@@ -45,8 +45,7 @@ button, a { outline-offset: 4px; }
   border-bottom: 1px solid rgb(148 163 184 / 14%);
 }
 .site-header-inner { height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-inline: max(2.5rem, calc((100vw - 1440px) / 2)); }
-.brand-link { display: inline-flex; flex: 0 0 auto; width: 154px; align-items: center; }
-.brand-link img { width: 100%; height: auto; }
+.brand-link { display: inline-flex; flex: 0 0 auto; align-items: center; }
 .desktop-nav { display: flex; align-items: center; gap: clamp(18px, 2.2vw, 34px); }
 .desktop-nav a { color: #c0cada; font-size: 13px; font-weight: 500; transition: color .2s ease; }
 .desktop-nav a:hover, .desktop-nav a.active { color: var(--gold); }
@@ -237,8 +236,7 @@ button, a { outline-offset: 4px; }
 
 .site-footer { padding: 42px 0 0; background: #030d1a; border-top: 1px solid rgb(148 163 184 / 13%); }
 .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1.35fr 1fr; gap: clamp(22px, 4vw, 58px); padding-bottom: 30px; }
-.footer-brand { display: inline-flex; width: 148px; }
-.footer-brand img { width: 100%; height: auto; }
+.footer-brand { display: inline-flex; }
 .footer-brand-column > p { max-width: 300px; margin: 12px 0; color: #a8b5c6; font-size: 11px; line-height: 1.6; }
 .footer-brand-column blockquote { max-width: 340px; margin: 0; color: #91a0b4; font-size: 10px; font-style: italic; line-height: 1.6; }
 .footer-column h2 { margin: 3px 0 13px; color: var(--gold); font-family: var(--font-geist-mono), monospace; font-size: 8px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
@@ -268,7 +266,6 @@ button, a { outline-offset: 4px; }
   html { scroll-padding-top: 4.5rem; }
   .site-container { width: min(100% - 2rem, 600px); }
   .site-header-inner { height: 68px; padding-inline: 1rem; }
-  .brand-link { width: 138px; }
   .desktop-nav, .header-cta { display: none; }
   .mobile-menu-button { display: inline-flex; }
   .mobile-nav { position: absolute; inset: 68px 0 auto; display: none; flex-direction: column; gap: 0; padding: 8px 16px 16px; border-bottom: 1px solid rgb(148 163 184 / 15%); background: rgb(7 20 38 / 98%); box-shadow: 0 18px 24px rgb(0 0 0 / 24%); }
