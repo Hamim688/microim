@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary-container":"#394a66","on-tertiary-fixed-variant":"#653e00","secondary-fixed-dim":"#b6c7e9","surface-container-lowest":"#030e20","on-error":"#690005","surface-container-high":"#1e2a3d","tertiary-container":"#ffc681","primary-container":"#ffc928","on-surface":"#d7e3fc","primary":"#ffebc0","on-primary-fixed":"#251a00","on-primary":"#3e2e00","on-background":"#d7e3fc","outline-variant":"#4e4633","inverse-primary":"#765a00","on-tertiary":"#472a00","secondary-fixed":"#d6e3ff","primary-fixed-dim":"#f4bf1b","on-primary-fixed-variant":"#594400","on-secondary":"#1f314c","surface-container-low":"#0f1c2e","surface-variant":"#293549","background":"#071426","secondary":"#b6c7e9","on-tertiary-fixed":"#2a1700","tertiary":"#ffe9d3","tertiary-fixed-dim":"#ffb95f","on-primary-container":"#6f5500","tertiary-fixed":"#ffddb8","surface-container":"#142032","inverse-surface":"#d7e3fc","surface-bright":"#2e3a4d","primary-fixed":"#ffdf95","surface-dim":"#071426","surface":"#071426","surface-container-highest":"#293549","on-tertiary-container":"#7e4e00","surface-tint":"#f4bf1b","on-secondary-fixed":"#081c36","outline":"#9b8f79","error":"#ffb4ab","on-secondary-fixed-variant":"#364763","on-secondary-container":"#a8b9da","error-container":"#93000a","inverse-on-surface":"#253144","on-surface-variant":"#d2c5ac","on-error-container":"#ffdad6"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"gutter":"1.5rem","space-sm":"0.5rem","space-lg":"1.5rem","margin-mobile":"1rem","space-md":"1rem","margin":"2.5rem","gutter-mobile":"0.75rem","space-xs":"0.25rem","space-xl":"2.5rem"},fontFamily:{"label-lg":["JetBrains Mono"],"display-xl":["Space Grotesk"],"headline-lg-mobile":["Space Grotesk"],"display-xl-mobile":["Space Grotesk"],"label-sm":["JetBrains Mono"],"body-md":["Geist"],"body-lg":["Geist"],"headline-sm":["Space Grotesk"],"body-sm":["Geist"],"headline-md":["Space Grotesk"],"headline-lg":["Space Grotesk"],"label-md":["JetBrains Mono"]},fontSize:{"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"500"}],"display-xl":["64px",{"lineHeight":"72px","letterSpacing":"-0.03em","fontWeight":"600"}],"headline-lg-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"500"}],"display-xl-mobile":["38px",{"lineHeight":"46px","letterSpacing":"-0.02em","fontWeight":"600"}],"label-sm":["9px",{"lineHeight":"12px","letterSpacing":"0.08em","fontWeight":"500"}],"body-md":["14px",{"lineHeight":"22px","letterSpacing":"0em","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"26px","letterSpacing":"-0.005em","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"500"}],"body-sm":["12px",{"lineHeight":"18px","letterSpacing":"0.005em","fontWeight":"400"}],"headline-md":["28px",{"lineHeight":"36px","letterSpacing":"-0.015em","fontWeight":"500"}],"headline-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"500"}],"label-md":["11px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"500"}]}}}};</script></head><body class="bg-surface text-on-surface font-body-md text-body-md min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-surface-variant/40"><div class="w-full px-margin h-20 flex items-center justify-between"><div class="flex items-center gap-space-md"><img alt="MikroIm Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UGHbqGXmZpQGJb6DqLyoSk9ZMNXiHpoZr0xL7zPDVeIbsqwtHpCXEAt_OZLpYDEX2r_aRE9m0y8hd1AGBt-S8Yx9BkyoJXL4Mg03dLDDwNat_MdN53URbvSvGr7L5hmqRbJg-yWMSvG6IlVjv-e4JXkFNlN_Kj_k0IAGBlNX0_umLIlL54MffjTQECagH1aq-338fe4bsikKRxPfmySat8kQ9i0cLm6BwF-uaGex7tbDwUY9FPFmPuri4"/><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface font-semibold">MikroIm</span></div><nav class="hidden md:flex items-center gap-space-lg" data-active-classes="text-primary-container font-medium"><a aria-current="page" class="transition-colors tracking-wide text-primary-container font-medium" data-path="home" href="#">Home</a><a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors tracking-wide" data-path="about" href="#">About</a><a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors tracking-wide" data-path="services" href="#">Services</a><a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors tracking-wide" data-path="projects" href="#">Projects</a><a class="font-headline-sm text-body-md text-on-surface-variant hover:text-on-surface transition-colors tracking-wide" data-path="contact" href="#">Contact</a></nav><div class="flex items-center gap-space-md"><a class="hidden sm:inline-flex items-center justify-center px-space-md py-space-sm rounded bg-surface-container border border-primary-container/60 text-primary-container font-label-md text-label-md uppercase tracking-wider hover:bg-primary-container hover:text-on-primary-container transition-all duration-300 shadow-[0_0_16px_-4px_rgba(255,201,40,0.3)]" data-path="contact" href="#">Start Your Project</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface"><div class="flex flex-col w-full">
+<!-- SECTION 1: HERO -->
+<section class="relative w-full overflow-hidden bg-surface py-space-xl lg:py-32">
+<!-- Ambient circuit grid and glow layers -->
+<div class="absolute inset-0 pointer-events-none opacity-25">
+<div class="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-primary-container/20 blur-3xl"></div>
+<div class="absolute top-1/2 right-0 w-[500px] h-[500px] rounded-full bg-secondary/10 blur-3xl"></div>
+<svg class="w-full h-full stroke-surface-variant/30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="64" id="circuit-grid" patternunits="userSpaceOnUse" width="64">
+<path d="M 64 0 L 0 0 0 64" fill="none" stroke-width="0.75"></path>
+<circle cx="64" cy="64" fill="#FFC928" fill-opacity="0.3" r="1.5"></circle>
+<circle cx="0" cy="0" fill="#b6c7e9" fill-opacity="0.2" r="1"></circle>
+</pattern>
+</defs>
+<rect fill="url(#circuit-grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<div class="w-full px-margin relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<!-- Hero Left Column -->
+<div class="lg:col-span-6 flex flex-col items-start space-y-space-lg">
+<!-- Pill Badge -->
+<div class="inline-flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-container-high/80 border border-primary-container/30 shadow-[0_0_15px_-3px_rgba(255,201,40,0.25)]">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-ping"></span>
+<span class="w-2.5 h-2.5 -ml-4 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary-container">NEXT-GEN IOT &amp; HARDWARE SOLUTIONS</span>
+</div>
+<!-- Headline -->
+<h1 class="font-display-xl text-display-xl text-on-surface font-semibold tracking-tight leading-none">
+            Connecting Ideas Through <span class="bg-gradient-to-r from-primary-container via-primary-fixed to-on-surface bg-clip-text text-transparent">Intelligent Technology</span>
+</h1>
+<!-- Supporting Text (Verbatim) -->
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
+            MikroIm menghadirkan solusi teknologi melalui IoT, embedded system, dan pengembangan perangkat digital untuk menciptakan inovasi masa depan.
+          </p>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center gap-space-md pt-space-xs">
+<a class="inline-flex items-center justify-center gap-space-sm px-space-lg py-space-md rounded bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-wider font-semibold hover:bg-primary-fixed-dim hover:shadow-[0_0_24px_rgba(255,201,40,0.45)] transition-all duration-300" href="#contact-dispatch">
+<span>Consult Your Project</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+<a class="inline-flex items-center justify-center gap-space-sm px-space-lg py-space-md rounded bg-surface-container-high/70 backdrop-blur-md border border-surface-variant text-on-surface font-label-md text-label-md uppercase tracking-wider hover:border-primary-container/70 hover:text-primary-container transition-all duration-300" href="#services-core">
+<span class="material-symbols-outlined text-[18px] text-primary-container">terminal</span>
+<span>Explore Solutions</span>
+</a>
+</div>
+<!-- Micro-Stats Pill Row -->
+<div class="flex flex-wrap items-center gap-space-sm pt-space-sm text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container/60 border border-surface-variant/40">
+<span class="material-symbols-outlined text-primary-container text-[14px]">verified</span>
+<span>Global Standards</span>
+</div>
+<span class="text-surface-variant">/</span>
+<div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container/60 border border-surface-variant/40">
+<span class="material-symbols-outlined text-primary-container text-[14px]">memory</span>
+<span>Custom Prototyping</span>
+</div>
+<span class="text-surface-variant">/</span>
+<div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container/60 border border-surface-variant/40">
+<span class="material-symbols-outlined text-primary-container text-[14px]">neurology</span>
+<span>Edge AI Ready</span>
+</div>
+</div>
+</div>
+<!-- Hero Right Column: High-tech Engineering Frame -->
+<div class="lg:col-span-6 relative mt-space-lg lg:mt-0">
+<div class="relative mx-auto rounded-xl p-2 bg-gradient-to-br from-primary-container/30 via-surface-variant/20 to-transparent border border-primary-container/20 shadow-[0_0_50px_-10px_rgba(255,201,40,0.18)]">
+<!-- Decorative circuit corner notches -->
+<div class="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-primary-container"></div>
+<div class="absolute -top-2 -right-2 w-4 h-4 border-t-2 border-r-2 border-primary-container"></div>
+<div class="absolute -bottom-2 -left-2 w-4 h-4 border-b-2 border-l-2 border-primary-container"></div>
+<div class="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-primary-container"></div>
+<!-- 3D Hardware Render Showcase -->
+<div class="relative overflow-hidden rounded-lg bg-surface-container-lowest aspect-video lg:aspect-[16/10] flex items-center justify-center group">
+<img alt="MikroIm Hyper-Grid IoT Core Hardware Prototyping System" class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOmhv7eobeA2sF3whN8cVlB6L6ONtpoeHz3lq53nq-bI5rsiJF_ZuIa-gz2N9nXlMRDxDZQcLQIrERklhuY6YVNylpw_IxCvCbbUyzziqYo3Hm28j5EAfX34WLfsOxJHMQCGvBn91UG47_05LvSNWILD46bHib3ebzOoxovcYN9GyyGY0QX34NLNeAmDlQvCwtgqCMY-SP7UKD-2ne8T1ZT6zchHvmARSdLYJGrm4FU2mmteU15Qjs"/>
+<!-- Overlay HUD Badges & Telemetry Nodes -->
+<div class="absolute top-4 left-4 flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest/85 backdrop-blur-md border border-primary-container/40">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-primary-container uppercase tracking-wider">ESP32 / ARM Core</span>
+</div>
+<div class="absolute top-4 right-4 flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest/85 backdrop-blur-md border border-surface-variant/50">
+<span class="material-symbols-outlined text-[14px] text-secondary">wifi_tethering</span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Telemetry Active</span>
+</div>
+<div class="absolute bottom-4 left-4 right-4 flex items-center justify-between p-space-sm rounded bg-surface-container-lowest/90 backdrop-blur-md border border-surface-variant/40">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">BUS: 115200 BAUD</span>
+<span class="w-1 h-3 bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-primary-container">LOW LATENCY: 1.8ms</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1 h-3 bg-primary-container"></span>
+<span class="w-1 h-3 bg-primary-container"></span>
+<span class="w-1 h-3 bg-primary-container"></span>
+<span class="w-1 h-3 bg-surface-variant"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: ABOUT MIKROIM & M-I-C-R-O-I-M VALUES -->
+<section class="relative w-full bg-surface-container-low py-space-xl border-t border-b border-surface-variant/20">
+<div class="w-full px-margin">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-xl">
+<div class="space-y-space-xs max-w-2xl">
+<div class="inline-flex items-center gap-space-xs font-label-md text-label-md uppercase tracking-widest text-primary-container">
+<span class="material-symbols-outlined text-[16px]">corporate_fare</span>
+<span>About MikroIm Sovereign</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-semibold">
+            Building Technology Through Innovation
+          </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+            MikroIm hadir sebagai penghubung antara ide kreatif dan implementasi teknologi nyata melalui pengembangan hardware dan software.
+          </p>
+</div>
+<!-- Brand Emblem Box -->
+<div class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg bg-surface-container border border-primary-container/20">
+<img alt="MikroIm Emblem" class="w-10 h-10 object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UGHbqGXmZpQGJb6DqLyoSk9ZMNXiHpoZr0xL7zPDVeIbsqwtHpCXEAt_OZLpYDEX2r_aRE9m0y8hd1AGBt-S8Yx9BkyoJXL4Mg03dLDDwNat_MdN53URbvSvGr7L5hmqRbJg-yWMSvG6IlVjv-e4JXkFNlN_Kj_k0IAGBlNX0_umLIlL54MffjTQECagH1aq-338fe4bsikKRxPfmySat8kQ9i0cLm6BwF-uaGex7tbDwUY9FPFmPuri4"/>
+<div>
+<div class="font-label-sm text-label-sm uppercase tracking-widest text-primary-container">ARCHITECTURAL MATRIX</div>
+<div class="font-body-sm text-body-sm text-secondary">PT MikroIm Global Teknologi</div>
+</div>
+</div>
+</div>
+<!-- Vision Callout Card -->
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-r from-surface-container via-surface-container-high to-surface-container p-space-lg lg:p-space-xl border border-primary-container/30 mb-space-xl shadow-[0_0_30px_-5px_rgba(255,201,40,0.1)]">
+<div class="absolute -right-12 -top-12 opacity-10 pointer-events-none">
+<img alt="MikroIm Watermark" class="w-72 h-72 object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UGHbqGXmZpQGJb6DqLyoSk9ZMNXiHpoZr0xL7zPDVeIbsqwtHpCXEAt_OZLpYDEX2r_aRE9m0y8hd1AGBt-S8Yx9BkyoJXL4Mg03dLDDwNat_MdN53URbvSvGr7L5hmqRbJg-yWMSvG6IlVjv-e4JXkFNlN_Kj_k0IAGBlNX0_umLIlL54MffjTQECagH1aq-338fe4bsikKRxPfmySat8kQ9i0cLm6BwF-uaGex7tbDwUY9FPFmPuri4"/>
+</div>
+<div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg">
+<div class="space-y-space-xs max-w-3xl">
+<span class="inline-block font-label-md text-label-md uppercase tracking-widest text-primary-container">CORE COMPANY VISION</span>
+<blockquote class="font-headline-md text-headline-md text-on-surface font-medium italic">
+              “Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.”
+            </blockquote>
+</div>
+<div class="shrink-0 flex items-center gap-space-xs px-space-md py-space-sm rounded bg-surface-container-lowest/80 border border-surface-variant">
+<span class="material-symbols-outlined text-primary-container">public</span>
+<span class="font-label-sm text-label-sm text-on-surface tracking-wider uppercase">Global Footprint</span>
+</div>
+</div>
+</div>
+<!-- 7 Value Cards Grid: M-I-C-R-O-I-M -->
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold flex items-center gap-space-xs">
+<span class="text-primary-container font-label-lg">M-I-C-R-O-I-M</span>
+<span>Corporate Values</span>
+</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">[SYS.VAL.7NODES]</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- [M] Mutu -->
+<div class="group relative rounded-xl bg-surface-container-lowest/70 backdrop-blur-md p-space-lg border border-surface-variant/40 hover:border-primary-container/60 transition-all duration-300 flex flex-col justify-between">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded flex items-center justify-center bg-primary-container/10 border border-primary-container/30 text-primary-container font-display-xl text-headline-sm font-bold">M</span>
+<span class="material-symbols-outlined text-secondary group-hover:text-primary-container transition-colors">verified_user</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Mutu</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Memberikan solusi teknologi dengan kualitas terbaik.
+              </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-variant/30 flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span>PRCD.01</span>
+<span>100% Quality Pass</span>
+</div>
+</div>
+<!-- [I] Inovatif -->
+<div class="group relative rounded-xl bg-surface-container-lowest/70 backdrop-blur-md p-space-lg border border-surface-variant/40 hover:border-primary-container/60 transition-all duration-300 flex flex-col justify-between">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded flex items-center justify-center bg-primary-container/10 border border-primary-container/30 text-primary-container font-display-xl text-headline-sm font-bold">I</span>
+<span class="material-symbols-outlined text-secondary group-hover:text-primary-container transition-colors">lightbulb</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Inovatif</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Mengembangkan teknologi kreatif untuk kebutuhan masa depan.
+              </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-variant/30 flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span>PRCD.02</span>
+<span>R&amp;D Continuous</span>
+</div>
+</div>
+<!-- [C] Cerdas -->
+<div class="group relative rounded-xl bg-surface-container-lowest/70 backdrop-blur-md p-space-lg border border-surface-variant/40 hover:border-primary-container/60 transition-all duration-300 flex flex-col justify-between">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded flex items-center justify-center bg-primary-container/10 border border-primary-container/30 text-primary-container font-display-xl text-headline-sm font-bold">C</span>
+<span class="material-symbols-outlined text-secondary group-hover:text-primary-container transition-colors">psychology</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Cerdas</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Menggunakan pendekatan teknologi yang efektif dan modern.
+              </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-variant/30 flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span>PRCD.03</span>
+<span>Smart Topology</span>
+</div>
+</div>
+<!-- [R] Responsif -->
+<div class="group relative rounded-xl bg-surface-container-lowest/70 backdrop-blur-md p-space-lg border border-surface-variant/40 hover:border-primary-container/60 transition-all duration-300 flex flex-col justify-between">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded flex items-center justify-center bg-primary-container/10 border border-primary-container/30 text-primary-container font-display-xl text-headline-sm font-bold">R</span>
+<span class="material-symbols-outlined text-secondary group-hover:text-primary-container transition-colors">speed</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Responsif</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Memberikan solusi cepat sesuai kebutuhan pengguna.
+              </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-variant/30 flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span>PRCD.04</span>
+<span>Fast Agile Loop</span>
+</div>
+</div>
+<!-- [O] Optimal -->
+<div class="group relative rounded-xl bg-surface-container-lowest/70 backdrop-blur-md p-space-lg border border-surface-variant/40 hover:border-primary-container/60 transition-all duration-300 flex flex-col justify-between">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded flex items-center justify-center bg-primary-container/10 border border-primary-container/30 text-primary-container font-display-xl text-headline-sm font-bold">O</span>
+<span class="material-symbols-outlined text-secondary group-hover:text-primary-container transition-colors">tune</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Optimal</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Menghasilkan sistem yang efisien dan terpercaya.
+              </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-variant/30 flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span>PRCD.05</span>
+<span>Max Efficiency</span>
+</div>
+</div>
+<!-- [I] Integratif -->
+<div class="group relative rounded-xl bg-surface-container-lowest/70 backdrop-blur-md p-space-lg border border-surface-variant/40 hover:border-primary-container/60 transition-all duration-300 flex flex-col justify-between">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded flex items-center justify-center bg-primary-container/10 border border-primary-container/30 text-primary-container font-display-xl text-headline-sm font-bold">I</span>
+<span class="material-symbols-outlined text-secondary group-hover:text-primary-container transition-colors">hub</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Integratif</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Menghubungkan hardware dan software dalam satu solusi.
+              </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-variant/30 flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span>PRCD.06</span>
+<span>Full-Stack Bus</span>
+</div>
+</div>
+<!-- [M] Mudah (Spans 2 cols on lg) -->
+<div class="group relative sm:col-span-2 rounded-xl bg-surface-container-lowest/70 backdrop-blur-md p-space-lg border border-surface-variant/40 hover:border-primary-container/60 transition-all duration-300 flex flex-col justify-between">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded flex items-center justify-center bg-primary-container/10 border border-primary-container/30 text-primary-container font-display-xl text-headline-sm font-bold">M</span>
+<span class="material-symbols-outlined text-secondary group-hover:text-primary-container transition-colors">touch_app</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Mudah</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Membuat teknologi kompleks menjadi lebih mudah digunakan.
+              </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-variant/30 flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span>PRCD.07</span>
+<span>Intuitive Operator UX</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 3: SERVICES & CAPABILITIES -->
+<section class="relative w-full bg-surface py-space-xl" id="services-core">
+<div class="w-full px-margin">
+<!-- Section Titles -->
+<div class="text-center max-w-3xl mx-auto mb-space-xl space-y-space-xs">
+<div class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container border border-primary-container/30 font-label-md text-label-md uppercase tracking-widest text-primary-container">
+<span class="material-symbols-outlined text-[16px]">developer_board</span>
+<span>CORE CAPABILITIES</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-semibold">
+          Our Technology Solutions
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+          End-to-end engineering excellence from silicon to cloud.
+        </p>
+</div>
+<!-- 3 Professional Service Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- 1. Hardware & IoT Development -->
+<div class="relative rounded-xl bg-surface-container/60 backdrop-blur-md p-space-xl border border-surface-variant/50 hover:border-primary-container/80 transition-all duration-300 flex flex-col justify-between group shadow-lg">
+<div class="space-y-space-md">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high flex items-center justify-center border border-primary-container/40 text-primary-container group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">memory</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container uppercase tracking-widest">[ENG.CAP-01]</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Hardware &amp; IoT Development</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Perancangan dan pengembangan perangkat IoT berbasis microcontroller seperti Arduino, ESP32, dan sistem embedded.
+            </p>
+<!-- Specs Tags -->
+<div class="flex flex-wrap gap-space-xs pt-space-sm">
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">ESP32</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">STM32</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">LoRaWAN</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">BLE 5.2</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">Custom PCB</span>
+</div>
+</div>
+<div class="mt-space-lg pt-space-md border-t border-surface-variant/40 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Silicon-Level Custom</span>
+<span class="material-symbols-outlined text-primary-container group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- 2. Embedded Programming -->
+<div class="relative rounded-xl bg-surface-container/60 backdrop-blur-md p-space-xl border border-surface-variant/50 hover:border-primary-container/80 transition-all duration-300 flex flex-col justify-between group shadow-lg">
+<div class="space-y-space-md">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high flex items-center justify-center border border-primary-container/40 text-primary-container group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">code_blocks</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container uppercase tracking-widest">[ENG.CAP-02]</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Embedded Programming</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Pemrograman perangkat keras, sensor, motor, dan sistem otomasi.
+            </p>
+<!-- Specs Tags -->
+<div class="flex flex-wrap gap-space-xs pt-space-sm">
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">C / C++</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">FreeRTOS</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">Sensor Fusion</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">CAN Bus</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">UART / SPI</span>
+</div>
+</div>
+<div class="mt-space-lg pt-space-md border-t border-surface-variant/40 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Deterministic Real-Time</span>
+<span class="material-symbols-outlined text-primary-container group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- 3. Mobile Application Development -->
+<div class="relative rounded-xl bg-surface-container/60 backdrop-blur-md p-space-xl border border-surface-variant/50 hover:border-primary-container/80 transition-all duration-300 flex flex-col justify-between group shadow-lg">
+<div class="space-y-space-md">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high flex items-center justify-center border border-primary-container/40 text-primary-container group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">stay_current_portrait</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container uppercase tracking-widest">[ENG.CAP-03]</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Mobile Application Development</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Pengembangan aplikasi mobile untuk monitoring dan kontrol perangkat IoT.
+            </p>
+<!-- Specs Tags -->
+<div class="flex flex-wrap gap-space-xs pt-space-sm">
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">Flutter</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">React Native</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">MQTT</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">WebSockets</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary border border-surface-variant/40">Live Dashboard</span>
+</div>
+</div>
+<div class="mt-space-lg pt-space-md border-t border-surface-variant/40 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Bi-Directional Telemetry</span>
+<span class="material-symbols-outlined text-primary-container group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 4: WHY MIKROIM (STATISTICS & ENGINEERING EDGE) -->
+<section class="relative w-full bg-surface-container-lowest py-space-xl border-t border-b border-surface-variant/20 overflow-hidden">
+<div class="w-full px-margin relative z-10">
+<!-- Section Header -->
+<div class="max-w-2xl mb-space-xl space-y-space-xs">
+<div class="inline-flex items-center gap-space-xs font-label-md text-label-md uppercase tracking-widest text-primary-container">
+<span class="material-symbols-outlined text-[16px]">equalizer</span>
+<span>ENGINEERING PROOF-OF-WORK</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-semibold">
+          Why MikroIm Engineering Edge
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+          Empirical precision and robust architecture deployed across industrial-grade workloads.
+        </p>
+</div>
+<!-- 4 Proof-of-Work Metrics Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-space-xl">
+<!-- Metric 1 -->
+<div class="p-space-lg rounded-xl bg-surface-container/50 border border-surface-variant/40 relative">
+<div class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Engineering Driven</div>
+<div class="font-display-xl text-display-xl font-bold text-primary-container my-space-xs">99.8%</div>
+<div class="font-body-md text-body-md text-on-surface-variant">Precision Hardware Reliability across harsh environments.</div>
+</div>
+<!-- Metric 2 -->
+<div class="p-space-lg rounded-xl bg-surface-container/50 border border-surface-variant/40 relative">
+<div class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Hardware + Software</div>
+<div class="font-display-xl text-display-xl font-bold text-primary-container my-space-xs">100%</div>
+<div class="font-body-md text-body-md text-on-surface-variant">Unified Architecture with zero vendor-lock fragmentation.</div>
+</div>
+<!-- Metric 3 -->
+<div class="p-space-lg rounded-xl bg-surface-container/50 border border-surface-variant/40 relative">
+<div class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">IoT Development</div>
+<div class="font-display-xl text-display-xl font-bold text-primary-container my-space-xs">50+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">Custom Microcontroller Deployments in field operations.</div>
+</div>
+<!-- Metric 4 -->
+<div class="p-space-lg rounded-xl bg-surface-container/50 border border-surface-variant/40 relative">
+<div class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Custom Projects</div>
+<div class="font-display-xl text-display-xl font-bold text-primary-container my-space-xs">14d</div>
+<div class="font-body-md text-body-md text-on-surface-variant">Rapid Turnaround from prototype schematic to production run.</div>
+</div>
+</div>
+<!-- Architectural Stack Comparison Diagram -->
+<div class="rounded-xl bg-surface-container/70 border border-surface-variant/60 p-space-lg lg:p-space-xl">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-lg">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Architectural Paradigm Comparison</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Isolated Silos vs MikroIm Converged Telemetry &amp; Firmware Stack</p>
+</div>
+<div class="flex items-center gap-space-sm font-label-sm text-label-sm">
+<span class="inline-flex items-center gap-1 text-on-surface-variant"><span class="w-2.5 h-2.5 rounded bg-error-container"></span> Fragmented</span>
+<span class="inline-flex items-center gap-1 text-primary-container"><span class="w-2.5 h-2.5 rounded bg-primary-container"></span> MikroIm Unified</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Traditional Isolated Column -->
+<div class="rounded-lg bg-surface-container-lowest/80 p-space-md border border-surface-variant/30 space-y-space-sm opacity-70">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-variant/30">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Traditional Legacy Stack</span>
+<span class="material-symbols-outlined text-error text-[18px]">close</span>
+</div>
+<div class="p-space-sm rounded bg-surface/50 border border-surface-variant/20 text-body-sm text-on-surface-variant flex items-center justify-between">
+<span>Third-party Sensor Modules</span>
+<span class="font-label-sm text-label-sm text-error">Unstandardized</span>
+</div>
+<div class="p-space-sm rounded bg-surface/50 border border-surface-variant/20 text-body-sm text-on-surface-variant flex items-center justify-between">
+<span>Generic Firmware Blob</span>
+<span class="font-label-sm text-label-sm text-error">High Overhead</span>
+</div>
+<div class="p-space-sm rounded bg-surface/50 border border-surface-variant/20 text-body-sm text-on-surface-variant flex items-center justify-between">
+<span>Middleman Bridge Server</span>
+<span class="font-label-sm text-label-sm text-error">+240ms Latency</span>
+</div>
+<div class="p-space-sm rounded bg-surface/50 border border-surface-variant/20 text-body-sm text-on-surface-variant flex items-center justify-between">
+<span>Disjointed UI Dashboard</span>
+<span class="font-label-sm text-label-sm text-error">High Error Rate</span>
+</div>
+</div>
+<!-- MikroIm Unified Stack Column -->
+<div class="rounded-lg bg-surface-container-high/80 p-space-md border border-primary-container/40 space-y-space-sm shadow-[0_0_20px_-5px_rgba(255,201,40,0.15)]">
+<div class="flex items-center justify-between pb-space-xs border-b border-primary-container/20">
+<span class="font-label-md text-label-md text-primary-container uppercase font-semibold">MikroIm Converged Stack</span>
+<span class="material-symbols-outlined text-primary-container text-[18px]">check_circle</span>
+</div>
+<div class="p-space-sm rounded bg-surface-container-lowest border border-primary-container/20 text-body-sm text-on-surface flex items-center justify-between">
+<span>Precision Calibrated Sensors &amp; Custom PCB</span>
+<span class="font-label-sm text-label-sm text-primary-container">Sub-millivolt Spec</span>
+</div>
+<div class="p-space-sm rounded bg-surface-container-lowest border border-primary-container/20 text-body-sm text-on-surface flex items-center justify-between">
+<span>Custom C/C++ Micro-Kernel Firmware</span>
+<span class="font-label-sm text-label-sm text-primary-container">Zero Jitter / RTOS</span>
+</div>
+<div class="p-space-sm rounded bg-surface-container-lowest border border-primary-container/20 text-body-sm text-on-surface flex items-center justify-between">
+<span>Native MQTT / WebSockets Realtime Bus</span>
+<span class="font-label-sm text-label-sm text-primary-container">&lt; 15ms Ultra Low</span>
+</div>
+<div class="p-space-sm rounded bg-surface-container-lowest border border-primary-container/20 text-body-sm text-on-surface flex items-center justify-between">
+<span>Tailored Mobile &amp; Web Control Suite</span>
+<span class="font-label-sm text-label-sm text-primary-container">Seamless Flow</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 5: PROJECT SHOWCASE PREVIEW -->
+<section class="relative w-full bg-surface py-space-xl">
+<div class="w-full px-margin">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-xl">
+<div class="space-y-space-xs max-w-2xl">
+<div class="inline-flex items-center gap-space-xs font-label-md text-label-md uppercase tracking-widest text-primary-container">
+<span class="material-symbols-outlined text-[16px]">token</span>
+<span>FEATURED ENGINEERING</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-semibold">
+            Engineered for Real-World Impact
+          </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+            Explore battle-tested hardware solutions and active deployments built for efficiency.
+          </p>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="px-space-md py-space-xs rounded bg-surface-container border border-surface-variant font-label-sm text-label-sm text-secondary uppercase">
+            STATUS: 4 Active Projects Shown
+          </span>
+</div>
+</div>
+<!-- 4 Modern Project Showcase Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- 1. Smart Home System -->
+<div class="group rounded-xl bg-surface-container/60 border border-surface-variant/50 hover:border-primary-container/70 transition-all duration-300 overflow-hidden flex flex-col justify-between">
+<div class="p-space-lg space-y-space-md">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-primary-container border border-primary-container/30">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                DEPLOYED / ACTIVE
+              </span>
+<span class="font-label-sm text-label-sm text-secondary">[PRJ-01]</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold group-hover:text-primary-container transition-colors">
+                Smart Home System
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 leading-relaxed">
+                IoT automation hub with continuous energy telemetry, dynamic ambient load-balancing, and decentralized mesh node control across multi-zone residential units.
+              </p>
+</div>
+<!-- Tech Stack Tags -->
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">ESP32 Mesh</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">Zigbee Bridge</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">MQTT Cloud</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">Flutter App</span>
+</div>
+</div>
+<div class="px-space-lg py-space-sm bg-surface-container-lowest/80 border-t border-surface-variant/40 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Telemetry Rate: 200 samples/sec</span>
+<span class="material-symbols-outlined text-secondary group-hover:text-primary-container transition-colors">sensors</span>
+</div>
+</div>
+<!-- 2. Robot Arm -->
+<div class="group rounded-xl bg-surface-container/60 border border-surface-variant/50 hover:border-primary-container/70 transition-all duration-300 overflow-hidden flex flex-col justify-between">
+<div class="p-space-lg space-y-space-md">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-primary-container border border-primary-container/30">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                CALIBRATED
+              </span>
+<span class="font-label-sm text-label-sm text-secondary">[PRJ-02]</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold group-hover:text-primary-container transition-colors">
+                Robot Arm (6-DOF Manipulator)
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 leading-relaxed">
+                Precision robotic manipulator arm engineered with inverse kinematics, sub-millimeter servo control boards, and dedicated hardware safety cut-offs.
+              </p>
+</div>
+<!-- Tech Stack Tags -->
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">STM32 Microcontroller</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">CANopen Bus</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">PID Servo Tuning</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">FreeRTOS</span>
+</div>
+</div>
+<div class="px-space-lg py-space-sm bg-surface-container-lowest/80 border-t border-surface-variant/40 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Kinematic Repeatability: ±0.05mm</span>
+<span class="material-symbols-outlined text-secondary group-hover:text-primary-container transition-colors">precision_manufacturing</span>
+</div>
+</div>
+<!-- 3. IoT Monitoring Device -->
+<div class="group rounded-xl bg-surface-container/60 border border-surface-variant/50 hover:border-primary-container/70 transition-all duration-300 overflow-hidden flex flex-col justify-between">
+<div class="p-space-lg space-y-space-md">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-primary-container border border-primary-container/30">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                FIELD OPERATIONAL
+              </span>
+<span class="font-label-sm text-label-sm text-secondary">[PRJ-03]</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold group-hover:text-primary-container transition-colors">
+                IoT Monitoring Device
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 leading-relaxed">
+                Industrial environmental probe capturing temperature, air quality, pressure, and vibration with localized OLED display diagnostics and cloud telemetry sync.
+              </p>
+</div>
+<!-- Tech Stack Tags -->
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">ESP32 SoC</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">I2C OLED Interface</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">LoRaWAN Long-Range</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">LiPo Power Mgmt</span>
+</div>
+</div>
+<div class="px-space-lg py-space-sm bg-surface-container-lowest/80 border-t border-surface-variant/40 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Battery Autonomy: 36 Months</span>
+<span class="material-symbols-outlined text-secondary group-hover:text-primary-container transition-colors">cloud_sync</span>
+</div>
+</div>
+<!-- 4. Embedded Controller -->
+<div class="group rounded-xl bg-surface-container/60 border border-surface-variant/50 hover:border-primary-container/70 transition-all duration-300 overflow-hidden flex flex-col justify-between">
+<div class="p-space-lg space-y-space-md">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-primary-container border border-primary-container/30">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                PRODUCTION UNIT
+              </span>
+<span class="font-label-sm text-label-sm text-secondary">[PRJ-04]</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold group-hover:text-primary-container transition-colors">
+                Embedded Industrial Controller
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 leading-relaxed">
+                Deterministic embedded unit for automated factory machinery, featuring optical galvanic isolation, dual watchdog systems, and fail-safe interrupt routines.
+              </p>
+</div>
+<!-- Tech Stack Tags -->
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">ARM Cortex-M4</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">Modbus RTU / RS485</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">Galvanic Isolation</span>
+<span class="px-space-sm py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">Bare-Metal C</span>
+</div>
+</div>
+<div class="px-space-lg py-space-sm bg-surface-container-lowest/80 border-t border-surface-variant/40 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Switching Frequency: 50 kHz</span>
+<span class="material-symbols-outlined text-secondary group-hover:text-primary-container transition-colors">developer_board</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 6: CALL TO ACTION SECTION -->
+<section class="relative w-full bg-surface-container-lowest py-space-xl lg:py-32 overflow-hidden border-t border-surface-variant/30" id="contact-dispatch">
+<!-- Radial Golden Circuit Glow -->
+<div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+<div class="w-[600px] h-[600px] rounded-full bg-primary-container/10 blur-[120px]"></div>
+</div>
+<div class="w-full px-margin relative z-10">
+<div class="max-w-4xl mx-auto rounded-2xl bg-surface-container/70 backdrop-blur-xl border border-primary-container/30 p-space-lg lg:p-space-xl text-center space-y-space-md shadow-[0_0_50px_-10px_rgba(255,201,40,0.2)]">
+<!-- Floating Circuit Pip -->
+<div class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest border border-primary-container/40">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary-container">INITIATE COLLABORATION PROTOCOL</span>
+</div>
+<!-- Headline & Description (Verbatim) -->
+<h2 class="font-display-xl text-display-xl text-on-surface font-semibold tracking-tight">
+          Ready to Build Your Technology Solution?
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto">
+          Diskusikan kebutuhan proyek Anda bersama MikroIm.
+        </p>
+<!-- CTA Buttons -->
+<div class="flex flex-col sm:flex-row items-center justify-center gap-space-md pt-space-md">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-space-sm px-space-xl py-space-md rounded bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-wider font-semibold hover:bg-primary-fixed-dim hover:shadow-[0_0_24px_rgba(255,201,40,0.5)] transition-all duration-300" href="mailto:ops@mikroim.tech">
+<span>Contact MikroIm</span>
+<span class="material-symbols-outlined text-[18px]">send</span>
+</a>
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-space-sm px-space-lg py-space-md rounded bg-surface-container-high/80 border border-surface-variant hover:border-primary-container/60 text-on-surface font-label-md text-label-md uppercase tracking-wider hover:text-primary-container transition-all duration-300" href="https://wa.me/628119800000" rel="noopener noreferrer" target="_blank">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+<span>Schedule Technical Consultation</span>
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</a>
+</div>
+<!-- Meta Dispatch Bar -->
+<div class="pt-space-md flex flex-wrap items-center justify-center gap-space-md font-label-sm text-label-sm text-secondary">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container">lock</span>
+            Encrypted NDA Guarantee
+          </span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container">schedule</span>
+            24h Response SLA
+          </span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container">badge</span>
+            Jakarta &amp; Remote Dispatch
+          </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive micro-script for active telemetry tick and tab highlights -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Periodic subtle flash simulation on telemetry badges
+      const statusPips = document.querySelectorAll('.animate-pulse');
+      setInterval(() => {
+        statusPips.forEach(pip => {
+          pip.classList.toggle('opacity-75');
+        });
+      }, 2500);
+    });
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-surface-variant/30 relative overflow-hidden"><div class="w-full px-margin py-space-xl relative z-10"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-gutter mb-space-xl"><div class="lg:col-span-2 space-y-space-md pr-space-lg"><div class="flex items-center gap-space-sm"><img alt="MikroIm Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UGHbqGXmZpQGJb6DqLyoSk9ZMNXiHpoZr0xL7zPDVeIbsqwtHpCXEAt_OZLpYDEX2r_aRE9m0y8hd1AGBt-S8Yx9BkyoJXL4Mg03dLDDwNat_MdN53URbvSvGr7L5hmqRbJg-yWMSvG6IlVjv-e4JXkFNlN_Kj_k0IAGBlNX0_umLIlL54MffjTQECagH1aq-338fe4bsikKRxPfmySat8kQ9i0cLm6BwF-uaGex7tbDwUY9FPFmPuri4"/><span class="font-headline-sm text-headline-sm tracking-wide text-on-surface font-semibold">MikroIm</span></div><p class="font-body-md text-body-md text-on-surface-variant italic max-w-md">“Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.”</p><div class="inline-flex items-center gap-space-xs px-space-sm py-space-xs bg-surface-container rounded border border-surface-variant/50"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase">Systems Operational 99.98%</span></div></div><div><h4 class="font-label-md text-label-md uppercase text-primary-container tracking-widest mb-space-md">Quick Links</h4><ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-on-surface transition-colors" data-path="home" href="#">Home Core</a></li><li><a class="hover:text-on-surface transition-colors" data-path="about" href="#">About Sovereign</a></li><li><a class="hover:text-on-surface transition-colors" data-path="services" href="#">Enterprise Services</a></li><li><a class="hover:text-on-surface transition-colors" data-path="projects" href="#">Deployment Projects</a></li><li><a class="hover:text-on-surface transition-colors" data-path="contact" href="#">Contact Terminal</a></li></ul></div><div><h4 class="font-label-md text-label-md uppercase text-primary-container tracking-widest mb-space-md">IoT &amp; Solutions</h4><ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant"><li><span class="hover:text-on-surface transition-colors cursor-pointer">Edge AI Telemetry</span></li><li><span class="hover:text-on-surface transition-colors cursor-pointer">Hardware-Software Bus</span></li><li><span class="hover:text-on-surface transition-colors cursor-pointer">Precision Firmware Eng</span></li><li><span class="hover:text-on-surface transition-colors cursor-pointer">Cyber-Physical Hub</span></li><li><span class="hover:text-on-surface transition-colors cursor-pointer">Cloud Stream Gateway</span></li></ul></div><div><h4 class="font-label-md text-label-md uppercase text-primary-container tracking-widest mb-space-md">Contact Dispatch</h4><ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-on-surface transition-colors block" href="mailto:ops@mikroim.tech">Email: ops@mikroim.tech</a></li><li><a class="hover:text-on-surface transition-colors block" href="#">WhatsApp: +62 811-9800-IoT</a></li><li><span class="block">Base: Jakarta &amp; Silicon Hub</span></li><li><div class="flex items-center gap-space-sm pt-space-xs text-secondary"><span class="material-symbols-outlined text-[18px] hover:text-primary-container cursor-pointer transition-colors">terminal</span><span class="material-symbols-outlined text-[18px] hover:text-primary-container cursor-pointer transition-colors">satellite_alt</span><span class="material-symbols-outlined text-[18px] hover:text-primary-container cursor-pointer transition-colors">lan</span></div></li></ul></div></div><div class="pt-space-lg border-t border-surface-variant/20 flex flex-col sm:flex-row items-center justify-between gap-space-md font-label-sm text-label-sm text-on-surface-variant"><div class="tracking-wider">© 2025 PT MikroIm Global Teknologi. All Precision Rights Reserved.</div><div class="flex items-center gap-space-md"><span class="hover:text-on-surface cursor-pointer">Privacy Matrix</span><span class="hover:text-on-surface cursor-pointer">SLA Telemetry</span><span class="hover:text-on-surface cursor-pointer">Compliance Registry</span></div></div></div></footer></body></html>
