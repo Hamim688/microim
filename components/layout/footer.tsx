@@ -16,7 +16,10 @@ export function Footer() {
       <div className="site-container">
         <div className="footer-grid">
           <div className="footer-brand-column">
-            <Link href="/" className="footer-brand" aria-label="Beranda MikroIm"><Image src="/logo/mikroim-logo.svg" alt="Laboratorium Teknologi dan IoT MikroIm" width={320} height={80} /></Link>
+            <Link href="/" className="footer-brand flex items-center gap-3.5 mb-4" aria-label="Beranda MikroIm">
+              <Image src="/logo/logo-baru.png" alt="Laboratorium Teknologi dan IoT MikroIm" width={48} height={48} quality={100} className="rounded-2xl" />
+              <span className="text-white font-bold tracking-normal" style={{ fontSize: '1.45rem', fontFamily: 'var(--font-body)' }}>MikroIm</span>
+            </Link>
             <p>Menghubungkan gagasan, perangkat keras, perangkat lunak, dan teknologi cerdas.</p>
             <blockquote>“Menjadi perusahaan yang mendorong pengembangan dan pembelajaran teknologi informasi hingga mendunia.”</blockquote>
           </div>

@@ -22,8 +22,9 @@ export function Navbar() {
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <Link href="/" className="brand-link" aria-label="Beranda MikroIm" onClick={() => setIsOpen(false)}>
-          <Image src="/logo/mikroim-logo.svg" alt="Laboratorium Teknologi dan IoT MikroIm" width={320} height={80} priority />
+        <Link href="/" className="brand-link flex items-center gap-3" aria-label="Beranda MikroIm" onClick={() => setIsOpen(false)}>
+          <Image src="/logo/logo-baru.png" alt="Laboratorium Teknologi dan IoT MikroIm" width={40} height={40} priority quality={100} className="rounded-2xl" />
+          <span className="text-white font-bold tracking-normal" style={{ fontSize: '1.25rem', fontFamily: 'var(--font-body)' }}>MikroIm</span>
         </Link>
         <nav className="desktop-nav" aria-label="Navigasi utama">
           {navLinks.map(({ name, href, activePath }) => {
