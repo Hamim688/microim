@@ -5,7 +5,7 @@ import { ArrowLeft, Cpu, Globe, Rocket } from "lucide-react"
 
 export default function AboutPage() {
   return (
-    <div className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-12 sm:py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mb-8">
         <Link href="/" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-[#FFC928] transition-colors">
           <ArrowLeft className="w-4 h-4" />
@@ -15,7 +15,7 @@ export default function AboutPage() {
 
       <div className="space-y-6 max-w-3xl">
         <Badge variant="gold">Tentang Perusahaan</Badge>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
           Menghubungkan Ide Lewat Rekayasa Cerdas
         </h1>
         <p className="text-lg text-slate-300 leading-relaxed">
@@ -24,7 +24,7 @@ export default function AboutPage() {
       </div>
 
       {/* Kartu visi */}
-      <div className="mt-12 p-8 rounded-2xl bg-[#0c213d] border border-[#173359] max-w-4xl space-y-4">
+      <div className="mt-12 p-5 sm:p-8 rounded-2xl bg-[#0c213d] border border-[#173359] max-w-4xl space-y-4">
         <div className="flex items-center gap-3 text-[#FFC928]">
           <Globe className="w-6 h-6" />
           <h2 className="text-xl font-bold text-white">Visi Mendunia MikroIm</h2>
@@ -34,7 +34,7 @@ export default function AboutPage() {
         </blockquote>
       </div>
 
-      <div className="mt-12 flex gap-4">
+      <div className="mt-12 flex flex-wrap gap-3 sm:gap-4">
         <Link href="/contact">
           <Button size="lg">Hubungi Tim Rekayasa</Button>
         </Link>

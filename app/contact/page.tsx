@@ -36,7 +36,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-12 sm:py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mb-8">
         <Link href="/" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-[#FFC928] transition-colors">
           <ArrowLeft className="w-4 h-4" />
@@ -44,18 +44,18 @@ export default function ContactPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
         {/* Left Info Column */}
         <div className="lg:col-span-5 space-y-6">
           <Badge variant="gold">Pengajuan Proyek &amp; Konsultasi</Badge>
-          <h1 className="text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Mulai Diskusikan Solusi Teknologi Anda
           </h1>
           <p className="text-slate-300 text-base leading-relaxed">
             Ceritakan spesifikasi kebutuhan proyek IoT, perancangan perangkat keras, atau sistem tertanam Anda. Tim rekayasa MikroIm akan menelaah dan memberikan konsultasi teknis awal.
           </p>
 
-          <div className="p-6 rounded-2xl bg-[#0c213d] border border-[#173359] space-y-4">
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#0c213d] border border-[#173359] space-y-4">
             <h4 className="text-sm font-semibold uppercase tracking-wider text-white">Hubungi Kami</h4>
             <div className="flex items-center gap-3 text-sm text-slate-300">
               <Mail className="w-4 h-4 text-[#FFC928]" />
@@ -74,7 +74,7 @@ export default function ContactPage() {
 
         {/* Right Form Column */}
         <div className="lg:col-span-7">
-          <div className="rounded-2xl bg-[#0c213d] border border-[#173359] p-8">
+          <div className="rounded-2xl bg-[#0c213d] border border-[#173359] p-5 sm:p-8">
             {submitted ? (
               <div className="text-center py-12 space-y-4">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto">

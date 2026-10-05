@@ -29,7 +29,7 @@ const sampleProducts = [
 export default function ProductsPage() {
   return (
     <LandingMotion>
-      <div className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="py-12 sm:py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <PageEntrance>
           <div className="mb-8">
             <Link href="/" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-[#FFC928] transition-colors">
@@ -38,9 +38,9 @@ export default function ProductsPage() {
             </Link>
           </div>
 
-          <div className="space-y-4 max-w-3xl mb-12">
+          <div className="space-y-4 max-w-3xl mb-8 sm:mb-12">
             <Badge variant="gold">Katalog Komponen IoT</Badge>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
               Komponen Elektronika &amp; Mikrokontroler
             </h1>
             <p className="text-lg text-slate-300">

@@ -43,8 +43,11 @@ export function PointerField({
 
     resizeCanvas()
     window.addEventListener("resize", resizeCanvas)
+    const observer = new ResizeObserver(resizeCanvas)
+    observer.observe(canvas.parentElement ?? canvas)
     return () => {
       window.removeEventListener("resize", resizeCanvas)
+      observer.disconnect()
       if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current)
     }
   }, [])
