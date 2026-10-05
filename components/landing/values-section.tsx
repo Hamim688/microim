@@ -6,7 +6,7 @@ const values = [
   { letter: "C", title: "Cerdas", text: "Menghubungkan perangkat dan sistem melalui rancangan yang tepat.", icon: BrainCircuit },
   { letter: "R", title: "Responsif", text: "Memahami kebutuhan pengguna dalam setiap proses rekayasa.", icon: Zap },
   { letter: "O", title: "Optimal", text: "Memilih solusi yang sesuai untuk tujuan dan batasan proyek.", icon: Gauge },
-  { letter: "I", title: "Integratif", text: "Menyatukan hardware, firmware, aplikasi, dan konektivitas.", icon: Link2 },
+  { letter: "I", title: "Integratif", text: "Menyatukan perangkat keras, perangkat lunak tertanam, aplikasi, dan konektivitas.", icon: Link2 },
   { letter: "M", title: "Mudah", text: "Membuat teknologi kompleks terasa lebih mudah digunakan.", icon: UsersRound },
 ]
 
@@ -15,7 +15,7 @@ export function ValuesSection() {
     <section className="values-section" aria-labelledby="values-heading">
       <div className="site-container">
         <div className="values-heading-row">
-          <h2 id="values-heading"><span>M-I-C-R-O-I-M</span> Corporate Values</h2>
+          <h2 id="values-heading"><span>M-I-C-R-O-I-M</span> Nilai Perusahaan</h2>
           <span className="section-code">[SYS.VAL.7NODES]</span>
         </div>
         <div className="values-grid">

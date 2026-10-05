@@ -5,10 +5,10 @@ import { PointerField } from "@/components/landing/pointer-field"
 
 function HardwareIllustration() {
   return (
-    <div className="hero-board-frame" aria-label="Illustration of an IoT circuit board">
+      <div className="hero-board-frame" aria-label="Ilustrasi rangkaian IoT">
       <div className="hero-board-topline">
-        <span><i /> SYSTEM / CORE</span>
-        <span className="hero-board-status"><Wifi aria-hidden="true" /> TELEMETRY ACTIVE</span>
+        <span><i /> SISTEM / INTI</span>
+        <span className="hero-board-status"><Wifi aria-hidden="true" /> TELEMETRI AKTIF</span>
       </div>
       <div className="hero-board-image-wrap">
         <Image
@@ -22,8 +22,8 @@ function HardwareIllustration() {
         />
       </div>
       <div className="hero-board-footer">
-        <span><CircuitBoard aria-hidden="true" /> EDGE SYSTEMS</span>
-        <span>HW + FW + CONNECTIVITY</span>
+        <span><CircuitBoard aria-hidden="true" /> SISTEM PERANGKAT</span>
+        <span>PERANGKAT + SISTEM TERTANAM + KONEKTIVITAS</span>
         <span className="hero-bars"><i /><i /><i /><i /><i /></span>
       </div>
     </div>
@@ -37,15 +37,15 @@ export function Hero() {
       <PointerField className="hero-pointer-field">
         <div className="site-container hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow hero-eyebrow"><span className="status-light" /> NEXT-GEN IOT &amp; HARDWARE SOLUTIONS</div>
-            <h1>Connecting Ideas Through <span>Intelligent Technology</span></h1>
-            <p>MikroIm menghadirkan solusi teknologi melalui IoT, embedded system, dan pengembangan perangkat digital untuk menciptakan inovasi masa depan.</p>
+            <div className="eyebrow hero-eyebrow"><span className="status-light" /> SOLUSI IOT &amp; PERANGKAT KERAS MASA DEPAN</div>
+            <h1>Menghubungkan Ide Lewat <span>Teknologi Cerdas</span></h1>
+            <p>MikroIm mewujudkan gagasan melalui IoT, sistem tertanam, dan perangkat digital untuk menciptakan inovasi masa depan.</p>
             <div className="hero-actions">
               <Link className="button-primary" href="/contact">Konsultasikan Proyek <ArrowUpRight aria-hidden="true" /></Link>
               <Link className="button-secondary" href="/products"><ShoppingBag aria-hidden="true" /> Lihat Produk</Link>
             </div>
-            <div className="hero-tags" aria-label="Core technology areas"><span><i /> IoT Systems</span><span><i /> Custom Prototyping</span><span><i /> Edge to App</span></div>
-            <a className="hero-scroll" href="#about"><ArrowDown aria-hidden="true" /> SCROLL TO EXPLORE</a>
+            <div className="hero-tags" aria-label="Bidang teknologi utama"><span><i /> Sistem IoT</span><span><i /> Purwarupa Kustom</span><span><i /> Perangkat hingga Aplikasi</span></div>
+            <a className="hero-scroll" href="#about"><ArrowDown aria-hidden="true" /> GULIR UNTUK MELIHAT</a>
           </div>
           <div className="hero-visual"><HardwareIllustration /></div>
         </div>

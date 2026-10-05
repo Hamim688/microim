@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "MikroIm - Technology Engineering & IoT Solutions",
+  title: "MikroIm - Rekayasa Teknologi & Solusi IoT",
   description:
-    "Connecting Ideas Through Intelligent Technology. IoT hardware components, embedded systems, prototyping, and custom engineering.",
+    "Menghubungkan gagasan lewat teknologi cerdas. Komponen IoT, sistem tertanam, purwarupa, dan layanan rekayasa khusus.",
 }
 
 export default function RootLayout({

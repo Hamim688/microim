@@ -29,7 +29,7 @@ export function ProjectCard({ title, category, description, techStack }: Project
       </div>
       <Link href="/contact">
         <Button variant="secondary" size="sm" className="w-full flex items-center justify-center gap-1.5">
-          Inquiry Proyek Serupa
+          Ajukan Proyek Serupa
           <ArrowUpRight className="w-3.5 h-3.5" />
         </Button>
       </Link>

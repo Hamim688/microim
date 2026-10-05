@@ -4,9 +4,9 @@ import { ArrowRight, ShoppingBag } from "lucide-react"
 import { ScrollReveal } from "@/components/landing/landing-motion"
 
 const products = [
-  { name: "ESP32 Development Board", category: "MIKROKONTROLER", price: "Rp 68.000", image: "/images/product-esp32.jpg" },
-  { name: "SG90 Micro Servo Motor", category: "AKTUATOR", price: "Rp 18.000", image: "/images/product-sg90.jpg" },
-  { name: "HC-SR04 Ultrasonic Sensor", category: "SENSOR JARAK", price: "Rp 16.500", image: "/images/product-ultrasonic.jpg" },
+  { name: "Papan Pengembangan ESP32", category: "MIKROKONTROLER", price: "Rp 68.000", image: "/images/product-esp32.jpg" },
+  { name: "Motor Servo Mikro SG90", category: "AKTUATOR", price: "Rp 18.000", image: "/images/product-sg90.jpg" },
+  { name: "Sensor Ultrasonik HC-SR04", category: "SENSOR JARAK", price: "Rp 16.500", image: "/images/product-ultrasonic.jpg" },
 ]
 
 export function FeaturedProducts() {
@@ -17,7 +17,7 @@ export function FeaturedProducts() {
           <div>
             <span className="section-kicker">KATALOG KOMPONEN MIKROIM</span>
             <h2>Siapkan Komponen untuk Proyekmu</h2>
-            <p>Board, sensor, dan aktuator pilihan untuk belajar, membuat prototipe, dan mengembangkan sistem IoT.</p>
+            <p>Papan mikrokontroler, sensor, dan aktuator pilihan untuk belajar, membuat purwarupa, dan mengembangkan sistem IoT.</p>
           </div>
           <Link className="featured-products-link" href="/products">LIHAT SEMUA PRODUK <ArrowRight aria-hidden="true" /></Link>
         </ScrollReveal>
@@ -29,7 +29,7 @@ export function FeaturedProducts() {
                 <Link className="featured-product-image" href="/products" aria-label={`Lihat ${product.name}`}>
                   <Image src={product.image} alt={product.name} width={512} height={279} sizes="(max-width: 760px) 100vw, 33vw" />
                   <span className="featured-product-category">{product.category}</span>
-                  <span className="featured-product-stock"><i /> READY STOCK</span>
+                  <span className="featured-product-stock"><i /> STOK TERSEDIA</span>
                 </Link>
                 <div className="featured-product-info">
                   <h3><Link href="/products">{product.name}</Link></h3>

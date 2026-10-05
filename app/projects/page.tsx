@@ -5,21 +5,21 @@ import { ArrowLeft, Cpu, ArrowUpRight } from "lucide-react"
 
 const projects = [
   {
-    title: "Smart Water Quality & Dissolved Oxygen Telemetry",
+    title: "Telemetri Kualitas Air & Oksigen Terlarut",
     category: "IoT",
-    desc: "Sistem telemetri tambak dengan koneksi LoRaWAN jarak jauh dan baterai panel surya berdaya tahan 14 hari.",
+    desc: "Sistem pemantauan tambak melalui LoRaWAN jarak jauh dengan baterai panel surya yang bertahan hingga 14 hari.",
     tech: ["ESP32", "LoRaWAN", "FreeRTOS", "MQTT"],
   },
   {
-    title: "Autonomous Logistics AGV & Precision Obstacle Avoidance",
-    category: "Robotics",
-    desc: "Robot transportasi gudang otomatis dengan panduan sensor ultrasonik & LiDAR berbasis mikrokontroler presisi tinggi.",
-    tech: ["STM32", "H-Bridge Driver", "PID Controller", "BLE 5.0"],
+    title: "Kendaraan Logistik Otomatis & Penghindar Rintangan",
+    category: "Robotika",
+    desc: "Robot pengangkut barang di gudang dengan sensor ultrasonik dan LiDAR berbasis mikrokontroler presisi tinggi.",
+    tech: ["STM32", "Pengendali H-Bridge", "Pengendali PID", "BLE 5.0"],
   },
   {
-    title: "Cold Chain Temperature Edge Logger",
-    category: "Embedded System",
-    desc: "Data logger rantai dingin berakurasi tinggi dengan enkripsi memori internal dan sinkronisasi NFC ke smartphone.",
+    title: "Pencatat Suhu Rantai Dingin",
+    category: "Sistem Tertanam",
+    desc: "Pencatat data berakurasi tinggi dengan enkripsi memori internal dan sinkronisasi NFC ke ponsel pintar.",
     tech: ["ATmega328P", "DS18B20", "EEPROM", "NFC"],
   },
 ]
@@ -40,7 +40,7 @@ export default function ProjectsPage() {
           Proyek Rekayasa &amp; Purwarupa
         </h1>
         <p className="text-lg text-slate-300">
-          Implementasi nyata solusi hardware, firmware mikrokontroler, dan sistem otomasi terintegrasi.
+          Penerapan nyata solusi perangkat keras, perangkat lunak mikrokontroler, dan sistem otomasi terintegrasi.
         </p>
       </div>
 

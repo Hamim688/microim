@@ -12,9 +12,9 @@ export function LandingMotion({ children }: { children: ReactNode }) {
 export function PageEntrance({ children }: { children: ReactNode }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 26, scale: 0.99 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.85, ease: smoothEase }}
+      transition={{ duration: 0.7, ease: smoothEase }}
     >
       {children}
     </motion.div>
@@ -33,10 +33,10 @@ export function ScrollReveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.14 }}
-      transition={{ duration: 0.7, delay, ease: smoothEase }}
+      transition={{ duration: 0.85, delay, ease: smoothEase }}
     >
       {children}
     </motion.div>

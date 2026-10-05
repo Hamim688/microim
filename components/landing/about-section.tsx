@@ -5,21 +5,21 @@ export function AboutSection() {
     <section className="about-section" id="about">
       <div className="site-container">
         <div className="about-intro">
-          <span className="section-kicker">THE MIKROIM APPROACH</span>
+          <span className="section-kicker">CARA KERJA MIKROIM</span>
           <div className="about-intro-row">
             <div>
-              <h2>Building Technology Through Innovation</h2>
-              <p>MikroIm hadir sebagai penghubung antara ide kreatif dan implementasi teknologi nyata, melalui pengembangan hardware dan software.</p>
+              <h2>Membangun Teknologi Lewat Inovasi</h2>
+              <p>MikroIm menghubungkan ide kreatif dengan penerapan nyata melalui pengembangan perangkat keras dan perangkat lunak.</p>
             </div>
-            <span className="about-side-note"><i /> INNOVATION THROUGH ENGINEERING</span>
+            <span className="about-side-note"><i /> INOVASI MELALUI REKAYASA</span>
           </div>
         </div>
         <div className="vision-panel">
           <div>
-            <span className="section-kicker">CORE COMPANY VISION</span>
-            <blockquote>“Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.”</blockquote>
+            <span className="section-kicker">VISI UTAMA PERUSAHAAN</span>
+            <blockquote>“Menjadi perusahaan yang mendorong pengembangan dan pembelajaran teknologi informasi hingga mendunia.”</blockquote>
           </div>
-          <div className="vision-badge"><Globe2 aria-hidden="true" /><span>GLOBAL<br />DEVELOPMENT</span></div>
+          <div className="vision-badge"><Globe2 aria-hidden="true" /><span>PENGEMBANGAN<br />MENDUNIA</span></div>
           <div className="vision-watermark" aria-hidden="true">M</div>
         </div>
       </div>

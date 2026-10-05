@@ -6,20 +6,20 @@ import { FeaturedProducts } from "@/components/landing/featured-products"
 import { EngineeringEdge } from "@/components/landing/engineering-edge"
 import { ProjectShowcase } from "@/components/landing/project-showcase"
 import { CTASection } from "@/components/landing/cta-section"
-import { LandingMotion, PageEntrance, ScrollReveal } from "@/components/landing/landing-motion"
+import { LandingMotion, PageEntrance } from "@/components/landing/landing-motion"
 
 export default function HomePage() {
   return (
     <LandingMotion>
       <div className="landing-page">
         <PageEntrance><Hero /></PageEntrance>
-        <ScrollReveal><AboutSection /></ScrollReveal>
-        <ScrollReveal><ValuesSection /></ScrollReveal>
+        <AboutSection />
+        <ValuesSection />
         <ServicesPreview />
         <FeaturedProducts />
-        <ScrollReveal><EngineeringEdge /></ScrollReveal>
-        <ScrollReveal><ProjectShowcase /></ScrollReveal>
-        <ScrollReveal><CTASection /></ScrollReveal>
+        <EngineeringEdge />
+        <ProjectShowcase />
+        <CTASection />
       </div>
     </LandingMotion>
   )

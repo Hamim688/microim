@@ -6,24 +6,24 @@ import { LandingMotion, PageEntrance, ScrollReveal } from "@/components/landing/
 
 const categories = [
   "Semua",
-  "Microcontrollers",
-  "Sensors",
-  "Actuators",
-  "Motors",
-  "Connectivity",
-  "Accessories",
-  "Kits",
+  "Mikrokontroler",
+  "Sensor",
+  "Aktuator",
+  "Motor",
+  "Konektivitas",
+  "Aksesori",
+  "Paket",
 ]
 
 const sampleProducts = [
-  { name: "ESP32 Development Board NodeMCU 38-Pin", cat: "Microcontrollers", price: "Rp 68.000", stock: 45, image: "/images/product-esp32.jpg" },
-  { name: "ESP8266 NodeMCU V3 Lolin", cat: "Microcontrollers", price: "Rp 42.000", stock: 30, image: "/images/product-esp8266.webp" },
-  { name: "HC-SR04 Ultrasonic Distance Sensor", cat: "Sensors", price: "Rp 16.500", stock: 120, image: "/images/product-ultrasonic.jpg" },
-  { name: "HC-SR501 PIR Motion Sensor", cat: "Sensors", price: "Rp 19.500", stock: 80, image: "/images/product-pir.webp" },
-  { name: "SG90 Micro Servo Motor 9g", cat: "Actuators", price: "Rp 18.000", stock: 65, image: "/images/product-sg90.jpg" },
-  { name: "DC Gear Motor with Wheel 3-6V", cat: "Motors", price: "Rp 22.000", stock: 50, image: "/images/product-gear-motor.webp" },
-  { name: "1 Channel 5V Relay Module Optocoupler", cat: "Accessories", price: "Rp 12.000", stock: 95, image: "/images/product-relay.webp" },
-  { name: "Jumper Wire Breadboard 20cm (Male-Female)", cat: "Accessories", price: "Rp 14.000", stock: 200, image: "/images/product-jumper-wires.webp" },
+  { name: "Papan Pengembangan ESP32 NodeMCU 38 Pin", cat: "Mikrokontroler", price: "Rp 68.000", stock: 45, image: "/images/product-esp32.jpg" },
+  { name: "ESP8266 NodeMCU V3 Lolin", cat: "Mikrokontroler", price: "Rp 42.000", stock: 30, image: "/images/product-esp8266.webp" },
+  { name: "Sensor Jarak Ultrasonik HC-SR04", cat: "Sensor", price: "Rp 16.500", stock: 120, image: "/images/product-ultrasonic.jpg" },
+  { name: "Sensor Gerak PIR HC-SR501", cat: "Sensor", price: "Rp 19.500", stock: 80, image: "/images/product-pir.webp" },
+  { name: "Motor Servo Mikro SG90 9 g", cat: "Aktuator", price: "Rp 18.000", stock: 65, image: "/images/product-sg90.jpg" },
+  { name: "Motor DC Gearbox dengan Roda 3–6 V", cat: "Motor", price: "Rp 22.000", stock: 50, image: "/images/product-gear-motor.webp" },
+  { name: "Modul Relai 1 Kanal 5 V Optokopler", cat: "Aksesori", price: "Rp 12.000", stock: 95, image: "/images/product-relay.webp" },
+  { name: "Kabel Jumper Papan Percobaan 20 cm (Jantan-Betina)", cat: "Aksesori", price: "Rp 14.000", stock: 200, image: "/images/product-jumper-wires.webp" },
 ]
 
 export default function ProductsPage() {
@@ -44,7 +44,7 @@ export default function ProductsPage() {
               Komponen Elektronika &amp; Mikrokontroler
             </h1>
             <p className="text-lg text-slate-300">
-              Modul hardware berkualitas tinggi yang diuji langsung di laboratorium MikroIm.
+              Modul perangkat keras berkualitas yang diuji langsung di laboratorium MikroIm.
             </p>
           </div>
 

@@ -3,9 +3,9 @@ import { ArrowRight, Code2, Cpu, ShoppingBag } from "lucide-react"
 import { ScrollReveal } from "@/components/landing/landing-motion"
 
 const services = [
-  { code: "ASSEMBLY.01", icon: Cpu, title: "Jasa Rakit Hardware & IoT", body: "Perakitan perangkat, prototipe, dan sistem IoT sesuai kebutuhan proyek—dari pemilihan komponen sampai siap diuji.", href: "/services", action: "LIHAT JASA RAKIT" },
-  { code: "PROGRAM.02", icon: Code2, title: "Jasa Programming", body: "Pemrograman mikrokontroler, firmware, dan integrasi aplikasi agar perangkat bekerja sesuai kebutuhanmu.", href: "/services", action: "LIHAT JASA PROGRAMMING" },
-  { code: "SHOP.IOT.03", icon: ShoppingBag, title: "Komponen IoT & Elektronik", body: "Cari board, sensor, motor, dan modul elektronik untuk merakit proyekmu sendiri.", href: "/products", action: "BELANJA KOMPONEN" },
+  { code: "RAKIT.01", icon: Cpu, title: "Jasa Rakit Perangkat & IoT", body: "Perakitan perangkat, purwarupa, dan sistem IoT sesuai kebutuhan proyek—dari pemilihan komponen sampai siap diuji.", href: "/services", action: "LIHAT JASA RAKIT" },
+  { code: "PROGRAM.02", icon: Code2, title: "Jasa Pemrograman", body: "Pemrograman mikrokontroler, perangkat lunak tertanam, dan integrasi aplikasi agar perangkat bekerja sesuai kebutuhanmu.", href: "/services", action: "LIHAT JASA PEMROGRAMAN" },
+  { code: "TOKO.IOT.03", icon: ShoppingBag, title: "Komponen IoT & Elektronik", body: "Cari papan mikrokontroler, sensor, motor, dan modul elektronik untuk merakit proyekmu sendiri.", href: "/products", action: "BELANJA KOMPONEN" },
 ]
 
 export function ServicesPreview() {

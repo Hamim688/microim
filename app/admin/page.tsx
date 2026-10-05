@@ -4,16 +4,16 @@ import Link from "next/link"
 import { ArrowLeft, LayoutDashboard, ShoppingBag, FolderGit2, Inbox, Users, ShieldAlert } from "lucide-react"
 
 const stats = [
-  { label: "Total Inquiries", count: "12", icon: Inbox, change: "+3 baru" },
-  { label: "Active Projects", count: "5", icon: FolderGit2, change: "On Track" },
-  { label: "Komponen Terdaftar", count: "48", icon: ShoppingBag, change: "Ready" },
-  { label: "Client Inquiries", count: "24", icon: Users, change: "Active" },
+  { label: "Total Pengajuan", count: "12", icon: Inbox, change: "+3 baru" },
+  { label: "Proyek Berjalan", count: "5", icon: FolderGit2, change: "Sesuai rencana" },
+  { label: "Komponen Terdaftar", count: "48", icon: ShoppingBag, change: "Tersedia" },
+  { label: "Pengajuan Klien", count: "24", icon: Users, change: "Aktif" },
 ]
 
 const recentInquiries = [
-  { name: "PT Agro Makmur", type: "IoT Telemetry", budget: "Rp 15.000.000", status: "NEW", date: "Hari ini" },
-  { name: "Lab Robotika Kampus", type: "Custom Driver Board", budget: "Rp 6.000.000", status: "REVIEWING", date: "Kemarin" },
-  { name: "CV Smart Logistic", type: "AGV Firmware", budget: "Rp 25.000.000", status: "QUOTATION", date: "2 hari lalu" },
+  { name: "PT Agro Makmur", type: "Telemetri IoT", budget: "Rp 15.000.000", status: "BARU", date: "Hari ini" },
+  { name: "Lab Robotika Kampus", type: "Papan Penggerak Kustom", budget: "Rp 6.000.000", status: "DITINJAU", date: "Kemarin" },
+  { name: "CV Smart Logistic", type: "Perangkat Lunak AGV", budget: "Rp 25.000.000", status: "PENAWARAN", date: "2 hari lalu" },
 ]
 
 export default function AdminPage() {
@@ -26,19 +26,19 @@ export default function AdminPage() {
         </Link>
         <span className="flex items-center gap-1.5 text-xs font-mono text-[#FFC928] bg-[#FFC928]/10 px-3 py-1 rounded-full border border-[#FFC928]/20">
           <ShieldAlert className="w-3.5 h-3.5" />
-          Admin Portal Preview (Phase 10)
+          Pratinjau Portal Admin (Tahap 10)
         </span>
       </div>
 
       <div className="space-y-3 mb-10">
-        <Badge variant="gold">Dashboard Manajemen</Badge>
-        <h1 className="text-3xl font-extrabold text-white">MikroIm Command Center</h1>
+        <Badge variant="gold">Panel Manajemen</Badge>
+        <h1 className="text-3xl font-extrabold text-white">Pusat Kendali MikroIm</h1>
         <p className="text-slate-400 text-sm">
-          Kelola katalog komponen IoT, pantau inquiry proyek kustom, dan status pengerjaan rekayasa hardware.
+          Kelola katalog komponen IoT, pantau pengajuan proyek kustom, dan status pengerjaan perangkat keras.
         </p>
       </div>
 
-      {/* KPI Stats Grid */}
+      {/* Ringkasan statistik */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         {stats.map((s, idx) => {
           const Icon = s.icon
@@ -57,9 +57,9 @@ export default function AdminPage() {
         })}
       </div>
 
-      {/* Recent Inquiries Table */}
+      {/* Daftar pengajuan terbaru */}
       <div className="rounded-2xl bg-[#0c213d] border border-[#173359] p-6">
-        <h3 className="text-lg font-bold text-white mb-4">Daftar Project Inquiry Terbaru</h3>
+        <h3 className="text-lg font-bold text-white mb-4">Daftar Pengajuan Proyek Terbaru</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="border-b border-[#173359] text-xs uppercase text-slate-400 font-mono">
@@ -80,9 +80,9 @@ export default function AdminPage() {
                   <td className="py-4">
                     <span
                       className={`text-[11px] font-mono font-semibold px-2.5 py-1 rounded-md ${
-                        inq.status === "NEW"
+                        inq.status === "BARU"
                           ? "bg-blue-500/10 text-blue-400 border border-blue-500/20"
-                          : inq.status === "REVIEWING"
+                          : inq.status === "DITINJAU"
                           ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
                           : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                       }`}

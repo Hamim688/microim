@@ -19,24 +19,24 @@ export default function AboutPage() {
           Menghubungkan Ide Lewat Rekayasa Cerdas
         </h1>
         <p className="text-lg text-slate-300 leading-relaxed">
-          MikroIm adalah entitas rekayasa teknologi dan laboratorium Internet of Things yang berfokus pada integrasi perangkat keras, mikrokontroler terprogram, purwarupa elektronik, dan platform digital.
+          MikroIm adalah pusat rekayasa teknologi dan laboratorium Internet untuk Segala Benda (IoT) yang berfokus pada integrasi perangkat keras, mikrokontroler terprogram, purwarupa elektronik, dan platform digital.
         </p>
       </div>
 
-      {/* Vision Card */}
+      {/* Kartu visi */}
       <div className="mt-12 p-8 rounded-2xl bg-[#0c213d] border border-[#173359] max-w-4xl space-y-4">
         <div className="flex items-center gap-3 text-[#FFC928]">
           <Globe className="w-6 h-6" />
-          <h2 className="text-xl font-bold text-white">Visi Global MikroIm</h2>
+          <h2 className="text-xl font-bold text-white">Visi Mendunia MikroIm</h2>
         </div>
         <blockquote className="text-xl font-medium text-slate-200 italic border-l-4 border-[#FFC928] pl-4 py-1">
-          &ldquo;Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.&rdquo;
+          &ldquo;Menjadi perusahaan yang mendorong pengembangan dan pembelajaran teknologi informasi hingga mendunia.&rdquo;
         </blockquote>
       </div>
 
       <div className="mt-12 flex gap-4">
         <Link href="/contact">
-          <Button size="lg">Hubungi Tim Engineer</Button>
+          <Button size="lg">Hubungi Tim Rekayasa</Button>
         </Link>
         <Link href="/services">
           <Button variant="secondary" size="lg">Lihat Layanan Kami</Button>

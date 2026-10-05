@@ -12,7 +12,7 @@ export function InquiryForm() {
       {submitted ? (
         <div className="text-center py-8 space-y-3">
           <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
-          <h4 className="text-xl font-bold text-white">Inquiry Diterima</h4>
+          <h4 className="text-xl font-bold text-white">Pengajuan Diterima</h4>
           <p className="text-sm text-slate-300">Kami akan merespons dalam 1x24 jam.</p>
         </div>
       ) : (
@@ -32,7 +32,7 @@ export function InquiryForm() {
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1">Email / WhatsApp</label>
+            <label className="block text-xs font-semibold text-slate-300 mb-1">Surel / WhatsApp</label>
             <input
               required
               className="w-full px-3 py-2 rounded-lg bg-[#071426] border border-[#173359] text-white text-sm"

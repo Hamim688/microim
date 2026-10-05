@@ -7,12 +7,12 @@ import { usePathname } from "next/navigation"
 import { ArrowUpRight, Menu, X } from "lucide-react"
 
 const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/#about" },
-  { name: "Services", href: "/#services-core" },
-  { name: "Products", href: "/products" },
-  { name: "Projects", href: "/#projects" },
-  { name: "Contact", href: "/#contact" },
+  { name: "Beranda", href: "/", activePath: "/" },
+  { name: "Tentang", href: "/#about", activePath: "/about" },
+  { name: "Layanan", href: "/#services-core", activePath: "/services" },
+  { name: "Produk", href: "/products", activePath: "/products" },
+  { name: "Proyek", href: "/#projects", activePath: "/projects" },
+  { name: "Kontak", href: "/#contact", activePath: "/contact" },
 ]
 
 export function Navbar() {
@@ -22,25 +22,25 @@ export function Navbar() {
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <Link href="/" className="brand-link" aria-label="MikroIm home" onClick={() => setIsOpen(false)}>
-          <Image src="/logo/mikroim-logo.svg" alt="MikroIm Technology and IoT Lab" width={320} height={80} priority />
+        <Link href="/" className="brand-link" aria-label="Beranda MikroIm" onClick={() => setIsOpen(false)}>
+          <Image src="/logo/mikroim-logo.svg" alt="Laboratorium Teknologi dan IoT MikroIm" width={320} height={80} priority />
         </Link>
-        <nav className="desktop-nav" aria-label="Main navigation">
-          {navLinks.map(({ name, href }, index) => {
-            const isActive = (index === 0 && pathname === "/") || pathname === `/${name.toLowerCase()}`
+        <nav className="desktop-nav" aria-label="Navigasi utama">
+          {navLinks.map(({ name, href, activePath }) => {
+            const isActive = pathname === activePath
             return <Link aria-current={isActive ? "page" : undefined} className={isActive ? "active" : ""} href={href} key={name}>{name}</Link>
           })}
         </nav>
         <div className="header-actions">
-          <Link className="header-cta" href="/contact">Start Your Project <ArrowUpRight aria-hidden="true" /></Link>
-          <button className="mobile-menu-button" type="button" aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"} aria-expanded={isOpen} aria-controls="mobile-navigation" onClick={() => setIsOpen(!isOpen)}>
+          <Link className="header-cta" href="/contact">Mulai Proyek <ArrowUpRight aria-hidden="true" /></Link>
+          <button className="mobile-menu-button" type="button" aria-label={isOpen ? "Tutup menu navigasi" : "Buka menu navigasi"} aria-expanded={isOpen} aria-controls="mobile-navigation" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
         </div>
       </div>
-      <nav className={`mobile-nav${isOpen ? " is-open" : ""}`} id="mobile-navigation" aria-label="Mobile navigation" aria-hidden={!isOpen}>
+      <nav className={`mobile-nav${isOpen ? " is-open" : ""}`} id="mobile-navigation" aria-label="Navigasi seluler" aria-hidden={!isOpen}>
         {navLinks.map(({ name, href }) => <Link href={href} key={name} onClick={() => setIsOpen(false)}>{name}</Link>)}
-        <Link className="mobile-nav-cta" href="/contact" onClick={() => setIsOpen(false)}>Start Your Project <ArrowUpRight aria-hidden="true" /></Link>
+        <Link className="mobile-nav-cta" href="/contact" onClick={() => setIsOpen(false)}>Mulai Proyek <ArrowUpRight aria-hidden="true" /></Link>
       </nav>
     </header>
   )
