@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <rect width="800" height="600" fill="#071426" />
+  <g stroke="#173359" stroke-width="1.5" fill="none">
+    <path d="M 50 100 H 250 L 300 150 V 350 L 400 450 H 750" />
+    <path d="M 100 500 H 350 L 450 400 V 200 L 550 100 H 700" />
+    <path d="M 200 50 V 250 L 250 300 H 550 L 600 350 V 550" />
+    <path d="M 600 50 V 150 L 500 250 H 300" stroke="#FFC928" stroke-width="2" opacity="0.6" />
+  </g>
+  <!-- Circuit Nodes -->
+  <circle cx="250" cy="100" r="4" fill="#FFC928" />
+  <circle cx="300" cy="150" r="4" fill="#FFC928" />
+  <circle cx="450" cy="400" r="4" fill="#FFC928" />
+  <circle cx="550" cy="100" r="4" fill="#FFC928" />
+  <circle cx="500" cy="250" r="5" fill="#FFC928" />
+</svg>
