@@ -4,7 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowUpRight, Menu, X } from "lucide-react"
+import { ArrowUpRight, LogIn, Menu, X } from "lucide-react"
 
 const navLinks = [
   { name: "Beranda", href: "/", activePath: "/" },
@@ -33,6 +33,13 @@ export function Navbar() {
           })}
         </nav>
         <div className="header-actions">
+          <Link
+            href="/login"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-[#FFC928] border border-[#173359] hover:border-[#FFC928]/40 transition-colors"
+          >
+            <LogIn className="w-3.5 h-3.5 text-[#FFC928]" />
+            <span>Masuk</span>
+          </Link>
           <Link className="header-cta" href="/contact">Mulai Proyek <ArrowUpRight aria-hidden="true" /></Link>
           <button className="mobile-menu-button" type="button" aria-label={isOpen ? "Tutup menu navigasi" : "Buka menu navigasi"} aria-expanded={isOpen} aria-controls="mobile-navigation" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
@@ -41,6 +48,9 @@ export function Navbar() {
       </div>
       <nav className={`mobile-nav${isOpen ? " is-open" : ""}`} id="mobile-navigation" aria-label="Navigasi seluler" aria-hidden={!isOpen}>
         {navLinks.map(({ name, href }) => <Link href={href} key={name} onClick={() => setIsOpen(false)}>{name}</Link>)}
+        <Link className="mobile-nav-cta" href="/login" onClick={() => setIsOpen(false)}>
+          <LogIn className="w-4 h-4 text-[#FFC928]" /> Masuk Akun
+        </Link>
         <Link className="mobile-nav-cta" href="/contact" onClick={() => setIsOpen(false)}>Mulai Proyek <ArrowUpRight aria-hidden="true" /></Link>
       </nav>
     </header>
