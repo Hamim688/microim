@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   title: "MikroIm - Rekayasa Teknologi & Solusi IoT",
   description:
     "Menghubungkan gagasan lewat teknologi cerdas. Komponen IoT, sistem tertanam, purwarupa, dan layanan rekayasa khusus.",
+  icons: {
+    icon: "/logo/logo-baru.png",
+    shortcut: "/logo/logo-baru.png",
+    apple: "/logo/logo-baru.png",
+  },
 }
 
 export default function RootLayout({

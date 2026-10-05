@@ -43,6 +43,12 @@ button, a { outline-offset: 4px; }
   position: sticky; top: 0; z-index: 50; width: 100%;
   background: rgb(7 20 38 / 92%); backdrop-filter: blur(18px);
   border-bottom: 1px solid rgb(148 163 184 / 14%);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.site-header.is-scrolled {
+  background: rgb(7 20 38 / 97%);
+  border-bottom-color: rgb(255 201 40 / 30%);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 15px rgb(255 201 40 / 5%);
 }
 .site-header-inner { height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-inline: max(2.5rem, calc((100vw - 1440px) / 2)); }
 .brand-link { display: inline-flex; flex: 0 0 auto; align-items: center; }

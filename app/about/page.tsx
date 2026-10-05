@@ -30,7 +30,7 @@ export default function AboutPage() {
           <h2 className="text-xl font-bold text-white">Visi Mendunia MikroIm</h2>
         </div>
         <blockquote className="text-xl font-medium text-slate-200 italic border-l-4 border-[#FFC928] pl-4 py-1">
-          &ldquo;Menjadi perusahaan yang mendorong pengembangan dan pembelajaran teknologi informasi hingga mendunia.&rdquo;
+          &ldquo;Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.&rdquo;
         </blockquote>
       </div>
 

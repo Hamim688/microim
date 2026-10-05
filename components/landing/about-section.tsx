@@ -17,7 +17,7 @@ export function AboutSection() {
         <div className="vision-panel">
           <div>
             <span className="section-kicker">VISI UTAMA PERUSAHAAN</span>
-            <blockquote>“Menjadi perusahaan yang mendorong pengembangan dan pembelajaran teknologi informasi hingga mendunia.”</blockquote>
+            <blockquote>“Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.”</blockquote>
           </div>
           <div className="vision-badge"><Globe2 aria-hidden="true" /><span>PENGEMBANGAN<br />MENDUNIA</span></div>
           <div className="vision-watermark" aria-hidden="true">M</div>

@@ -21,7 +21,7 @@ export function Footer() {
               <span className="text-white font-bold tracking-normal" style={{ fontSize: '1.45rem', fontFamily: 'var(--font-body)' }}>MikroIm</span>
             </Link>
             <p>Menghubungkan gagasan, perangkat keras, perangkat lunak, dan teknologi cerdas.</p>
-            <blockquote>“Menjadi perusahaan yang mendorong pengembangan dan pembelajaran teknologi informasi hingga mendunia.”</blockquote>
+            <blockquote>“Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.”</blockquote>
           </div>
           <div className="footer-column"><h2>Tautan</h2><ul>{links.map(({ label, href }) => <li key={label}><Link href={href}>{label}</Link></li>)}</ul></div>
           <div className="footer-column"><h2>Rekayasa</h2><ul><li><Link href="/services">Pengembangan Perangkat &amp; IoT</Link></li><li><Link href="/services">Pemrograman Sistem Tertanam</Link></li><li><Link href="/services">Pembuatan Aplikasi Seluler</Link></li><li><Link href="/products">Produk IoT</Link></li></ul></div>
