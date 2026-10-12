@@ -15,7 +15,7 @@ export default function AboutPage() {
 
       <div className="space-y-6 max-w-3xl">
         <Badge variant="gold">Tentang Perusahaan</Badge>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-semibold text-white tracking-[-0.035em]">
           Menghubungkan Ide Lewat Rekayasa Cerdas
         </h1>
         <p className="text-lg text-slate-300 leading-relaxed">
@@ -24,10 +24,10 @@ export default function AboutPage() {
       </div>
 
       {/* Kartu visi */}
-      <div className="mt-12 p-5 sm:p-8 rounded-2xl bg-[#0c213d] border border-[#173359] max-w-4xl space-y-4">
+      <div className="mt-12 p-5 sm:p-8 rounded-[6px] bg-[#0c213d] border border-[#173359] max-w-4xl space-y-4">
         <div className="flex items-center gap-3 text-[#FFC928]">
           <Globe className="w-6 h-6" />
-          <h2 className="text-xl font-bold text-white">Visi Mendunia MikroIm</h2>
+          <h2 className="font-display text-xl font-semibold text-white">Visi Mendunia MikroIm</h2>
         </div>
         <blockquote className="text-xl font-medium text-slate-200 italic border-l-4 border-[#FFC928] pl-4 py-1">
           &ldquo;Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.&rdquo;

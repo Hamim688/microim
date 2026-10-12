@@ -4,9 +4,9 @@ import { ArrowRight, ShoppingBag } from "lucide-react"
 import { ScrollReveal } from "@/components/landing/landing-motion"
 
 const products = [
-  { name: "Papan Pengembangan ESP32", category: "MIKROKONTROLER", price: "Rp 68.000", image: "/images/product-esp32.jpg" },
-  { name: "Motor Servo Mikro SG90", category: "AKTUATOR", price: "Rp 18.000", image: "/images/product-sg90.jpg" },
-  { name: "Sensor Ultrasonik HC-SR04", category: "SENSOR JARAK", price: "Rp 16.500", image: "/images/product-ultrasonic.jpg" },
+  { name: "Papan Pengembangan ESP32", category: "MIKROKONTROLER", price: "Rp 100.000", image: "/images/product-esp32.jpg" },
+  { name: "Motor Servo Mikro SG90", category: "AKTUATOR", price: "Rp 25.000", image: "/images/product-sg90.jpg" },
+  { name: "Motor DC Gearbox TT", category: "AKTUATOR", price: "Rp 25.000", image: "/images/product-gear-motor.webp" },
 ]
 
 export function FeaturedProducts() {

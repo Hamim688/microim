@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Send, CheckCircle2, MessageSquare, Mail, MapPin } from "lucide-react"
+import { siteContact, whatsappLink } from "@/lib/site"
 
 const projectTypes = [
   "Pengembangan IoT",
@@ -31,7 +32,21 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Simulated submission for the design system phase
+    const message = [
+      "Halo MikroIm, saya ingin mengajukan proyek.",
+      "",
+      `Nama: ${formData.name}`,
+      `Email: ${formData.email}`,
+      `WhatsApp: ${formData.whatsapp}`,
+      `Jenis proyek: ${formData.projectType}`,
+      formData.budget ? `Estimasi anggaran: ${formData.budget}` : null,
+      formData.timeline ? `Target waktu: ${formData.timeline}` : null,
+      "",
+      `Kebutuhan: ${formData.description}`,
+    ]
+      .filter((line) => line !== null)
+      .join("\n")
+    window.open(whatsappLink(message), "_blank", "noopener,noreferrer")
     setSubmitted(true)
   }
 
@@ -48,22 +63,22 @@ export default function ContactPage() {
         {/* Left Info Column */}
         <div className="lg:col-span-5 space-y-6">
           <Badge variant="gold">Pengajuan Proyek &amp; Konsultasi</Badge>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-display font-semibold text-white tracking-[-0.035em]">
             Mulai Diskusikan Solusi Teknologi Anda
           </h1>
           <p className="text-slate-300 text-base leading-relaxed">
             Ceritakan spesifikasi kebutuhan proyek IoT, perancangan perangkat keras, atau sistem tertanam Anda. Tim rekayasa MikroIm akan menelaah dan memberikan konsultasi teknis awal.
           </p>
 
-          <div className="p-5 sm:p-6 rounded-2xl bg-[#0c213d] border border-[#173359] space-y-4">
+          <div className="p-5 sm:p-6 rounded-[6px] bg-[#0c213d] border border-[#173359] space-y-4">
             <h4 className="text-sm font-semibold uppercase tracking-wider text-white">Hubungi Kami</h4>
             <div className="flex items-center gap-3 text-sm text-slate-300">
               <Mail className="w-4 h-4 text-[#FFC928]" />
-              <span>contact@mikroim.com</span>
+              <a href={`mailto:${siteContact.email}`} className="hover:text-[#FFC928] transition-colors">{siteContact.email}</a>
             </div>
             <div className="flex items-center gap-3 text-sm text-slate-300">
               <MessageSquare className="w-4 h-4 text-[#FFC928]" />
-              <span>WhatsApp: +62 812-3456-7890</span>
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="hover:text-[#FFC928] transition-colors">WhatsApp: {siteContact.whatsappDisplay}</a>
             </div>
             <div className="flex items-start gap-3 text-sm text-slate-300">
               <MapPin className="w-4 h-4 text-[#FFC928] shrink-0 mt-0.5" />
@@ -74,15 +89,15 @@ export default function ContactPage() {
 
         {/* Right Form Column */}
         <div className="lg:col-span-7">
-          <div className="rounded-2xl bg-[#0c213d] border border-[#173359] p-5 sm:p-8">
+          <div className="rounded-[6px] bg-[#0c213d] border border-[#173359] p-5 sm:p-8">
             {submitted ? (
               <div className="text-center py-12 space-y-4">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-white">Pengajuan Terkirim!</h3>
+                <h3 className="font-display text-2xl font-semibold text-white">Lanjutkan di WhatsApp</h3>
                 <p className="text-slate-300 text-sm max-w-md mx-auto">
-                  Terima kasih, tim rekayasa MikroIm telah menerima informasi kebutuhan proyek Anda dan akan segera menghubungi melalui WhatsApp atau surel.
+                  Pesan pengajuan proyek Anda sudah kami siapkan di WhatsApp. Tekan kirim di WhatsApp agar tim MikroIm menerimanya. Jika WhatsApp tidak terbuka, hubungi kami langsung di {siteContact.whatsappDisplay}.
                 </p>
                 <Button onClick={() => setSubmitted(false)} variant="secondary" size="sm">
                   Kirim Pengajuan Lain
@@ -99,7 +114,7 @@ export default function ContactPage() {
                       placeholder="Contoh: Budi Pratama"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
+                      className="w-full px-4 py-2.5 rounded-[4px] bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
                     />
                   </div>
                   <div>
@@ -110,7 +125,7 @@ export default function ContactPage() {
                       placeholder="Contoh: budi@perusahaan.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
+                      className="w-full px-4 py-2.5 rounded-[4px] bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
                     />
                   </div>
                 </div>
@@ -124,7 +139,7 @@ export default function ContactPage() {
                       placeholder="Contoh: 081234567890"
                       value={formData.whatsapp}
                       onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
+                      className="w-full px-4 py-2.5 rounded-[4px] bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
                     />
                   </div>
                   <div>
@@ -132,7 +147,7 @@ export default function ContactPage() {
                     <select
                       value={formData.projectType}
                       onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
+                      className="w-full px-4 py-2.5 rounded-[4px] bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
                     >
                       {projectTypes.map((pt) => (
                         <option key={pt} value={pt} className="bg-[#0c213d] text-white">
@@ -151,7 +166,7 @@ export default function ContactPage() {
                       placeholder="Contoh: Rp 5.000.000–Rp 15.000.000"
                       value={formData.budget}
                       onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
+                      className="w-full px-4 py-2.5 rounded-[4px] bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
                     />
                   </div>
                   <div>
@@ -161,7 +176,7 @@ export default function ContactPage() {
                       placeholder="Contoh: 1 bulan / Triwulan III 2026"
                       value={formData.timeline}
                       onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
+                      className="w-full px-4 py-2.5 rounded-[4px] bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
                     />
                   </div>
                 </div>
@@ -174,7 +189,7 @@ export default function ContactPage() {
                     placeholder="Jelaskan gambaran umum sistem, masukan sensor yang diinginkan, aktuator, atau platform pemantauan..."
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
+                    className="w-full px-4 py-2.5 rounded-[4px] bg-[#071426] border border-[#173359] text-white text-sm focus:outline-none focus:border-[#FFC928]"
                   />
                 </div>
 

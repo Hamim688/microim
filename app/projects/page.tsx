@@ -36,7 +36,7 @@ export default function ProjectsPage() {
 
       <div className="space-y-4 max-w-3xl mb-14">
         <Badge variant="gold">Portofolio Teknologi</Badge>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-semibold text-white tracking-[-0.035em]">
           Proyek Rekayasa &amp; Purwarupa
         </h1>
         <p className="text-lg text-slate-300">
@@ -48,19 +48,19 @@ export default function ProjectsPage() {
         {projects.map((p, i) => (
           <div
             key={i}
-            className="rounded-2xl bg-[#0c213d] border border-[#173359] p-5 sm:p-6 flex flex-col justify-between hover:border-[#FFC928]/50 transition-all"
+            className="rounded-[6px] bg-[#0c213d] border border-[#173359] p-5 sm:p-6 flex flex-col justify-between hover:border-[#FFC928]/50 transition-all"
           >
             <div>
               <span className="text-xs font-mono text-[#FFC928] bg-[#FFC928]/10 px-2.5 py-0.5 rounded border border-[#FFC928]/20">
                 {p.category}
               </span>
-              <h3 className="text-xl font-bold text-white mt-4 mb-2">{p.title}</h3>
+              <h3 className="font-display text-xl font-semibold text-white mt-4 mb-2">{p.title}</h3>
               <p className="text-sm text-slate-300 leading-relaxed mb-6">{p.desc}</p>
               <div className="flex flex-wrap gap-1.5 mb-6">
                 {p.tech.map((t, tidx) => (
                   <span
                     key={tidx}
-                    className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#071426] text-slate-300 border border-[#173359]"
+                    className="text-xs font-mono px-2 py-0.5 rounded bg-[#071426] text-slate-300 border border-[#173359]"
                   >
                     {t}
                   </span>

@@ -13,9 +13,9 @@ export function Badge({
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium tracking-wide uppercase",
+        "inline-flex items-center gap-2 px-2.5 py-1.5 rounded-[2px] font-mono text-[11px] font-medium leading-none tracking-[0.1em] uppercase",
         {
-          "bg-[#FFC928]/10 text-[#FFC928] border border-[#FFC928]/30 shadow-[0_0_10px_rgba(255,201,40,0.1)]":
+          "bg-[#0c213d]/75 text-[#FFC928] border border-[#FFC928]/35":
             variant === "gold",
           "bg-[#0c213d] text-slate-300 border border-[#173359]":
             variant === "navy",
