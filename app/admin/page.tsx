@@ -1,7 +1,13 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import type { Metadata } from "next"
 import { ArrowLeft, LayoutDashboard, ShoppingBag, FolderGit2, Inbox, Users, ShieldAlert } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "Pratinjau Admin",
+  robots: { index: false, follow: false },
+}
 
 const stats = [
   { label: "Total Pengajuan", count: "12", icon: Inbox, change: "+3 baru" },
@@ -11,9 +17,9 @@ const stats = [
 ]
 
 const recentInquiries = [
-  { name: "PT Agro Makmur", type: "Telemetri IoT", budget: "Rp 15.000.000", status: "BARU", date: "Hari ini" },
-  { name: "Lab Robotika Kampus", type: "Papan Penggerak Kustom", budget: "Rp 6.000.000", status: "DITINJAU", date: "Kemarin" },
-  { name: "CV Smart Logistic", type: "Perangkat Lunak AGV", budget: "Rp 25.000.000", status: "PENAWARAN", date: "2 hari lalu" },
+  { name: "Contoh Klien A", type: "Telemetri IoT", budget: "Rp 15.000.000", status: "BARU", date: "Hari ini" },
+  { name: "Contoh Klien B", type: "Papan Penggerak Kustom", budget: "Rp 6.000.000", status: "DITINJAU", date: "Kemarin" },
+  { name: "Contoh Klien C", type: "Perangkat Lunak AGV", budget: "Rp 25.000.000", status: "PENAWARAN", date: "2 hari lalu" },
 ]
 
 export default function AdminPage() {
@@ -26,13 +32,13 @@ export default function AdminPage() {
         </Link>
         <span className="flex items-center gap-1.5 text-xs font-mono text-[#FFC928] bg-[#FFC928]/10 px-3 py-1 rounded-full border border-[#FFC928]/20">
           <ShieldAlert className="w-3.5 h-3.5" />
-          Pratinjau Portal Admin (Tahap 10)
+          Pratinjau Portal Admin · Data Contoh
         </span>
       </div>
 
       <div className="space-y-3 mb-10">
         <Badge variant="gold">Panel Manajemen</Badge>
-        <h1 className="text-3xl font-extrabold text-white">Pusat Kendali MikroIm</h1>
+        <h1 className="text-3xl font-extrabold text-white">Pusat Kendali Microim</h1>
         <p className="text-slate-400 text-sm">
           Kelola katalog komponen IoT, pantau pengajuan proyek kustom, dan status pengerjaan perangkat keras.
         </p>

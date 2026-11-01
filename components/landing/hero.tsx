@@ -1,31 +1,27 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowDown, ArrowUpRight, CircuitBoard, ShoppingBag, Wifi } from "lucide-react"
-import { PointerField } from "@/components/landing/pointer-field"
+import { GraduationCap, MessageCircle, ShieldCheck, ShoppingBag, Zap } from "lucide-react"
+import { whatsappLink } from "@/lib/site"
+import { Esp32Viewer } from "@/components/landing/esp32-viewer"
+
+const heroProof = [
+  { label: "Respons Cepat", icon: Zap },
+  { label: "Diuji Sebelum Diserahkan", icon: ShieldCheck },
+  { label: "Ramah Proyek Kampus", icon: GraduationCap },
+]
 
 function HardwareIllustration() {
   return (
-      <div className="hero-board-frame" aria-label="Ilustrasi rangkaian IoT">
-      <div className="hero-board-topline">
-        <span><i /> SISTEM / INTI</span>
-        <span className="hero-board-status"><Wifi aria-hidden="true" /> TELEMETRI AKTIF</span>
-      </div>
-      <div className="hero-board-image-wrap">
+    <div className="hero-esp32">
+      <Esp32Viewer>
         <Image
-          className="hero-board-art"
-          src="/images/iot-board-hero.png"
-          alt="Rangkaian perangkat IoT MikroIm dengan mikrokontroler dan sensor"
-          width={1536}
-          height={1024}
-          sizes="(max-width: 760px) 100vw, 55vw"
+          src="/images/esp32-poster.webp"
+          alt="Papan ESP32 DevKit Microim"
+          fill
+          sizes="(max-width: 760px) 100vw, 50vw"
           priority
         />
-      </div>
-      <div className="hero-board-footer">
-        <span><CircuitBoard aria-hidden="true" /> SISTEM PERANGKAT</span>
-        <span>PERANGKAT + SISTEM TERTANAM + KONEKTIVITAS</span>
-        <span className="hero-bars"><i /><i /><i /><i /><i /></span>
-      </div>
+      </Esp32Viewer>
     </div>
   )
 }
@@ -34,23 +30,25 @@ export function Hero() {
   return (
     <section className="hero-section" id="home">
       <div className="hero-circuit-grid" aria-hidden="true" />
-      <PointerField className="hero-pointer-field">
+      <div className="hero-pointer-field">
         <div className="site-container hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow hero-eyebrow"><span className="status-light" /> SOLUSI IOT &amp; PERANGKAT KERAS MASA DEPAN</div>
-            <h1>Menghubungkan Ide Lewat <span>Teknologi Cerdas</span></h1>
-            <p>MikroIm mewujudkan gagasan melalui IoT, sistem tertanam, dan perangkat digital untuk menciptakan inovasi masa depan.</p>
+            <div className="eyebrow hero-eyebrow"><span className="status-light" /> RAKIT · PROGRAM · KOMPONEN</div>
+            <h1><span className="hero-line">Microcontroller</span> <span className="hero-line">Immediately Made.</span></h1>
+            <p>Microim menyediakan jasa perakitan dan pemrograman perangkat berbasis mikrokontroler, lengkap dengan komponen elektroniknya, untuk membawa ide Anda dari purwarupa hingga perangkat yang siap digunakan.</p>
             <div className="hero-actions">
-              <Link className="button-primary" href="/contact">Konsultasikan Proyek <ArrowUpRight aria-hidden="true" /></Link>
+              <a className="button-primary" href={whatsappLink("Halo Microim, saya ingin berkonsultasi mengenai proyek perangkat.")} target="_blank" rel="noopener noreferrer"><MessageCircle aria-hidden="true" /> Konsultasi via WhatsApp</a>
               <Link className="button-secondary" href="/products"><ShoppingBag aria-hidden="true" /> Lihat Produk</Link>
             </div>
-            <div className="hero-tags" aria-label="Bidang teknologi utama"><span><i /> Sistem IoT</span><span><i /> Purwarupa Kustom</span><span><i /> Perangkat hingga Aplikasi</span></div>
-            <a className="hero-scroll" href="#about"><ArrowDown aria-hidden="true" /> GULIR UNTUK MELIHAT</a>
+            <ul className="hero-proof" aria-label="Keunggulan Microim">
+              {heroProof.map(({ label, icon: Icon }) => (
+                <li key={label}><Icon aria-hidden="true" />{label}</li>
+              ))}
+            </ul>
           </div>
           <div className="hero-visual"><HardwareIllustration /></div>
         </div>
-      </PointerField>
-      <div className="hero-bottom-line" aria-hidden="true" />
+      </div>
     </section>
   )
 }

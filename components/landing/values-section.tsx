@@ -24,7 +24,7 @@ export function ValuesSection() {
               <div className="value-card-top"><span className="value-letter">{letter}</span><Icon aria-hidden="true" /></div>
               <h3>{title}</h3>
               <p>{text}</p>
-              <div className="value-card-meta"><span>MIKROIM / 0{index + 1}</span><Sparkles aria-hidden="true" /></div>
+              <div className="value-card-meta"><span>MICROIM / 0{index + 1}</span><Sparkles aria-hidden="true" /></div>
             </article>
           ))}
         </div>

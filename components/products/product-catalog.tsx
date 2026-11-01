@@ -49,7 +49,7 @@ export function ProductCatalog({ products }: { products: CatalogProduct[] }) {
           >
             <article className="product-catalog-card rounded-[6px] bg-[#0c213d] border border-[#173359] p-4 flex h-full flex-col justify-between hover:border-[#FFC928]/50 transition-all group">
               <div>
-                <div className="product-catalog-image relative h-44 rounded-[4px] bg-[#071426] border border-[#173359] overflow-hidden mb-4">
+                <div className="product-catalog-image relative aspect-[4/3] w-full rounded-[4px] bg-[#071426] border border-[#173359] overflow-hidden mb-4">
                   <Image
                     src={p.image}
                     alt={p.name}
@@ -67,7 +67,7 @@ export function ProductCatalog({ products }: { products: CatalogProduct[] }) {
                   <span className="text-base font-bold text-[#FFC928]">{p.price}</span>
                 </div>
                 <a
-                  href={whatsappLink(`Halo MikroIm, saya ingin memesan ${p.name} (${p.price}).`)}
+                  href={whatsappLink(`Halo Microim, saya ingin memesan ${p.name} (${p.price}).`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Pesan ${p.name} lewat WhatsApp`}

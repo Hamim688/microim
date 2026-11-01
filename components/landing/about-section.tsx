@@ -5,11 +5,11 @@ export function AboutSection() {
     <section className="about-section" id="about">
       <div className="site-container">
         <div className="about-intro">
-          <span className="section-kicker">CARA KERJA MIKROIM</span>
+          <span className="section-kicker">CARA KERJA MICROIM</span>
           <div className="about-intro-row">
             <div>
               <h2>Membangun Teknologi Lewat Inovasi</h2>
-              <p>MikroIm menghubungkan ide kreatif dengan penerapan nyata melalui pengembangan perangkat keras dan perangkat lunak.</p>
+              <p>Microim menghubungkan ide kreatif dengan penerapan nyata melalui pengembangan perangkat keras dan perangkat lunak.</p>
             </div>
             <span className="about-side-note"><i /> INOVASI MELALUI REKAYASA</span>
           </div>

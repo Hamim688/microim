@@ -1,8 +1,10 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
+import { WhatsappFloat } from "@/components/layout/whatsapp-float"
+import { siteConfig } from "@/lib/site"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,14 +23,38 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: "MikroIm - Rekayasa Teknologi & Solusi IoT",
-  description:
-    "Menghubungkan gagasan lewat teknologi cerdas. Komponen IoT, sistem tertanam, purwarupa, dan layanan rekayasa khusus.",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: "Microim - Jasa Rakit IoT, Pemrograman & Komponen Mikrokontroler",
+    template: "%s | Microim",
+  },
+  description: siteConfig.description,
+  keywords: ["Microim", "jasa rakit IoT", "pemrograman ESP32", "komponen mikrokontroler", "Arduino", "sensor"],
+  applicationName: siteConfig.name,
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: "/",
+    siteName: siteConfig.name,
+    title: "Microim - Dari Ide ke Perangkat Siap Pakai",
+    description: siteConfig.description,
+    images: [{ url: "/images/iot-board-hero.png", width: 1536, height: 1024, alt: "Perangkat IoT Microim" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Microim - Dari Ide ke Perangkat Siap Pakai",
+    description: siteConfig.description,
+    images: ["/images/iot-board-hero.png"],
+  },
   icons: {
     icon: "/logo/logo-baru.png",
     shortcut: "/logo/logo-baru.png",
     apple: "/logo/logo-baru.png",
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: "#071426",
 }
 
 export default function RootLayout({
@@ -42,6 +68,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <WhatsappFloat />
       </body>
     </html>
   )

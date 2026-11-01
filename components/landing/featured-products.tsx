@@ -1,12 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, ShoppingBag } from "lucide-react"
+import { ArrowRight, MessageCircle } from "lucide-react"
+import { whatsappLink } from "@/lib/site"
 import { ScrollReveal } from "@/components/landing/landing-motion"
 
 const products = [
-  { name: "Papan Pengembangan ESP32", category: "MIKROKONTROLER", price: "Rp 100.000", image: "/images/product-esp32.jpg" },
-  { name: "Motor Servo Mikro SG90", category: "AKTUATOR", price: "Rp 25.000", image: "/images/product-sg90.jpg" },
-  { name: "Motor DC Gearbox TT", category: "AKTUATOR", price: "Rp 25.000", image: "/images/product-gear-motor.webp" },
+  { name: "ESP32 Dev Module", category: "MIKROKONTROLER", price: "Rp 100.000", image: "/images/product-esp32.jpg" },
+  { name: "Mobil Kit", category: "KIT", price: "Rp 65.000", image: "/images/product-robot-car-kit.jpg" },
+  { name: "Driver Motor", category: "MODUL", price: "Rp 30.000", image: "/images/product-motor-driver.jpg" },
+  { name: "Servo SG90", category: "SERVO", price: "Rp 25.000", image: "/images/product-sg90.jpg" },
 ]
 
 export function FeaturedProducts() {
@@ -15,9 +17,9 @@ export function FeaturedProducts() {
       <div className="site-container">
         <ScrollReveal className="featured-products-heading">
           <div>
-            <span className="section-kicker">KATALOG KOMPONEN MIKROIM</span>
+            <span className="section-kicker">KATALOG KOMPONEN MICROIM</span>
             <h2>Siapkan Komponen untuk Proyekmu</h2>
-            <p>Papan mikrokontroler, sensor, dan aktuator pilihan untuk belajar, membuat purwarupa, dan mengembangkan sistem IoT.</p>
+            <p>Papan mikrokontroler, kit robotika, sensor, dan aksesori pilihan untuk belajar, membuat purwarupa, dan mengembangkan sistem IoT.</p>
           </div>
           <Link className="featured-products-link" href="/products">LIHAT SEMUA PRODUK <ArrowRight aria-hidden="true" /></Link>
         </ScrollReveal>
@@ -35,7 +37,7 @@ export function FeaturedProducts() {
                   <h3><Link href="/products">{product.name}</Link></h3>
                   <div className="featured-product-bottom">
                     <div><span>HARGA</span><strong>{product.price}</strong></div>
-                    <Link className="featured-product-buy" href="/products"><ShoppingBag aria-hidden="true" /> BELI</Link>
+                    <a className="featured-product-buy" href={whatsappLink(`Halo Microim, saya ingin memesan ${product.name} (${product.price}).`)} target="_blank" rel="noopener noreferrer" aria-label={`Pesan ${product.name} lewat WhatsApp`}><MessageCircle aria-hidden="true" /> PESAN</a>
                   </div>
                 </div>
               </article>

@@ -9,7 +9,7 @@ export function CTASection() {
         <span className="section-kicker">WUJUDKAN GAGASAN BERSAMA</span>
         <CircuitBoard className="cta-mark" aria-hidden="true" />
         <h2>Siap Mewujudkan<br className="desktop-break" /> Solusi Teknologimu?</h2>
-        <p>Diskusikan kebutuhan teknologi Anda bersama MikroIm.</p>
+        <p>Diskusikan kebutuhan teknologi Anda bersama Microim.</p>
         <div className="cta-actions">
           <Link className="button-primary" href="/contact">Mulai Proyek <ArrowUpRight aria-hidden="true" /></Link>
           <Link className="button-secondary" href="/contact"><MessageSquareText aria-hidden="true" /> Kirim Pengajuan Proyek</Link>

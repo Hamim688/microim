@@ -1,8 +1,8 @@
-# MikroIm Web Application - Implementation Guide
+# Microim Web Application - Implementation Guide
 
 ## 1. Project Context
 
-MikroIm is a technology engineering and IoT company.
+Microim is a technology engineering and IoT company.
 
 The company focuses on:
 
@@ -22,9 +22,9 @@ Customer
 → Services
 → Custom Projects
 → Project Inquiry
-→ MikroIm Team
+→ Microim Team
 
-The website must communicate that MikroIm is a technology engineering partner, not simply an electronics store.
+The website must communicate that Microim is a technology engineering partner, not simply an electronics store.
 
 ---
 
@@ -38,11 +38,11 @@ The website must communicate that MikroIm is a technology engineering partner, n
 
 Brand name:
 
-MikroIm
+Microim
 
 Brand concept:
 
-MikroIm represents the connection between hardware, software, ideas, and intelligent technology.
+Microim represents the connection between hardware, software, ideas, and intelligent technology.
 
 The visual identity is inspired by:
 
@@ -63,13 +63,13 @@ The logo must NOT be modified, distorted, recolored, or redesigned during implem
 
 The website has several primary goals:
 
-1. Introduce MikroIm as a technology company.
-2. Present MikroIm services.
+1. Introduce Microim as a technology company.
+2. Present Microim services.
 3. Sell IoT and electronics components.
 4. Showcase completed technology projects.
 5. Receive custom project inquiries.
 6. Provide a professional digital presence.
-7. Connect customers with MikroIm through WhatsApp and other contact channels.
+7. Connect customers with Microim through WhatsApp and other contact channels.
 
 ---
 
@@ -185,7 +185,7 @@ Follow these principles:
 
 # 9. UI / UX Direction
 
-The website must follow the MikroIm visual identity.
+The website must follow the Microim visual identity.
 
 Primary color:
 
@@ -296,7 +296,7 @@ The landing page should communicate:
 Main sections:
 
 1. Hero
-2. About MikroIm
+2. About Microim
 3. Company Values
 4. Services Preview
 5. Featured Products
@@ -693,7 +693,7 @@ Once the landing page visually matches the Stitch reference, reuse the same desi
 
 Do not redesign the product.
 
-Do not change the MikroIm branding.
+Do not change the Microim branding.
 
 Do not introduce a different color palette.
 

@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import type * as ThreeNS from "three"
-import { Rotate3d } from "lucide-react"
 
 type Three = typeof ThreeNS
 
@@ -12,6 +11,12 @@ const TOP = PCB.h / 2
 const PITCH = 0.254
 const PIN_COUNT = 19
 const PIN_ROW_X = 1.27
+
+// Pose diam: USB di kiri, modul WROOM di kanan, tepi depan & pin terlihat. Bergerak hanya saat digeser.
+const REST_POSE = { x: 0.18, y: -1.3, z: -0.38 }
+const MAX_SPIN = 0.12
+// Radius bola yang melingkupi papan + pin (setengah diagonal PCB ditambah tinggi komponen).
+const BOARD_RADIUS = Math.hypot(PCB.w / 2, PCB.l / 2, 0.45)
 
 const leftPins = ["3V3", "EN", "VP", "VN", "D34", "D35", "D32", "D33", "D25", "D26", "D27", "D14", "D12", "GND", "D13", "SD2", "SD3", "CMD", "5V"]
 const rightPins = ["GND", "D23", "D22", "TX0", "RX0", "D21", "GND", "D19", "D18", "D5", "D17", "D16", "D4", "D0", "D2", "D15", "SD1", "SD0", "CLK"]
@@ -76,7 +81,7 @@ function silkscreenTexture(THREE: Three) {
   ctx.fillText("ESP32-DEVKIT", u(0), v(1.95))
   ctx.fillStyle = "#ffc928"
   ctx.font = "600 22px monospace"
-  ctx.fillText("MIKROIM · IOT LAB", u(0), v(2.15))
+  ctx.fillText("MICROIM · IOT LAB", u(0), v(2.15))
   ctx.fillStyle = "#e6ebf2"
   ctx.font = "600 20px monospace"
   ctx.fillText("EN", u(-0.85), v(2.5))
@@ -274,7 +279,7 @@ function buildBoard(THREE: Three) {
 export function Esp32Viewer({ children }: { children?: ReactNode }) {
   const mountRef = useRef<HTMLDivElement>(null)
   const [ready, setReady] = useState(false)
-  const [interacted, setInteracted] = useState(false)
+  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
     const mount = mountRef.current
@@ -283,6 +288,18 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
     let cleanup = () => {}
 
     ;(async () => {
+      // Siapkan WebGL setelah animasi masuk hero selesai, supaya kerja berat ini tidak membuat animasi tersendat.
+      // Selama menunggu, gambar diam (pose identik) sudah tampil.
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      await new Promise<void>((resolve) => {
+        const start = () => {
+          const idle = (window as Window & { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback
+          if (idle) idle(() => resolve(), { timeout: 800 })
+          else resolve()
+        }
+        window.setTimeout(start, reduceMotion ? 0 : 2400)
+      })
+      if (disposed) return
       const THREE = await import("three")
       const { RoomEnvironment } = await import("three/examples/jsm/environments/RoomEnvironment.js")
       if (disposed) return
@@ -291,6 +308,7 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
       try {
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" })
       } catch {
+        setFailed(true)
         return
       }
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
@@ -308,6 +326,8 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
       scene.environmentIntensity = 0.55
 
       const camera = new THREE.PerspectiveCamera(30, 1.5, 0.1, 100)
+      const CAMERA_TARGET = new THREE.Vector3(0, -0.2, 0)
+      const CAMERA_DIRECTION = new THREE.Vector3(0, 6.5, 10.2).normalize()
       camera.position.set(0, 6.3, 10.2)
       camera.lookAt(0, -0.2, 0)
 
@@ -335,10 +355,9 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
       pivot.add(board)
       scene.add(pivot)
 
-      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
       const state = {
-        rotY: -0.75,
-        rotX: 0.12,
+        rotY: REST_POSE.y,
+        rotX: REST_POSE.x,
         velY: 0,
         velX: 0,
         dragging: false,
@@ -347,14 +366,25 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
         idleSince: performance.now(),
       }
 
+      let visible = true
+      let frame: number | null = null
+      let firstFrame = true
+      let last = 0
+
       const resize = () => {
         const { clientWidth, clientHeight } = mount
         if (!clientWidth || !clientHeight) return
         renderer.setSize(clientWidth, clientHeight, false)
         camera.aspect = clientWidth / clientHeight
-        // keep the whole board in frame on narrow/tall stages
-        camera.fov = camera.aspect < 1.3 ? 36 : 30
+        // Hitung jarak kamera agar seluruh papan (bola pembatasnya) selalu muat, di layar apa pun.
+        camera.fov = camera.aspect < 1 ? 34 : 30
+        const vfov = (camera.fov * Math.PI) / 180
+        const hfov = 2 * Math.atan(Math.tan(vfov / 2) * camera.aspect)
+        const fitDistance = (BOARD_RADIUS / Math.sin(Math.min(vfov, hfov) / 2)) * (camera.aspect < 1 ? 1.12 : 1.04)
+        camera.position.copy(CAMERA_TARGET).addScaledVector(CAMERA_DIRECTION, fitDistance)
+        camera.lookAt(CAMERA_TARGET)
         camera.updateProjectionMatrix()
+        kick()
       }
       resize()
       const resizeObserver = new ResizeObserver(resize)
@@ -368,7 +398,6 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
         state.velY = 0
         mount.setPointerCapture(event.pointerId)
         mount.classList.add("is-dragging")
-        setInteracted(true)
       }
       const onPointerMove = (event: PointerEvent) => {
         if (!state.dragging) return
@@ -376,10 +405,12 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
         const dy = event.clientY - state.lastY
         state.lastX = event.clientX
         state.lastY = event.clientY
-        state.velY = dx * 0.0085
-        state.velX = event.pointerType === "touch" ? 0 : dy * 0.0085
+        const clamp = (v: number) => Math.max(-MAX_SPIN, Math.min(MAX_SPIN, v))
+        state.velY = clamp(dx * 0.0085)
+        state.velX = event.pointerType === "touch" ? 0 : clamp(dy * 0.0085)
         state.rotY += state.velY
         state.rotX = Math.max(-1.1, Math.min(1.1, state.rotX + state.velX))
+        kick()
       }
       const onPointerUp = (event: PointerEvent) => {
         if (!state.dragging) return
@@ -387,6 +418,7 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
         state.idleSince = performance.now()
         mount.classList.remove("is-dragging")
         if (mount.hasPointerCapture(event.pointerId)) mount.releasePointerCapture(event.pointerId)
+        kick()
       }
       const onKeyDown = (event: KeyboardEvent) => {
         const step = 0.25
@@ -397,7 +429,7 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
         else return
         event.preventDefault()
         state.idleSince = performance.now()
-        setInteracted(true)
+        kick()
       }
       mount.addEventListener("pointerdown", onPointerDown)
       mount.addEventListener("pointermove", onPointerMove)
@@ -405,44 +437,41 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
       mount.addEventListener("pointercancel", onPointerUp)
       mount.addEventListener("keydown", onKeyDown)
 
-      let visible = true
       const visibilityObserver = new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting
-        if (visible && frame === null) frame = requestAnimationFrame(tick)
+        if (visible) kick()
       })
       visibilityObserver.observe(mount)
 
-      let frame: number | null = null
-      let last = performance.now()
-      let firstFrame = true
-      const tick = (now: number) => {
+      // Render hanya saat ada gerakan: papan diam total sampai digeser.
+      function kick() {
+        if (frame !== null || !visible || disposed) return
+        last = performance.now()
+        frame = requestAnimationFrame(tick)
+      }
+      function tick(now: number) {
         frame = null
-        const dt = Math.min(0.05, (now - last) / 1000)
+        const steps = Math.min(3, Math.max(0, (now - last) / (1000 / 60)))
         last = now
 
         if (!state.dragging) {
-          // inertia
-          state.rotY += state.velY
-          state.rotX = Math.max(-1.1, Math.min(1.1, state.rotX + state.velX))
-          state.velY *= 0.92
-          state.velX *= 0.9
-          // gentle auto-spin after 2.5s idle
-          if (!reduceMotion && now - state.idleSince > 2500) {
-            state.rotY += dt * 0.35
-            state.rotX += (0.12 - state.rotX) * dt * 0.8
-          }
+          // inersia berbasis waktu, cepat meredam
+          state.rotY += state.velY * steps
+          state.rotX = Math.max(-1.1, Math.min(1.1, state.rotX + state.velX * steps))
+          state.velY *= Math.pow(0.88, steps)
+          state.velX *= Math.pow(0.86, steps)
         }
-        pivot.rotation.set(state.rotX, state.rotY, 0, "XYZ")
-        pivot.position.y = reduceMotion ? 0 : Math.sin(now / 1400) * 0.05
+        pivot.rotation.set(state.rotX, state.rotY, REST_POSE.z, "XYZ")
 
         renderer.render(scene, camera)
         if (firstFrame) {
           firstFrame = false
           setReady(true)
         }
-        if (visible && !disposed) frame = requestAnimationFrame(tick)
+        const moving = !state.dragging && (Math.abs(state.velY) > 0.0004 || Math.abs(state.velX) > 0.0004)
+        if (moving) kick()
       }
-      frame = requestAnimationFrame(tick)
+      kick()
 
       cleanup = () => {
         if (frame !== null) cancelAnimationFrame(frame)
@@ -478,7 +507,8 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
 
   return (
     <div className={`esp32-stage${ready ? " is-ready" : ""}`}>
-      <div className="esp32-fallback" aria-hidden={ready}>{children}</div>
+      {/* Gambar diam pose default: tampil saat model 3D dimuat, lalu memudar; tetap tampil bila WebGL gagal. */}
+      <div className={`esp32-poster${ready && !failed ? " is-hidden" : ""}`} aria-hidden={ready && !failed}>{children}</div>
       <div
         ref={mountRef}
         className="esp32-mount"
@@ -486,9 +516,6 @@ export function Esp32Viewer({ children }: { children?: ReactNode }) {
         role="application"
         aria-label="Model 3D papan ESP32. Geser atau gunakan tombol panah untuk memutar."
       />
-      <span className={`esp32-hint${interacted ? " is-hidden" : ""}`} aria-hidden="true">
-        <Rotate3d /> GESER UNTUK MEMUTAR 360°
-      </span>
     </div>
   )
 }

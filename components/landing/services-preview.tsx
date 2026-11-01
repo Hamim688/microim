@@ -13,7 +13,7 @@ export function ServicesPreview() {
     <section className="services-section" id="services-core">
       <div className="site-container">
         <ScrollReveal className="section-heading centered-heading">
-          <span className="section-kicker">JASA &amp; PRODUK MIKROIM</span>
+          <span className="section-kicker">JASA &amp; PRODUK MICROIM</span>
           <h2>Butuh Dirakit, Diprogram, atau Komponennya?</h2>
           <p>Pilih bantuan teknis atau temukan komponen yang kamu perlukan untuk mulai berkarya.</p>
         </ScrollReveal>

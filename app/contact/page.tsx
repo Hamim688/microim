@@ -33,7 +33,7 @@ export default function ContactPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const message = [
-      "Halo MikroIm, saya ingin mengajukan proyek.",
+      "Halo Microim, saya ingin mengajukan proyek.",
       "",
       `Nama: ${formData.name}`,
       `Email: ${formData.email}`,
@@ -67,7 +67,7 @@ export default function ContactPage() {
             Mulai Diskusikan Solusi Teknologi Anda
           </h1>
           <p className="text-slate-300 text-base leading-relaxed">
-            Ceritakan spesifikasi kebutuhan proyek IoT, perancangan perangkat keras, atau sistem tertanam Anda. Tim rekayasa MikroIm akan menelaah dan memberikan konsultasi teknis awal.
+            Ceritakan spesifikasi kebutuhan proyek IoT, perancangan perangkat keras, atau sistem tertanam Anda. Tim rekayasa Microim akan menelaah dan memberikan konsultasi teknis awal.
           </p>
 
           <div className="p-5 sm:p-6 rounded-[6px] bg-[#0c213d] border border-[#173359] space-y-4">
@@ -82,7 +82,7 @@ export default function ContactPage() {
             </div>
             <div className="flex items-start gap-3 text-sm text-slate-300">
               <MapPin className="w-4 h-4 text-[#FFC928] shrink-0 mt-0.5" />
-              <span>Laboratorium Rekayasa IoT MikroIm, Indonesia</span>
+              <span>Laboratorium Rekayasa IoT Microim, Indonesia</span>
             </div>
           </div>
         </div>
@@ -97,7 +97,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="font-display text-2xl font-semibold text-white">Lanjutkan di WhatsApp</h3>
                 <p className="text-slate-300 text-sm max-w-md mx-auto">
-                  Pesan pengajuan proyek Anda sudah kami siapkan di WhatsApp. Tekan kirim di WhatsApp agar tim MikroIm menerimanya. Jika WhatsApp tidak terbuka, hubungi kami langsung di {siteContact.whatsappDisplay}.
+                  Pesan pengajuan proyek Anda sudah kami siapkan di WhatsApp. Tekan kirim di WhatsApp agar tim Microim menerimanya. Jika WhatsApp tidak terbuka, hubungi kami langsung di {siteContact.whatsappDisplay}.
                 </p>
                 <Button onClick={() => setSubmitted(false)} variant="secondary" size="sm">
                   Kirim Pengajuan Lain

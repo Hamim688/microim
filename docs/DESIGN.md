@@ -1,11 +1,11 @@
-# MikroIm - Design System & Visual Guidelines
+# Microim - Design System & Visual Guidelines
 
 ## 1. Visual Identity & Brand Philosophy
 
-MikroIm represents the intersection between hardware engineering, software intelligence, and connectivity.
+Microim represents the intersection between hardware engineering, software intelligence, and connectivity.
 The design language is engineered to be **futuristic, premium, minimalist, and deeply engineering-focused**, avoiding generic ecommerce tropes.
 
-- **Brand Name**: MikroIm
+- **Brand Name**: Microim
 - **Tagline**: *"Connecting Ideas Through Intelligent Technology"*
 - **Vision**: *"Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global."*
 
@@ -83,6 +83,6 @@ The design language is engineered to be **futuristic, premium, minimalist, and d
 
 ## 5. Layout & Navigation Hierarchy
 
-- **Global Header**: Sticky top navigation with MikroIm mirrored M/I emblem, navigation links (`Home`, `About`, `Services`, `Products`, `Projects`, `Contact`), and prominent primary CTA `Start Your Project`.
+- **Global Header**: Sticky top navigation with Microim mirrored M/I emblem, navigation links (`Home`, `About`, `Services`, `Products`, `Projects`, `Contact`), and prominent primary CTA `Start Your Project`.
 - **Global Footer**: Company vision, quick links, contact info (WhatsApp, Email, Lab location), copyright, and engineering badge.
 - **Container Max-Width**: `max-w-7xl` (1280px) with fluid padding `px-4 sm:px-6 lg:px-8`.

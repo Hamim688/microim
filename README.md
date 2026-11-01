@@ -1,8 +1,8 @@
-# MikroIm - Digital Technology & IoT Engineering Platform
+# Microim - Digital Technology & IoT Engineering Platform
 
 > "Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global."
 
-MikroIm adalah platform digital rekayasa teknologi dan Internet of Things (IoT) yang menghubungkan pelanggan dengan produk komponen, layanan rekayasa, portofolio proyek kustom, dan konsultasi teknis.
+Microim adalah platform digital rekayasa teknologi dan Internet of Things (IoT) yang menghubungkan pelanggan dengan produk komponen, layanan rekayasa, portofolio proyek kustom, dan konsultasi teknis.
 
 ---
 
@@ -50,7 +50,7 @@ microim/
 │
 ├── public/
 │   ├── images/           # Circuit patterns & graphic assets
-│   ├── logo/             # MikroIm mirrored M/I circuit logo
+│   ├── logo/             # Microim mirrored M/I circuit logo
 │   └── products/         # Hardware & component imagery
 │
 ├── docs/

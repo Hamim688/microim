@@ -1,47 +1,50 @@
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowLeft, Cpu, Globe, Rocket } from "lucide-react"
+import { ArrowUpRight, Globe2 } from "lucide-react"
+import { PageHero } from "@/components/layout/page-hero"
+import { ValuesSection } from "@/components/landing/values-section"
+import { OrderSteps } from "@/components/landing/order-steps"
+import { LandingMotion } from "@/components/landing/landing-motion"
+
+export const metadata: Metadata = {
+  title: "Tentang",
+  description: "Kenali Microim (Microcontroller Immediately Made): visi, nilai M-I-C-R-O-I-M, dan cara kami bekerja.",
+}
 
 export default function AboutPage() {
   return (
-    <div className="py-12 sm:py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="mb-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-[#FFC928] transition-colors">
-          <ArrowLeft className="w-4 h-4" />
-          Kembali ke Beranda
-        </Link>
-      </div>
+    <LandingMotion>
+      <PageHero kicker="TENTANG MICROIM" title={<>Microcontroller <span>Immediately Made</span></>}>
+        Microim adalah usaha rekayasa teknologi yang berfokus pada perakitan perangkat IoT, pemrograman mikrokontroler, dan penyediaan komponen elektronik, agar ide teknologi lebih cepat menjadi perangkat nyata.
+      </PageHero>
 
-      <div className="space-y-6 max-w-3xl">
-        <Badge variant="gold">Tentang Perusahaan</Badge>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-semibold text-white tracking-[-0.035em]">
-          Menghubungkan Ide Lewat Rekayasa Cerdas
-        </h1>
-        <p className="text-lg text-slate-300 leading-relaxed">
-          MikroIm adalah pusat rekayasa teknologi dan laboratorium Internet untuk Segala Benda (IoT) yang berfokus pada integrasi perangkat keras, mikrokontroler terprogram, purwarupa elektronik, dan platform digital.
-        </p>
-      </div>
-
-      {/* Kartu visi */}
-      <div className="mt-12 p-5 sm:p-8 rounded-[6px] bg-[#0c213d] border border-[#173359] max-w-4xl space-y-4">
-        <div className="flex items-center gap-3 text-[#FFC928]">
-          <Globe className="w-6 h-6" />
-          <h2 className="font-display text-xl font-semibold text-white">Visi Mendunia MikroIm</h2>
+      <section className="about-section">
+        <div className="site-container">
+          <div className="vision-panel">
+            <div>
+              <span className="section-kicker">VISI UTAMA PERUSAHAAN</span>
+              <blockquote>“Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.”</blockquote>
+            </div>
+            <div className="vision-badge"><Globe2 aria-hidden="true" /><span>PENGEMBANGAN<br />MENDUNIA</span></div>
+            <div className="vision-watermark" aria-hidden="true">M</div>
+          </div>
         </div>
-        <blockquote className="text-xl font-medium text-slate-200 italic border-l-4 border-[#FFC928] pl-4 py-1">
-          &ldquo;Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.&rdquo;
-        </blockquote>
-      </div>
+      </section>
 
-      <div className="mt-12 flex flex-wrap gap-3 sm:gap-4">
-        <Link href="/contact">
-          <Button size="lg">Hubungi Tim Rekayasa</Button>
-        </Link>
-        <Link href="/services">
-          <Button variant="secondary" size="lg">Lihat Layanan Kami</Button>
-        </Link>
-      </div>
-    </div>
+      <ValuesSection />
+      <OrderSteps />
+
+      <section className="cta-section">
+        <div className="cta-panel">
+          <span className="section-kicker">MARI BERKOLABORASI</span>
+          <h2>Punya Ide Perangkat?</h2>
+          <p>Ceritakan kebutuhanmu, kami bantu dari pemilihan komponen sampai perangkat siap dipakai.</p>
+          <div className="cta-actions">
+            <Link className="button-primary" href="/contact">Hubungi Microim <ArrowUpRight aria-hidden="true" /></Link>
+            <Link className="button-secondary" href="/services">Lihat Layanan</Link>
+          </div>
+        </div>
+      </section>
+    </LandingMotion>
   )
 }

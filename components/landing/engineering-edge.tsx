@@ -12,7 +12,7 @@ export function EngineeringEdge() {
     <section className="edge-section">
       <div className="site-container">
         <div className="edge-heading">
-          <div><span className="section-kicker">REKAYASA MENYELURUH</span><h2>Keunggulan Rekayasa MikroIm</h2><p>Perangkat keras dan perangkat lunak dirancang sebagai bagian yang saling terhubung dalam satu sistem teknologi.</p></div>
+          <div><span className="section-kicker">REKAYASA MENYELURUH</span><h2>Keunggulan Rekayasa Microim</h2><p>Perangkat keras dan perangkat lunak dirancang sebagai bagian yang saling terhubung dalam satu sistem teknologi.</p></div>
           <span className="section-code">[SISTEM / INTEGRASI]</span>
         </div>
         <div className="edge-capabilities">

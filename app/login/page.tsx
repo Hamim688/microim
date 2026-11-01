@@ -85,7 +85,7 @@ export default function LoginPage() {
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#071426] border border-[#173359] shadow-inner mb-1">
               <Image
                 src="/logo/logo-baru.png"
-                alt="MikroIm Logo"
+                alt="Microim Logo"
                 width={36}
                 height={36}
                 priority
@@ -95,7 +95,7 @@ export default function LoginPage() {
             
             <div>
               <Badge variant="gold" className="text-[10px]">
-                MikroIm Command Portal
+                Microim Command Portal
               </Badge>
             </div>
 
@@ -103,7 +103,7 @@ export default function LoginPage() {
               Masuk ke Akun Anda
             </h1>
             <p className="text-xs text-slate-400 max-w-xs mx-auto">
-              Akses dasbor proyek IoT, katalog komponen, dan layanan rekayasa MikroIm.
+              Akses dasbor proyek IoT, katalog komponen, dan layanan rekayasa Microim.
             </p>
           </div>
 
@@ -216,7 +216,7 @@ export default function LoginPage() {
                     onClick={(e) => {
                       e.preventDefault()
                       alert(
-                        "Silakan hubungi tim administrator MikroIm melalui kontak untuk penyetelan ulang kata sandi."
+                        "Silakan hubungi tim administrator Microim melalui kontak untuk penyetelan ulang kata sandi."
                       )
                     }}
                     className="text-[11px] text-[#FFC928] hover:underline"
@@ -367,7 +367,7 @@ export default function LoginPage() {
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
             Enkripsi Terverifikasi
           </span>
-          <span>MikroIm Security v2.4</span>
+          <span>Microim Security v2.4</span>
         </div>
       </div>
     </div>
