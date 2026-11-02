@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google"
 import "./globals.css"
-import { Navbar } from "@/components/layout/navbar"
-import { Footer } from "@/components/layout/footer"
-import { WhatsappFloat } from "@/components/layout/whatsapp-float"
 import { siteConfig } from "@/lib/site"
 
 const geistSans = Geist({
@@ -65,10 +62,7 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#071426] text-white selection:bg-[#FFC928] selection:text-[#071426]">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <WhatsappFloat />
+        {children}
       </body>
     </html>
   )

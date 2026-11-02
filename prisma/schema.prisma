@@ -30,6 +30,21 @@ enum OrderStatus {
   CANCELLED
 }
 
+enum PaymentMethod {
+  CASH
+  TRANSFER
+  QRIS
+  OTHER
+}
+
+enum StockMovementType {
+  INITIAL
+  RESTOCK
+  SALE
+  RETURN
+  ADJUSTMENT
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -37,6 +52,7 @@ model User {
   emailVerified DateTime?
   image         String?
   role          Role      @default(USER)
+  passwordHash  String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -65,6 +81,7 @@ model Product {
   categoryId  String
   category    Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   orderItems  OrderItem[]
+  stockMovements StockMovement[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -77,6 +94,11 @@ model Order {
   status      OrderStatus @default(PENDING)
   totalAmount Decimal     @db.Decimal(10, 2)
   items       OrderItem[]
+  customerName    String        @default("Pelanggan")
+  customerContact String?
+  paymentMethod   PaymentMethod @default(CASH)
+  note            String?       @db.Text
+  stockMovements  StockMovement[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -143,4 +165,20 @@ model Service {
   sortOrder   Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// Riwayat setiap perubahan stok: stok awal, restock, penjualan, pengembalian, koreksi.
+model StockMovement {
+  id        String            @id @default(cuid())
+  productId String
+  product   Product           @relation(fields: [productId], references: [id], onDelete: Cascade)
+  type      StockMovementType
+  change    Int
+  stockAfter Int
+  note      String?
+  orderId   String?
+  order     Order?            @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  createdAt DateTime          @default(now())
+
+  @@index([productId, createdAt])
 }
