@@ -30,7 +30,7 @@
 .admin-num { font-variant-numeric: tabular-nums; }
 
 /* --- latar aurora --- */
-.admin-aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.admin-aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; contain: strict; transform: translateZ(0); }
 .admin-aurora > span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55; will-change: transform; }
 .admin-aurora .is-a { width: 46vw; height: 46vw; left: -12vw; top: -18vw; background: radial-gradient(circle, rgba(37, 99, 235, .55), transparent 65%); animation: a-drift-a 26s ease-in-out infinite alternate; }
 .admin-aurora .is-b { width: 38vw; height: 38vw; right: -10vw; top: 8vh; background: radial-gradient(circle, rgba(255, 201, 40, .22), transparent 65%); animation: a-drift-b 32s ease-in-out infinite alternate; }

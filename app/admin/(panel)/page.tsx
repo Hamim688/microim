@@ -7,7 +7,7 @@ import { LOW_STOCK, formatDate, rupiah, startOfDayWIB, startOfMonthWIB, toDateIn
 import { StatusBadge } from "@/components/admin/status-badge"
 import { CountUp } from "@/components/admin/count-up"
 
-export const metadata: Metadata = { title: "Ringkasan" }
+export const metadata: Metadata = { title: "Dashboard" }
 
 const DAYS = 14
 
@@ -57,7 +57,7 @@ export default async function AdminDashboard() {
     <div className="admin-page">
       <header className="admin-page-head">
         <div>
-          <h1>Ringkasan</h1>
+          <h1>Dashboard</h1>
           <p>{new Intl.DateTimeFormat("id-ID", { dateStyle: "full", timeZone: "Asia/Jakarta" }).format(new Date())}</p>
         </div>
         <Link href="/admin/transaksi/baru" className="admin-btn is-primary"><Plus aria-hidden="true" /> Catat transaksi</Link>

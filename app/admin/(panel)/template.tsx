@@ -2,14 +2,14 @@
 
 import { motion, useReducedMotion } from "motion/react"
 
-/** Transisi halus setiap pindah halaman admin. */
+/** Transisi halus, ringan, dan cepat tanpa filter blur berat. */
 export default function AdminTemplate({ children }: { children: React.ReactNode }) {
   const reduce = useReducedMotion()
   return (
     <motion.div
-      initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(4px)" }}
-      animate={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none", transform: "none" } }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      initial={reduce ? false : { opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.18, ease: "easeOut" }}
     >
       {children}
     </motion.div>

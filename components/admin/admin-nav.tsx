@@ -6,7 +6,7 @@ import { motion } from "motion/react"
 import { Boxes, LayoutDashboard, ReceiptText, UserCog } from "lucide-react"
 
 const links = [
-  { href: "/admin", label: "Ringkasan", icon: LayoutDashboard },
+  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/transaksi", label: "Transaksi", icon: ReceiptText },
   { href: "/admin/produk", label: "Produk & Stok", icon: Boxes },
   { href: "/admin/akun", label: "Akun", icon: UserCog },
@@ -19,7 +19,13 @@ export function AdminNav() {
       {links.map(({ href, label, icon: Icon }) => {
         const active = href === "/admin" ? pathname === "/admin" : pathname.startsWith(href)
         return (
-          <Link key={href} href={href} className={active ? "is-active" : undefined} aria-current={active ? "page" : undefined}>
+          <Link
+            key={href}
+            href={href}
+            prefetch={true}
+            className={active ? "is-active" : undefined}
+            aria-current={active ? "page" : undefined}
+          >
             {active ? (
               <motion.span
                 layoutId="admin-nav-pill"
