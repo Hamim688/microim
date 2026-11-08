@@ -56,12 +56,15 @@ export function resolvePeriod(key: string | undefined, month: string | undefined
       const prevFrom = new Date(Date.UTC(y - 1, 0, 1) - WIB)
       return { key, label: `Tahun ${y}`, compareLabel: `vs periode sama ${y - 1}`, from, to: tomorrow, prevFrom, prevTo: new Date(prevFrom.getTime() + span), bucket: "month" }
     }
-    case "semua": {
+    case "semua":
+    case undefined:
+    case "": {
       const from = earliest ? startOfDayWIB(earliest) : today
       const bucket = tomorrow.getTime() - from.getTime() > 62 * DAY ? "month" : "day"
-      return { key, label: "Semua waktu", compareLabel: null, from: null, to: tomorrow, prevFrom: null, prevTo: null, bucket }
+      return { key: "semua", label: "Semua waktu", compareLabel: null, from: null, to: tomorrow, prevFrom: null, prevTo: null, bucket }
     }
     default: {
+      // "bulan" = bulan berjalan
       const from = startOfMonthWIB(now)
       const span = tomorrow.getTime() - from.getTime()
       const prevFrom = monthStart(toDateInputWIB(now).slice(0, 7), -1)

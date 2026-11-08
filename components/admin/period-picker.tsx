@@ -34,7 +34,7 @@ export function PeriodPicker({ current, month, months }: { current: string; mont
             className={active === p.key ? "is-active" : undefined}
             onClick={() => {
               setActive(p.key)
-              go(p.key === "bulan" ? "" : `periode=${p.key}`)
+              go(p.key === "semua" ? "" : `periode=${p.key}`)
             }}
           >
             {active === p.key ? <motion.span layoutId="period-pill" className="admin-period-pill" transition={{ type: "spring", stiffness: 500, damping: 38 }} /> : null}
@@ -47,7 +47,7 @@ export function PeriodPicker({ current, month, months }: { current: string; mont
         className={`is-month${month ? " is-chosen" : ""}`}
         value={month ?? ""}
         onChange={(v) => {
-          setActive(v ? "" : "bulan")
+          setActive(v ? "" : "semua")
           go(v ? `bulan=${v}` : "")
         }}
         options={[{ value: "", label: "Pilih bulan…" }, ...months]}

@@ -8,7 +8,10 @@ type Slice = { name: string; value: number; share: number }
 
 /** Donat komposisi pendapatan (maks. 6 bagian; sisanya "Lainnya"). Legenda selalu tampil dengan persentase. */
 export function Donut({ data, centerLabel }: { data: Slice[]; centerLabel: string }) {
-  const [hover, setHover] = useState<number | null>(null)
+  const [hoverRaw, setHover] = useState<number | null>(null)
+  const [pinned, setPinned] = useState<number | null>(null)
+  // Klik legenda/irisan untuk "mengunci" sorotan; arahkan kursor untuk melihat sekilas.
+  const hover = hoverRaw ?? pinned
   const reduce = useReducedMotion()
   const total = data.reduce((s, d) => s + d.value, 0)
   const R = 70
@@ -45,6 +48,7 @@ export function Donut({ data, centerLabel }: { data: Slice[]; centerLabel: strin
                 transition={{ duration: 0.4, delay: reduce ? 0 : i * 0.06 }}
                 onPointerEnter={() => setHover(i)}
                 onPointerLeave={() => setHover(null)}
+                onClick={() => setPinned((p) => (p === i ? null : i))}
                 style={{ cursor: "pointer", transition: "stroke-width .2s" }}
               />
             )
@@ -60,7 +64,16 @@ export function Donut({ data, centerLabel }: { data: Slice[]; centerLabel: strin
       </div>
       <ul className="admin-legend">
         {data.map((d, i) => (
-          <li key={d.name} onPointerEnter={() => setHover(i)} onPointerLeave={() => setHover(null)} className={hover === i ? "is-hover" : undefined}>
+          <li
+            key={d.name}
+            tabIndex={0}
+            onPointerEnter={() => setHover(i)}
+            onPointerLeave={() => setHover(null)}
+            onFocus={() => setHover(i)}
+            onBlur={() => setHover(null)}
+            onClick={() => setPinned((p) => (p === i ? null : i))}
+            className={hover === i ? "is-hover" : hover !== null ? "is-dim" : undefined}
+          >
             <i style={{ background: color(d, i) }} aria-hidden="true" />
             <span>{d.name}</span>
             <b>{pct(d.share)}</b>

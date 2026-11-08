@@ -67,6 +67,19 @@ export function AdminShell({
     return () => window.removeEventListener("keydown", onKey)
   }, [])
 
+  // Efek sorotan yang mengikuti kursor di kartu ringkasan (posisi kursor dikirim lewat variabel CSS).
+  useEffect(() => {
+    function onMove(event: PointerEvent) {
+      const card = (event.target as HTMLElement | null)?.closest?.<HTMLElement>(".admin-inv-stat, .admin-kpi")
+      if (!card) return
+      const r = card.getBoundingClientRect()
+      card.style.setProperty("--mx", `${event.clientX - r.left}px`)
+      card.style.setProperty("--my", `${event.clientY - r.top}px`)
+    }
+    document.addEventListener("pointermove", onMove, { passive: true })
+    return () => document.removeEventListener("pointermove", onMove)
+  }, [])
+
   // Kunci scroll halaman saat laci menu terbuka.
   useEffect(() => {
     document.documentElement.classList.toggle("admin-lock", drawerOpen)

@@ -6,6 +6,19 @@ import { getLowStockThreshold, goodsOnly } from "@/lib/admin/settings"
 
 export type SeriesPoint = { key: string; revenue: number; profit: number; orders: number; visitors: number }
 export type RankRow = { name: string; value: number; share: number; sub: string }
+/** Baris peringkat interaktif: nilai utama + detail untuk panel saat disorot. */
+export type RankItem = {
+  key: string
+  name: string
+  image: string | null
+  service: boolean
+  value: number
+  share: number
+  qty: number
+  revenue: number
+  profit: number
+  extra?: string
+}
 
 /** Data kunjungan; tetap aman (kosong) bila tabel PageView belum dibuat lewat `prisma db push`. */
 async function safeViews(createdAt: { gte?: Date; lt?: Date }) {
@@ -32,7 +45,7 @@ export async function dashboardData(periodKey?: string, month?: string) {
     firstQuery,
     db.order.findMany({
       where: { ...inRange, ...active },
-      include: { items: { include: { product: { select: { name: true, category: { select: { name: true } } } } } } },
+      include: { items: { include: { product: { select: { name: true, imageUrl: true, category: { select: { name: true } } } } } } },
     }),
     period.prevFrom
       ? db.order.findMany({ where: { createdAt: range(period.prevFrom, period.prevTo), ...active }, include: { items: { select: { quantity: true, price: true, costPrice: true } } } })
@@ -41,7 +54,7 @@ export async function dashboardData(periodKey?: string, month?: string) {
     period.prevFrom ? safeViews(range(period.prevFrom, period.prevTo)) : Promise.resolve(null),
     getLowStockThreshold(),
     db.$queryRaw<{ ym: string }[]>`SELECT DISTINCT to_char("createdAt" AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Jakarta', 'YYYY-MM') AS ym FROM "Order" ORDER BY ym DESC`.catch(() => [] as { ym: string }[]),
-    db.product.findMany({ where: goodsOnly, select: { id: true, name: true, stock: true }, orderBy: [{ stock: "asc" }, { name: "asc" }] }).catch(() => []),
+    db.product.findMany({ where: goodsOnly, select: { id: true, name: true, stock: true, imageUrl: true }, orderBy: [{ stock: "asc" }, { name: "asc" }] }).catch(() => []),
     db.order.findMany({ orderBy: { createdAt: "desc" }, take: 6, include: { _count: { select: { items: true } } } }).catch(() => []),
     db.order.aggregate({ where: { status: "PENDING" }, _sum: { totalAmount: true }, _count: true }).catch(() => ({ _sum: { totalAmount: null }, _count: 0 })),
   ])
@@ -94,10 +107,10 @@ export async function dashboardData(periodKey?: string, month?: string) {
   const points: SeriesPoint[] = [...series.values()].map(({ ids, ...p }) => ({ ...p, visitors: ids.size }))
 
   // --- peringkat komponen ---
-  const byItem = new Map<string, { name: string; qty: number; revenue: number; profit: number; service: boolean }>()
+  const byItem = new Map<string, { key: string; name: string; image: string | null; qty: number; revenue: number; profit: number; service: boolean }>()
   for (const i of items) {
     const key = i.productId ?? `jasa:${(i.name ?? "").toLowerCase()}`
-    const row = byItem.get(key) ?? { name: itemName(i), qty: 0, revenue: 0, profit: 0, service: i.itemType === "SERVICE" }
+    const row = byItem.get(key) ?? { key, name: itemName(i), image: i.product?.imageUrl ?? null, qty: 0, revenue: 0, profit: 0, service: i.itemType === "SERVICE" }
     row.qty += i.quantity
     row.revenue += i.quantity * Number(i.price)
     row.profit += i.quantity * (Number(i.price) - Number(i.costPrice))
@@ -105,11 +118,12 @@ export async function dashboardData(periodKey?: string, month?: string) {
   }
   const components = [...byItem.values()].filter((r) => !r.service)
   const totalQty = components.reduce((s, r) => s + r.qty, 0)
-  const topQty: RankRow[] = [...components].sort((a, b) => b.qty - a.qty).slice(0, 8)
-    .map((r) => ({ name: r.name, value: r.qty, share: totalQty ? (r.qty / totalQty) * 100 : 0, sub: `${r.qty} pcs` }))
+  const topQty: RankItem[] = [...components].sort((a, b) => b.qty - a.qty || b.revenue - a.revenue).slice(0, 10)
+    .map((r) => ({ ...r, value: r.qty, share: totalQty ? (r.qty / totalQty) * 100 : 0 }))
   const allRevenue = [...byItem.values()]
-  const topRevenue: RankRow[] = [...allRevenue].sort((a, b) => b.revenue - a.revenue).slice(0, 8)
-    .map((r) => ({ name: r.service ? `${r.name} (jasa)` : r.name, value: r.revenue, share: revenue ? (r.revenue / revenue) * 100 : 0, sub: "" }))
+  const topRevenue: RankItem[] = [...allRevenue].sort((a, b) => b.revenue - a.revenue).slice(0, 10)
+    .map((r) => ({ ...r, value: r.revenue, share: revenue ? (r.revenue / revenue) * 100 : 0 }))
+  const rankTotals = { qty: totalQty, components: components.length, revenue, items: allRevenue.length }
 
   // --- komposisi ---
   const byCategory = new Map<string, number>()
@@ -140,8 +154,9 @@ export async function dashboardData(periodKey?: string, month?: string) {
     b.orders += 1
     byBuyer.set(key, b)
   }
-  const buyers: RankRow[] = [...byBuyer.values()].sort((a, b) => b.value - a.value).slice(0, 6)
-    .map((b) => ({ name: b.name, value: b.value, share: revenue ? (b.value / revenue) * 100 : 0, sub: `${b.orders} transaksi` }))
+  const buyers: RankItem[] = [...byBuyer.values()].sort((a, b) => b.value - a.value).slice(0, 5)
+    .map((b) => ({ key: b.name, name: b.name, image: null, service: false, value: b.value, share: revenue ? (b.value / revenue) * 100 : 0, qty: b.orders, revenue: b.value, profit: 0, extra: `${b.orders} transaksi` }))
+  const buyerCount = byBuyer.size
 
   // --- pengunjung ---
   const byPath = new Map<string, Set<string>>()
@@ -164,12 +179,27 @@ export async function dashboardData(periodKey?: string, month?: string) {
     points,
     topQty,
     topRevenue,
+    rankTotals,
+    buyerCount,
     categories,
     mix,
     payments,
     buyers,
-    visitors: { topPages, referrers, mobileShare: views.length ? (mobile / views.length) * 100 : 0, views: views.length },
+    visitors: {
+      topPages,
+      referrers,
+      mobileShare: views.length ? (mobile / views.length) * 100 : 0,
+      devices: [
+        { name: "Laptop / PC", value: views.length - mobile, share: views.length ? ((views.length - mobile) / views.length) * 100 : 0 },
+        { name: "HP / tablet", value: mobile, share: views.length ? (mobile / views.length) * 100 : 0 },
+      ],
+      views: views.length,
+    },
     lowStock: lowStock.filter((p) => p.stock <= threshold).slice(0, 6),
+    lowCounts: {
+      habis: lowStock.filter((p) => p.stock <= 0).length,
+      menipis: lowStock.filter((p) => p.stock > 0 && p.stock <= threshold).length,
+    },
     threshold,
     recent,
     today: toDateInputWIB(),
