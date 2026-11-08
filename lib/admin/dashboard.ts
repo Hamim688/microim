@@ -19,14 +19,17 @@ async function safeViews(createdAt: { gte?: Date; lt?: Date }) {
 const sumOrders = (orders: { totalAmount: unknown }[]) => orders.reduce((s, o) => s + Number(o.totalAmount), 0)
 
 export async function dashboardData(periodKey?: string, month?: string) {
-  const first = await db.order.findFirst({ orderBy: { createdAt: "asc" }, select: { createdAt: true } })
-  const earliest = first?.createdAt ?? null
-  const period = resolvePeriod(periodKey, month, earliest)
+  // Rentang tanggal tidak butuh tanggal transaksi pertama (kecuali untuk label sumbu "Semua"),
+  // jadi query itu ikut dijalankan bersamaan dengan yang lain, bukan ditunggu duluan.
+  const draft = resolvePeriod(periodKey, month, null)
+  const firstQuery = db.order.findFirst({ orderBy: { createdAt: "asc" }, select: { createdAt: true } })
+  const period = draft
   const range = (from: Date | null, to: Date | null) => ({ ...(from ? { gte: from } : {}), ...(to ? { lt: to } : {}) })
   const inRange = { createdAt: range(period.from, period.to) }
   const active = { status: { not: "CANCELLED" as const } }
 
-  const [orders, prevOrders, views, prevViews, threshold, months, lowStock, recent, pending] = await Promise.all([
+  const [first, orders, prevOrders, views, prevViews, threshold, months, lowStock, recent, pending] = await Promise.all([
+    firstQuery,
     db.order.findMany({
       where: { ...inRange, ...active },
       include: { items: { include: { product: { select: { name: true, category: { select: { name: true } } } } } } },
@@ -42,6 +45,9 @@ export async function dashboardData(periodKey?: string, month?: string) {
     db.order.findMany({ orderBy: { createdAt: "desc" }, take: 6, include: { _count: { select: { items: true } } } }).catch(() => []),
     db.order.aggregate({ where: { status: "PENDING" }, _sum: { totalAmount: true }, _count: true }).catch(() => ({ _sum: { totalAmount: null }, _count: 0 })),
   ])
+
+  const earliest = first?.createdAt ?? null
+  if (period.key === "semua") Object.assign(period, resolvePeriod("semua", undefined, earliest))
 
   // --- angka utama ---
   const items = orders.flatMap((o) => o.items)

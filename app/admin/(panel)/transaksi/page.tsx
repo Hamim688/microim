@@ -55,14 +55,6 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
   const where: Prisma.OrderWhereInput = { ...base, ...(status ? { status } : {}) }
   const active: Prisma.OrderWhereInput = { ...inPeriod, status: { not: "CANCELLED" } }
 
-  const [statusGroups, omzet, unpaid, profitItems, count] = await Promise.all([
-    db.order.groupBy({ by: ["status"], where: base, _count: true }),
-    db.order.aggregate({ where: active, _sum: { totalAmount: true }, _count: true }),
-    db.order.aggregate({ where: { ...inPeriod, status: "PENDING" }, _sum: { totalAmount: true }, _count: true }),
-    db.orderItem.findMany({ where: { order: active }, select: { quantity: true, price: true, costPrice: true } }),
-    view === "pembeli" ? db.order.count({ where }) : Promise.resolve(0),
-  ])
-
   // Tampilan "per item": satu baris = satu item, kalau dicari nama komponen hanya item itu yang muncul.
   const itemWhere: Prisma.OrderItemWhereInput = {
     order: { ...inPeriod, ...(status ? { status } : {}) },
@@ -77,24 +69,25 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
         }
       : {}),
   }
-  const [itemCount, itemSum, itemAll] =
-    view === "item"
-      ? await Promise.all([
-          db.orderItem.count({ where: itemWhere }),
-          db.orderItem.aggregate({ where: itemWhere, _sum: { quantity: true } }),
-          db.orderItem.findMany({ where: itemWhere, select: { quantity: true, price: true } }),
-        ])
-      : [0, null, []]
-  const listCount = view === "item" ? itemCount : count
-  const pages = Math.max(1, Math.ceil(listCount / perPage))
-  const page = Math.min(pages, Math.max(1, Number(sp.hal) || 1))
-  const [orders, items] = await Promise.all([
+  const requested = Math.max(1, Number(sp.hal) || 1)
+  const skip = (requested - 1) * perPage
+
+  // Semua query dijalankan sekaligus (bukan berurutan) supaya halaman lebih cepat.
+  const [statusGroups, omzet, unpaid, profitItems, count, itemCount, itemSum, itemAll, orders, items] = await Promise.all([
+    db.order.groupBy({ by: ["status"], where: base, _count: true }),
+    db.order.aggregate({ where: active, _sum: { totalAmount: true }, _count: true }),
+    db.order.aggregate({ where: { ...inPeriod, status: "PENDING" }, _sum: { totalAmount: true }, _count: true }),
+    db.orderItem.findMany({ where: { order: active }, select: { quantity: true, price: true, costPrice: true } }),
+    view === "pembeli" ? db.order.count({ where }) : Promise.resolve(0),
+    view === "item" ? db.orderItem.count({ where: itemWhere }) : Promise.resolve(0),
+    view === "item" ? db.orderItem.aggregate({ where: itemWhere, _sum: { quantity: true } }) : Promise.resolve(null),
+    view === "item" ? db.orderItem.findMany({ where: itemWhere, select: { quantity: true, price: true } }) : Promise.resolve([]),
     view === "pembeli"
       ? db.order.findMany({
           where,
           include: { items: { include: { product: { select: { name: true } } } } },
           orderBy: { createdAt: "desc" },
-          skip: (page - 1) * perPage,
+          skip,
           take: perPage,
         })
       : Promise.resolve([]),
@@ -103,11 +96,14 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
           where: itemWhere,
           include: { product: { select: { name: true } }, order: { select: { id: true, orderNumber: true, customerName: true, createdAt: true, status: true } } },
           orderBy: [{ order: { createdAt: "desc" } }, { id: "asc" }],
-          skip: (page - 1) * perPage,
+          skip,
           take: perPage,
         })
       : Promise.resolve([]),
   ])
+  const listCount = view === "item" ? itemCount : count
+  const pages = Math.max(1, Math.ceil(listCount / perPage))
+  const page = Math.min(pages, requested)
   const itemRevenue = itemAll.reduce((s, i) => s + i.quantity * Number(i.price), 0)
 
   const counts = Object.fromEntries(STATUS_ORDER.map((s) => [s, 0])) as Record<OrderStatus, number>

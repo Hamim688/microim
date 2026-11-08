@@ -14,12 +14,14 @@ export const metadata: Metadata = {
 }
 
 export default async function AdminPanelLayout({ children }: { children: React.ReactNode }) {
-  const admin = await requireAdmin()
-  const threshold = await getLowStockThreshold()
-  const [cookieStore, pending, lowStock] = await Promise.all([
+  // Semua dijalankan bersamaan supaya tidak menunggu satu per satu ke database.
+  const [admin, cookieStore, pending, lowStock] = await Promise.all([
+    requireAdmin(),
     cookies(),
     db.order.count({ where: { status: "PENDING" } }).catch(() => 0),
-    db.product.count({ where: { ...goodsOnly, stock: { lte: threshold } } }).catch(() => 0),
+    getLowStockThreshold()
+      .then((threshold) => db.product.count({ where: { ...goodsOnly, stock: { lte: threshold } } }))
+      .catch(() => 0),
   ])
 
   return (
