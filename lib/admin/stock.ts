@@ -37,11 +37,16 @@ export async function applyStockChanges(
   }
 }
 
-/** Jumlah per produk yang "memakai" stok; transaksi batal tidak memakai stok. */
-export function usage(items: { productId: string; quantity: number }[], active: boolean) {
+type StockItem = { productId: string | null; quantity: number; itemType?: "COMPONENT" | "SERVICE" }
+
+/** Jumlah per produk yang "memakai" stok. Jasa dan transaksi batal tidak memakai stok. */
+export function usage(items: StockItem[], active: boolean) {
   const map = new Map<string, number>()
   if (!active) return map
-  for (const item of items) map.set(item.productId, (map.get(item.productId) ?? 0) + item.quantity)
+  for (const item of items) {
+    if (item.itemType === "SERVICE" || !item.productId) continue
+    map.set(item.productId, (map.get(item.productId) ?? 0) + item.quantity)
+  }
   return map
 }
 

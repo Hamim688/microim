@@ -4,8 +4,9 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, Trash2 } from "lucide-react"
 import { db } from "@/lib/db"
 import { requireAdmin } from "@/lib/auth/session"
-import { categoryNames, productImages } from "@/lib/admin/catalog"
-import { LOW_STOCK, formatDateTime, movementLabel, rupiah } from "@/lib/admin/format"
+import { categoryNames } from "@/lib/admin/catalog"
+import { formatDateTime, movementLabel, rupiah } from "@/lib/admin/format"
+import { getLowStockThreshold, stockStatus, stockStatusLabel } from "@/lib/admin/settings"
 import { ProductForm } from "@/components/admin/product-form"
 import { StockForm } from "@/components/admin/stock-form"
 import { adjustStock, deleteProduct, updateProduct } from "../actions"
@@ -31,7 +32,10 @@ export default async function ProductDetailPage({
     },
   })
   if (!product) notFound()
-  const [categories, images] = await Promise.all([categoryNames(), productImages()])
+  const [categories, threshold] = await Promise.all([categoryNames(), getLowStockThreshold()])
+  const status = stockStatus(product.stock, threshold)
+  const cost = Number(product.costPrice)
+  const margin = Number(product.price) - cost
 
   return (
     <div className="admin-page">
@@ -39,7 +43,7 @@ export default async function ProductDetailPage({
       <header className="admin-page-head">
         <div>
           <h1>{product.name}</h1>
-          <p>{product.category.name} · {rupiah(product.price)} · stok <span className={`admin-stock${product.stock <= LOW_STOCK ? " is-low" : ""}`}>{product.stock}</span></p>
+          <p>{product.category.name} · modal {rupiah(cost)} · jual {rupiah(product.price)} · margin {rupiah(margin)} · stok {product.stock} <span className={`admin-status is-${status}`}>{stockStatusLabel[status]}</span></p>
         </div>
       </header>
       {saved ? <p className="admin-alert is-success" role="status">Produk tersimpan.</p> : null}
@@ -53,11 +57,11 @@ export default async function ProductDetailPage({
           <ProductForm
             action={updateProduct.bind(null, product.id)}
             categories={categories}
-            images={images}
             initial={{
               name: product.name,
               category: product.category.name,
               price: Number(product.price),
+              costPrice: cost,
               imageUrl: product.imageUrl ?? "",
               description: product.description,
             }}

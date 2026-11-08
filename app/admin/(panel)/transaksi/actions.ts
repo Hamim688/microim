@@ -13,11 +13,20 @@ export type OrderFormState = { error?: string } | undefined
 
 const STATUSES = ["PENDING", "PAID", "SHIPPED", "DELIVERED", "CANCELLED"] as const
 
-const ItemSchema = z.object({
-  productId: z.string().min(1),
-  quantity: z.coerce.number().int().min(1, { error: "Jumlah minimal 1." }).max(100_000),
-  price: z.coerce.number().int().min(0, { error: "Harga tidak boleh negatif." }).max(100_000_000),
-})
+const qty = z.coerce.number().int().min(1, { error: "Jumlah minimal 1." }).max(100_000)
+const money = z.coerce.number().int().min(0, { error: "Harga tidak boleh negatif." }).max(100_000_000)
+const ItemSchema = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("COMPONENT"), productId: z.string().min(1, { error: "Pilih komponen di setiap baris." }), quantity: qty, price: money }),
+  z.object({
+    type: z.literal("SERVICE"),
+    name: z.string().trim().min(2, { error: "Nama jasa minimal 2 karakter." }).max(120),
+    quantity: qty,
+    price: money,
+  }),
+])
+
+/** Bentuk item yang disimpan ke database. */
+type ItemInput = { itemType: "COMPONENT" | "SERVICE"; productId: string | null; name: string | null; quantity: number; price: number }
 
 const OrderSchema = z.object({
   customerName: z.string().trim().min(1, { error: "Nama pembeli wajib diisi." }).max(100),
@@ -26,7 +35,7 @@ const OrderSchema = z.object({
   paymentMethod: z.enum(["CASH", "TRANSFER", "QRIS", "OTHER"]),
   status: z.enum(STATUSES),
   note: z.string().trim().max(1000).optional(),
-  items: z.array(ItemSchema).min(1, { error: "Tambahkan minimal satu komponen." }).max(100),
+  items: z.array(ItemSchema).min(1, { error: "Tambahkan minimal satu komponen atau jasa." }).max(100),
 })
 
 function readOrder(formData: FormData) {
@@ -46,15 +55,28 @@ function readOrder(formData: FormData) {
     items,
   })
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Data transaksi tidak valid." }
-  // Gabungkan baris dengan produk & harga sama agar tidak dobel.
-  const merged = new Map<string, { productId: string; quantity: number; price: number }>()
+  // Gabungkan baris yang sama persis (produk/jasa & harga sama) agar tidak dobel.
+  const merged = new Map<string, ItemInput>()
   for (const item of parsed.data.items) {
-    const key = `${item.productId}:${item.price}`
+    const row: ItemInput =
+      item.type === "COMPONENT"
+        ? { itemType: "COMPONENT", productId: item.productId, name: null, quantity: item.quantity, price: item.price }
+        : { itemType: "SERVICE", productId: null, name: item.name, quantity: item.quantity, price: item.price }
+    const key = `${row.itemType}:${row.productId ?? row.name?.toLowerCase()}:${row.price}`
     const existing = merged.get(key)
-    if (existing) existing.quantity += item.quantity
-    else merged.set(key, { ...item })
+    if (existing) existing.quantity += row.quantity
+    else merged.set(key, row)
   }
   return { data: { ...parsed.data, items: [...merged.values()] } }
+}
+
+/** Modal per produk saat transaksi dicatat, supaya laba lama tidak berubah kalau modal naik nanti. */
+async function withCost(tx: Prisma.TransactionClient, items: ItemInput[], keep: Map<string, Prisma.Decimal> = new Map()) {
+  const ids = items.flatMap((i) => (i.productId ? [i.productId] : []))
+  const products = await tx.product.findMany({ where: { id: { in: ids } }, select: { id: true, costPrice: true } })
+  const cost = new Map(products.map((p) => [p.id, p.costPrice]))
+  // Jasa tidak punya modal barang, jadi seluruh harganya dihitung sebagai laba.
+  return items.map((i) => ({ ...i, costPrice: i.productId ? (keep.get(i.productId) ?? cost.get(i.productId) ?? 0) : 0 }))
 }
 
 const total = (items: { quantity: number; price: number }[]) => items.reduce((sum, i) => sum + i.quantity * i.price, 0)
@@ -94,7 +116,7 @@ export async function createOrder(_state: OrderFormState, formData: FormData): P
           orderNumber: await nextOrderNumber(tx, createdAt),
           totalAmount: total(items),
           createdAt,
-          items: { create: items },
+          items: { create: await withCost(tx, items) },
         },
       })
       await applyStockChanges(tx, usage(items, fields.status !== "CANCELLED"), { orderId: order.id, note: `Transaksi ${order.orderNumber}` })
@@ -135,7 +157,7 @@ export async function updateOrder(id: string, _state: OrderFormState, formData: 
           note: fields.note ?? null,
           totalAmount: total(items),
           ...(sameDay ? {} : { createdAt: fromDateInputWIB(date) }),
-          items: { create: items },
+          items: { create: await withCost(tx, items, new Map(old.items.flatMap((i) => (i.productId ? [[i.productId, i.costPrice] as const] : [])))) },
         },
       })
     })
@@ -171,6 +193,8 @@ export async function setOrderStatus(id: string, formData: FormData) {
     if (!(e instanceof StockError)) console.error(e)
   }
   refresh()
+  // Dari daftar transaksi (mis. tombol "Tandai lunas") cukup segarkan halaman tanpa pindah.
+  if (formData.get("stay") === "1" && !error) return
   redirect(error ? `/admin/transaksi/${id}?error=${encodeURIComponent(error)}` : `/admin/transaksi/${id}?saved=1`)
 }
 

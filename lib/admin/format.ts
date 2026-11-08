@@ -66,8 +66,6 @@ export const movementLabel: Record<StockMovementType, string> = {
   ADJUSTMENT: "Koreksi",
 }
 
-/** Batas stok yang dianggap "menipis". */
-export const LOW_STOCK = 5
 
 export function slugify(text: string) {
   return text

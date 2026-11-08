@@ -7,14 +7,16 @@ import { Prisma } from "@prisma/client"
 import { db } from "@/lib/db"
 import { requireAdmin } from "@/lib/auth/session"
 import { slugify } from "@/lib/admin/format"
+import { saveLowStockThreshold } from "@/lib/admin/settings"
+import { ImageError, readImage, removeStoredImage, storeImage } from "@/lib/admin/images"
 
 export type ProductFormState = { error?: string; success?: string } | undefined
 
 const ProductSchema = z.object({
   name: z.string().trim().min(2, { error: "Nama produk minimal 2 karakter." }).max(120),
   category: z.string().trim().min(2, { error: "Kategori wajib diisi." }).max(60),
-  price: z.coerce.number({ error: "Harga harus berupa angka." }).int({ error: "Harga harus bilangan bulat." }).min(0).max(100_000_000),
-  imageUrl: z.string().trim().max(300).optional(),
+  price: z.coerce.number({ error: "Harga jual harus berupa angka." }).int({ error: "Harga jual harus bilangan bulat." }).min(0).max(100_000_000),
+  costPrice: z.coerce.number({ error: "Modal harus berupa angka." }).int({ error: "Modal harus bilangan bulat." }).min(0, { error: "Modal tidak boleh negatif." }).max(100_000_000),
   description: z.string().trim().max(2000).optional(),
 })
 
@@ -23,7 +25,7 @@ function readProduct(formData: FormData) {
     name: formData.get("name"),
     category: formData.get("category"),
     price: formData.get("price"),
-    imageUrl: formData.get("imageUrl") ?? undefined,
+    costPrice: formData.get("costPrice") || 0,
     description: formData.get("description") ?? undefined,
   })
 }
@@ -54,15 +56,23 @@ export async function createProduct(_state: ProductFormState, formData: FormData
   if (!parsed.success) return { error: parsed.error.issues[0]?.message }
   const initialStock = z.coerce.number().int().min(0).max(1_000_000).safeParse(formData.get("stock") || 0)
   if (!initialStock.success) return { error: "Stok awal harus bilangan bulat 0 atau lebih." }
+  let image: File | null
+  try {
+    image = readImage(formData)
+  } catch (e) {
+    return { error: e instanceof ImageError ? e.message : "Foto tidak valid." }
+  }
 
   const product = await db.$transaction(async (tx) => {
+    const imageUrl = image ? await storeImage(tx, image) : null
     const created = await tx.product.create({
       data: {
         name: parsed.data.name,
         slug: await uniqueSlug(parsed.data.name, tx),
         description: parsed.data.description ?? "",
         price: parsed.data.price,
-        imageUrl: parsed.data.imageUrl || null,
+        costPrice: parsed.data.costPrice,
+        imageUrl,
         stock: initialStock.data,
         categoryId: await categoryIdFor(parsed.data.category, tx),
       },
@@ -83,8 +93,21 @@ export async function updateProduct(id: string, _state: ProductFormState, formDa
   await requireAdmin()
   const parsed = readProduct(formData)
   if (!parsed.success) return { error: parsed.error.issues[0]?.message }
+  let image: File | null
+  try {
+    image = readImage(formData)
+  } catch (e) {
+    return { error: e instanceof ImageError ? e.message : "Foto tidak valid." }
+  }
+  const removeImage = formData.get("removeImage") === "1"
 
   await db.$transaction(async (tx) => {
+    const current = await tx.product.findUnique({ where: { id }, select: { imageUrl: true } })
+    let imageUrl = current?.imageUrl ?? null
+    if (image || removeImage) {
+      await removeStoredImage(tx, imageUrl)
+      imageUrl = image ? await storeImage(tx, image) : null
+    }
     await tx.product.update({
       where: { id },
       data: {
@@ -92,7 +115,8 @@ export async function updateProduct(id: string, _state: ProductFormState, formDa
         slug: await uniqueSlug(parsed.data.name, tx, id),
         description: parsed.data.description ?? "",
         price: parsed.data.price,
-        imageUrl: parsed.data.imageUrl || null,
+        costPrice: parsed.data.costPrice,
+        imageUrl,
         categoryId: await categoryIdFor(parsed.data.category, tx),
       },
     })
@@ -136,7 +160,19 @@ export async function deleteProduct(id: string) {
   await requireAdmin()
   const sold = await db.orderItem.count({ where: { productId: id } })
   if (sold > 0) redirect(`/admin/produk/${id}?error=terjual`)
-  await db.product.delete({ where: { id } })
+  await db.$transaction(async (tx) => {
+    const product = await tx.product.delete({ where: { id }, select: { imageUrl: true } })
+    await removeStoredImage(tx, product.imageUrl)
+  })
   refresh()
   redirect("/admin/produk?deleted=1")
+}
+
+export async function setLowStockThreshold(_state: ProductFormState, formData: FormData): Promise<ProductFormState> {
+  await requireAdmin()
+  const value = z.coerce.number().int().min(0).max(1000).safeParse(formData.get("threshold"))
+  if (!value.success) return { error: "Batas harus bilangan bulat 0–1000." }
+  await saveLowStockThreshold(value.data)
+  refresh()
+  return { success: `Stok 1–${value.data} sekarang dianggap menipis.` }
 }

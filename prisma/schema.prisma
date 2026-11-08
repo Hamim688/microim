@@ -75,6 +75,7 @@ model Product {
   slug        String      @unique
   description String
   price       Decimal     @db.Decimal(10, 2)
+  costPrice   Decimal     @default(0) @db.Decimal(10, 2)
   stock       Int         @default(0)
   imageUrl    String?
   specs       Json?
@@ -103,14 +104,24 @@ model Order {
   updatedAt   DateTime    @updatedAt
 }
 
+enum OrderItemType {
+  COMPONENT
+  SERVICE
+}
+
 model OrderItem {
   id        String   @id @default(cuid())
   orderId   String
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId String
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  /// Komponen: wajib terisi & mengurangi stok. Jasa: kosong.
+  productId String?
+  product   Product? @relation(fields: [productId], references: [id], onDelete: Restrict)
+  itemType  OrderItemType @default(COMPONENT)
+  /// Nama jasa (untuk item jenis Jasa).
+  name      String?
   quantity  Int      @default(1)
   price     Decimal  @db.Decimal(10, 2)
+  costPrice Decimal  @default(0) @db.Decimal(10, 2)
 }
 
 model Project {
@@ -181,4 +192,34 @@ model StockMovement {
   createdAt DateTime          @default(now())
 
   @@index([productId, createdAt])
+}
+
+/// Foto produk yang diunggah dari panel admin (disimpan di database agar jalan di Vercel tanpa layanan tambahan).
+model ProductImage {
+  id        String   @id @default(cuid())
+  data      Bytes
+  mimeType  String
+  size      Int
+  createdAt DateTime @default(now())
+}
+
+/// Kunjungan halaman situs publik (untuk grafik pengunjung di dashboard admin). Tanpa data pribadi:
+/// visitorId hanya kode acak dari cookie peramban.
+model PageView {
+  id        String   @id @default(cuid())
+  path      String
+  visitorId String
+  referrer  String?
+  device    String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([visitorId])
+}
+
+/// Pengaturan sederhana panel admin (mis. batas stok menipis).
+model AppSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
 }

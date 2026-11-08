@@ -1,154 +1,189 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { AlertTriangle, ArrowRight, CalendarRange, Clock3, Package, Plus, Wallet } from "lucide-react"
-import { db } from "@/lib/db"
+import { AlertTriangle, ArrowRight, Clock3, Eye, Package, Plus, ReceiptText, ShoppingBag, TrendingDown, TrendingUp, Wallet } from "lucide-react"
 import { requireAdmin } from "@/lib/auth/session"
-import { LOW_STOCK, formatDate, rupiah, startOfDayWIB, startOfMonthWIB, toDateInputWIB } from "@/lib/admin/format"
+import { formatDate, rupiah } from "@/lib/admin/format"
+import { dashboardData } from "@/lib/admin/dashboard"
+import { monthLabel } from "@/lib/admin/period"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { CountUp } from "@/components/admin/count-up"
+import { PeriodPicker } from "@/components/admin/period-picker"
+import { SalesChart } from "@/components/admin/charts/sales-chart"
+import { Donut } from "@/components/admin/charts/donut"
+import { BarList, ShareBar } from "@/components/admin/charts/bar-list"
 
 export const metadata: Metadata = { title: "Dashboard" }
 
-const DAYS = 14
+const num = (n: number) => n.toLocaleString("id-ID")
+const pcs = (n: number) => `${num(n)} pcs`
+const visits = (n: number) => `${num(n)} orang`
 
-export default async function AdminDashboard() {
+function Delta({ value, label }: { value: number | null | undefined; label: string | null }) {
+  if (value === null || value === undefined) return null
+  const up = value >= 0
+  return (
+    <span className={`admin-delta ${up ? "is-up" : "is-down"}`} title={label ?? undefined}>
+      {up ? <TrendingUp aria-hidden="true" /> : <TrendingDown aria-hidden="true" />}
+      {value > 0 ? "+" : ""}{value.toLocaleString("id-ID")}%
+    </span>
+  )
+}
+
+export default async function AdminDashboard({ searchParams }: { searchParams: Promise<{ periode?: string; bulan?: string }> }) {
   await requireAdmin()
-  const today = startOfDayWIB()
-  const month = startOfMonthWIB()
-  const chartFrom = new Date(today.getTime() - (DAYS - 1) * 86_400_000)
-  const active = { status: { not: "CANCELLED" as const } }
+  const sp = await searchParams
+  const d = await dashboardData(sp.periode, sp.bulan)
+  const { kpi, period } = d
+  const cmp = period.compareLabel
 
-  const [todaySum, monthSum, unpaid, lowStock, monthItems, chartOrders, recent, stockAgg] = await Promise.all([
-    db.order.aggregate({ where: { ...active, createdAt: { gte: today } }, _sum: { totalAmount: true }, _count: true }),
-    db.order.aggregate({ where: { ...active, createdAt: { gte: month } }, _sum: { totalAmount: true }, _count: true }),
-    db.order.aggregate({ where: { status: "PENDING" }, _sum: { totalAmount: true }, _count: true }),
-    db.product.findMany({ where: { stock: { lte: LOW_STOCK } }, orderBy: [{ stock: "asc" }, { name: "asc" }], take: 8, select: { id: true, name: true, stock: true } }),
-    db.orderItem.findMany({
-      where: { order: { ...active, createdAt: { gte: month } } },
-      select: { productId: true, quantity: true, price: true, product: { select: { name: true } } },
-    }),
-    db.order.findMany({ where: { ...active, createdAt: { gte: chartFrom } }, select: { createdAt: true, totalAmount: true } }),
-    db.order.findMany({ orderBy: { createdAt: "desc" }, take: 6, include: { _count: { select: { items: true } } } }),
-    db.product.findMany({ select: { stock: true, price: true } }),
-  ])
-
-  const top = [...monthItems.reduce((map, i) => {
-    const row = map.get(i.productId) ?? { name: i.product.name, qty: 0, revenue: 0 }
-    row.qty += i.quantity
-    row.revenue += i.quantity * Number(i.price)
-    return map.set(i.productId, row)
-  }, new Map<string, { name: string; qty: number; revenue: number }>()).values()].sort((a, b) => b.qty - a.qty).slice(0, 5)
-
-  const days = Array.from({ length: DAYS }, (_, i) => {
-    const date = new Date(chartFrom.getTime() + i * 86_400_000)
-    return { key: toDateInputWIB(date), date, total: 0 }
-  })
-  const dayIndex = new Map(days.map((d, i) => [d.key, i]))
-  for (const o of chartOrders) {
-    const i = dayIndex.get(toDateInputWIB(o.createdAt))
-    if (i !== undefined) days[i].total += Number(o.totalAmount)
-  }
-  const maxDay = Math.max(1, ...days.map((d) => d.total))
-  const chartTotal = days.reduce((s, d) => s + d.total, 0)
-  const stockValue = stockAgg.reduce((s, p) => s + p.stock * Number(p.price), 0)
-  const monthName = new Intl.DateTimeFormat("id-ID", { month: "long", timeZone: "Asia/Jakarta" }).format(today)
+  const kpis = [
+    { icon: Wallet, tone: "gold", label: "Pendapatan", value: <CountUp value={kpi.revenue.value} format="rupiah" />, delta: kpi.revenue.change, sub: cmp ?? "total periode ini" },
+    { icon: TrendingUp, tone: "green", label: "Laba kotor", value: <CountUp value={kpi.profit.value} format="rupiah" />, delta: kpi.profit.change, sub: `margin ${kpi.profit.margin}%` },
+    { icon: ReceiptText, tone: "blue", label: "Transaksi", value: <CountUp value={kpi.orders.value} />, delta: kpi.orders.change, sub: `${pcs(kpi.pcs.value)} komponen terjual` },
+    { icon: ShoppingBag, tone: "violet", label: "Rata-rata / transaksi", value: <CountUp value={kpi.average.value} format="rupiah" />, delta: kpi.average.change, sub: "nilai belanja per pembeli" },
+    {
+      icon: Eye,
+      tone: "cyan",
+      label: "Pengunjung web",
+      value: <CountUp value={kpi.visitors.value} />,
+      delta: kpi.visitors.change,
+      sub: `${num(kpi.visitors.views)} kunjungan halaman${kpi.conversion !== null ? ` · konversi ${kpi.conversion}%` : ""}`,
+    },
+  ]
 
   return (
     <div className="admin-page">
       <header className="admin-page-head">
         <div>
           <h1>Dashboard</h1>
-          <p>{new Intl.DateTimeFormat("id-ID", { dateStyle: "full", timeZone: "Asia/Jakarta" }).format(new Date())}</p>
+          <div className="admin-head-meta">
+            <span>{period.label}</span>
+            {cmp ? (
+              <>
+                <span className="admin-dot-sep" aria-hidden="true" />
+                <span>persentase {cmp}</span>
+              </>
+            ) : null}
+            {kpi.pending.count ? (
+              <Link href="/admin/transaksi?status=PENDING" className="admin-head-alert">
+                <Clock3 aria-hidden="true" /> {kpi.pending.count} belum dibayar · {rupiah(kpi.pending.value)}
+              </Link>
+            ) : null}
+          </div>
         </div>
-        <Link href="/admin/transaksi/baru" className="admin-btn is-primary"><Plus aria-hidden="true" /> Catat transaksi</Link>
+        <div className="admin-head-actions">
+          <PeriodPicker current={period.key === "custom" ? "" : period.key} month={period.month} months={d.months.map((m) => ({ value: m, label: monthLabel(m) }))} />
+          <Link href="/admin/transaksi/baru" className="admin-btn is-primary"><Plus aria-hidden="true" /> Catat transaksi</Link>
+        </div>
       </header>
 
-      <div className="admin-stats admin-stagger">
-        <div className="admin-stat is-gold">
-          <i className="admin-stat-icon"><Wallet aria-hidden="true" /></i>
-          <span>Omzet hari ini</span>
-          <strong><CountUp value={Number(todaySum._sum.totalAmount ?? 0)} format="rupiah" /></strong>
-          <small>{todaySum._count} transaksi</small>
-        </div>
-        <div className="admin-stat is-green">
-          <i className="admin-stat-icon"><CalendarRange aria-hidden="true" /></i>
-          <span>Omzet {monthName}</span>
-          <strong><CountUp value={Number(monthSum._sum.totalAmount ?? 0)} format="rupiah" /></strong>
-          <small>{monthSum._count} transaksi</small>
-        </div>
-        <Link href="/admin/transaksi?status=PENDING" className="admin-stat is-link is-amber">
-          <i className="admin-stat-icon"><Clock3 aria-hidden="true" /></i>
-          <span>Belum dibayar</span>
-          <strong><CountUp value={Number(unpaid._sum.totalAmount ?? 0)} format="rupiah" /></strong>
-          <small>{unpaid._count} transaksi</small>
-        </Link>
-        <Link href="/admin/produk" className="admin-stat is-link is-blue">
-          <i className="admin-stat-icon"><Package aria-hidden="true" /></i>
-          <span>Nilai stok</span>
-          <strong><CountUp value={stockValue} format="rupiah" /></strong>
-          <small>{stockAgg.reduce((s, p) => s + p.stock, 0)} barang di gudang</small>
-        </Link>
+      <div className="admin-kpis admin-stagger">
+        {kpis.map(({ icon: Icon, tone, label, value, delta, sub }) => (
+          <div key={label} className={`admin-kpi is-${tone}`}>
+            <div className="admin-kpi-top">
+              <i><Icon aria-hidden="true" /></i>
+              <Delta value={delta} label={cmp} />
+            </div>
+            <span>{label}</span>
+            <strong>{value}</strong>
+            <small>{sub}</small>
+          </div>
+        ))}
       </div>
 
-      <div className="admin-columns is-wide-left admin-stagger">
-        <section className="admin-card">
-          <h2>Penjualan {DAYS} hari terakhir <small>{rupiah(chartTotal)}</small></h2>
-          <div className="admin-chart" role="img" aria-label={`Grafik omzet harian ${DAYS} hari terakhir, total ${rupiah(chartTotal)}`}>
-            {days.map((d, i) => (
-              <div key={d.key} className="admin-chart-col" style={{ "--i": i } as React.CSSProperties}>
-                <span className="admin-chart-tip">{formatDate(d.date)}<b>{rupiah(d.total)}</b></span>
-                <div className="admin-chart-bar" style={{ height: `${(d.total / maxDay) * 100}%` }} data-empty={d.total === 0 || undefined} />
-                <span>{Number(d.key.slice(8))}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+      <section className="admin-card">
+        <h2>Penjualan per {period.bucket === "day" ? "tanggal" : "bulan"} <small>{period.label}</small></h2>
+        <SalesChart
+          points={d.points}
+          totals={{ revenue: kpi.revenue.value, profit: kpi.profit.value, orders: kpi.orders.value, visitors: kpi.visitors.value }}
+          changes={{ revenue: kpi.revenue.change, profit: kpi.profit.change, orders: kpi.orders.change, visitors: kpi.visitors.change }}
+          compareLabel={cmp}
+        />
+      </section>
 
+      <div className="admin-columns admin-stagger">
         <section className="admin-card">
-          <h2>Stok menipis <small>≤ {LOW_STOCK}</small></h2>
-          {lowStock.length ? (
-            <ul className="admin-list admin-stagger">
-              {lowStock.map((p) => (
+          <h2>Komponen terlaris <small>berdasarkan jumlah terjual</small></h2>
+          <BarList rows={d.topQty} format={pcs} tone="gold" empty="Belum ada komponen terjual di periode ini." />
+        </section>
+        <section className="admin-card">
+          <h2>Pendapatan per item <small>porsi dari total pendapatan</small></h2>
+          <BarList rows={d.topRevenue} format={rupiah} tone="green" empty="Belum ada pendapatan di periode ini." />
+        </section>
+      </div>
+
+      <div className="admin-columns is-three admin-stagger">
+        <section className="admin-card">
+          <h2>Pendapatan per kategori</h2>
+          <Donut data={d.categories} centerLabel="Total" />
+        </section>
+        <section className="admin-card admin-mix-card">
+          <h2>Komponen vs jasa</h2>
+          <ShareBar parts={d.mix} format={rupiah} colors={["#3987e5", "#9085e9"]} />
+          <h2 className="admin-mix-sub">Metode pembayaran</h2>
+          <ShareBar parts={d.payments} format={rupiah} colors={["#199e70", "#3987e5", "#c98500", "#d55181"]} />
+        </section>
+        <section className="admin-card">
+          <h2>Pembeli teratas</h2>
+          <BarList rows={d.buyers} format={rupiah} tone="blue" empty="Belum ada pembeli di periode ini." />
+        </section>
+      </div>
+
+      <section className="admin-card admin-visitors">
+        <h2>
+          Pengunjung web <small>{period.label}</small>
+        </h2>
+        {d.visitors.views ? (
+          <div className="admin-visitors-grid">
+            <div className="admin-visitors-stats">
+              <div><span>Pengunjung unik</span><strong>{num(kpi.visitors.value)}</strong></div>
+              <div><span>Kunjungan halaman</span><strong>{num(d.visitors.views)}</strong></div>
+              <div><span>Halaman / pengunjung</span><strong>{kpi.visitors.value ? (d.visitors.views / kpi.visitors.value).toLocaleString("id-ID", { maximumFractionDigits: 1 }) : 0}</strong></div>
+              <div><span>Dari HP</span><strong>{Math.round(d.visitors.mobileShare)}%</strong></div>
+            </div>
+            <div>
+              <h3>Halaman terpopuler</h3>
+              <BarList rows={d.visitors.topPages} format={visits} tone="violet" empty="—" />
+            </div>
+            <div>
+              <h3>Sumber kunjungan</h3>
+              <ShareBar parts={d.visitors.referrers} format={(n) => `${num(n)} kunjungan`} colors={["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181"]} />
+            </div>
+          </div>
+        ) : (
+          <p className="admin-muted">
+            Belum ada kunjungan tercatat di periode ini. Pencatatan aktif di situs live (microim.vercel.app) setelah versi terbaru di-deploy.
+            Halaman admin dan bot tidak ikut dihitung.
+          </p>
+        )}
+      </section>
+
+      <div className="admin-columns admin-stagger">
+        <section className="admin-card">
+          <h2>Stok menipis <small>≤ {d.threshold} · <Link href="/admin/produk?status=menipis" className="admin-link">Kelola <ArrowRight aria-hidden="true" /></Link></small></h2>
+          {d.lowStock.length ? (
+            <ul className="admin-list">
+              {d.lowStock.map((p) => (
                 <li key={p.id}>
-                  <Link href={`/admin/produk/${p.id}`}>{p.name}</Link>
-                  <span className="admin-stock is-low">{p.stock}</span>
+                  <Link href={`/admin/produk/${p.id}`}><Package aria-hidden="true" className="admin-list-icon" /> {p.name}</Link>
+                  <span className={`admin-status is-${p.stock <= 0 ? "habis" : "menipis"}`}>{p.stock <= 0 ? "Habis" : `Sisa ${p.stock}`}</span>
                 </li>
               ))}
             </ul>
           ) : (
             <p className="admin-muted">Semua stok aman.</p>
           )}
-          {lowStock.some((p) => p.stock === 0) ? (
-            <p className="admin-hint is-error"><AlertTriangle aria-hidden="true" /> Ada produk yang habis.</p>
-          ) : null}
-        </section>
-      </div>
-
-      <div className="admin-columns admin-stagger">
-        <section className="admin-card">
-          <h2>Terlaris bulan ini</h2>
-          {top.length ? (
-            <ol className="admin-list is-ranked admin-stagger">
-              {top.map((p) => (
-                <li key={p.name}>
-                  <span>{p.name}</span>
-                  <span className="admin-muted">{p.qty} terjual · {rupiah(p.revenue)}</span>
-                </li>
-              ))}
-            </ol>
-          ) : (
-            <p className="admin-muted">Belum ada penjualan bulan ini.</p>
-          )}
+          {d.lowStock.some((p) => p.stock <= 0) ? <p className="admin-hint is-error"><AlertTriangle aria-hidden="true" /> Ada produk yang habis, segera restock.</p> : null}
         </section>
         <section className="admin-card">
           <h2>Transaksi terbaru <Link href="/admin/transaksi" className="admin-link">Semua <ArrowRight aria-hidden="true" /></Link></h2>
-          {recent.length ? (
-            <ul className="admin-list admin-stagger">
-              {recent.map((o) => (
+          {d.recent.length ? (
+            <ul className="admin-list">
+              {d.recent.map((o) => (
                 <li key={o.id}>
                   <Link href={`/admin/transaksi/${o.id}`}>
                     {o.customerName}
-                    <small className="admin-muted"> · {formatDate(o.createdAt)} · {o._count.items} jenis</small>
+                    <small className="admin-muted"> · {formatDate(o.createdAt)} · {o._count.items} item</small>
                   </Link>
                   <span className="admin-list-end"><StatusBadge status={o.status} /> {rupiah(o.totalAmount)}</span>
                 </li>

@@ -10,7 +10,9 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "node scripts/seed.mjs",
-    "admin:create": "node scripts/create-admin.mjs"
+    "admin:create": "node scripts/create-admin.mjs",
+    "db:import": "node scripts/import-spreadsheet.mjs",
+    "db:import-transaksi": "node scripts/import-transaksi.mjs"
   },
   "dependencies": {
     "@prisma/client": "6.19.3",
