@@ -6,6 +6,8 @@ import { getLowStockThreshold, goodsOnly } from "@/lib/admin/settings"
 import { AdminShell, SIDEBAR_COOKIE } from "@/components/admin/admin-shell"
 import "../admin.css"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: { default: "Admin", template: "%s · Admin Microim" },
   robots: { index: false, follow: false },
@@ -16,8 +18,8 @@ export default async function AdminPanelLayout({ children }: { children: React.R
   const threshold = await getLowStockThreshold()
   const [cookieStore, pending, lowStock] = await Promise.all([
     cookies(),
-    db.order.count({ where: { status: "PENDING" } }),
-    db.product.count({ where: { ...goodsOnly, stock: { lte: threshold } } }),
+    db.order.count({ where: { status: "PENDING" } }).catch(() => 0),
+    db.product.count({ where: { ...goodsOnly, stock: { lte: threshold } } }).catch(() => 0),
   ])
 
   return (

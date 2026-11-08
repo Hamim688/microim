@@ -9,7 +9,12 @@ export function proxy(request: NextRequest) {
   const loggedIn = Boolean(verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value))
   // Halaman login selalu boleh dibuka; ia sendiri yang mengalihkan admin yang sudah masuk.
   if (pathname === "/admin/login") return NextResponse.next()
-  if (!loggedIn) return NextResponse.redirect(new URL("/admin/login", request.url))
+  if (!loggedIn) {
+    const loginUrl = request.nextUrl.clone()
+    loginUrl.pathname = "/admin/login"
+    loginUrl.search = ""
+    return NextResponse.redirect(loginUrl)
+  }
   return NextResponse.next()
 }
 

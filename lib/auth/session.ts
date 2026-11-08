@@ -6,15 +6,21 @@ import { db } from "@/lib/db"
 import { SESSION_COOKIE, SESSION_TTL_REMEMBER, SESSION_TTL_SHORT, createSessionToken, getAuthSecret, verifySessionToken } from "@/lib/auth/token"
 
 export const getAdmin = cache(async () => {
-  const token = (await cookies()).get(SESSION_COOKIE)?.value
-  const session = verifySessionToken(token)
-  if (!session) return null
-  const user = await db.user.findUnique({
-    where: { id: session.uid },
-    select: { id: true, name: true, email: true, role: true },
-  })
-  if (!user || user.role !== "ADMIN") return null
-  return user
+  try {
+    const token = (await cookies()).get(SESSION_COOKIE)?.value
+    const session = verifySessionToken(token)
+    if (!session) return null
+    const user = await db.user.findUnique({
+      where: { id: session.uid },
+      select: { id: true, name: true, email: true, role: true },
+    })
+    if (!user || user.role !== "ADMIN") return null
+    return user
+  } catch (error) {
+    if ((error as { digest?: string })?.digest === "DYNAMIC_SERVER_USAGE") throw error
+    console.error("getAdmin error:", error)
+    return null
+  }
 })
 
 export async function requireAdmin() {

@@ -37,10 +37,10 @@ export async function dashboardData(periodKey?: string, month?: string) {
     safeViews(inRange.createdAt),
     period.prevFrom ? safeViews(range(period.prevFrom, period.prevTo)) : Promise.resolve(null),
     getLowStockThreshold(),
-    db.$queryRaw<{ ym: string }[]>`SELECT DISTINCT to_char("createdAt" AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Jakarta', 'YYYY-MM') AS ym FROM "Order" ORDER BY ym DESC`,
-    db.product.findMany({ where: goodsOnly, select: { id: true, name: true, stock: true }, orderBy: [{ stock: "asc" }, { name: "asc" }] }),
-    db.order.findMany({ orderBy: { createdAt: "desc" }, take: 6, include: { _count: { select: { items: true } } } }),
-    db.order.aggregate({ where: { status: "PENDING" }, _sum: { totalAmount: true }, _count: true }),
+    db.$queryRaw<{ ym: string }[]>`SELECT DISTINCT to_char("createdAt" AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Jakarta', 'YYYY-MM') AS ym FROM "Order" ORDER BY ym DESC`.catch(() => [] as { ym: string }[]),
+    db.product.findMany({ where: goodsOnly, select: { id: true, name: true, stock: true }, orderBy: [{ stock: "asc" }, { name: "asc" }] }).catch(() => []),
+    db.order.findMany({ orderBy: { createdAt: "desc" }, take: 6, include: { _count: { select: { items: true } } } }).catch(() => []),
+    db.order.aggregate({ where: { status: "PENDING" }, _sum: { totalAmount: true }, _count: true }).catch(() => ({ _sum: { totalAmount: null }, _count: 0 })),
   ])
 
   // --- angka utama ---

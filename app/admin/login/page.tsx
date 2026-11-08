@@ -8,6 +8,7 @@ import { AdminAurora } from "@/components/admin/aurora"
 import { LoginForm } from "./login-form"
 import "../admin.css"
 
+export const dynamic = "force-dynamic"
 export const metadata: Metadata = { title: "Masuk Admin", robots: { index: false, follow: false } }
 
 export default async function AdminLoginPage() {
