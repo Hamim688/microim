@@ -19,7 +19,9 @@ export function Donut({ data, centerLabel }: { data: Slice[]; centerLabel: strin
   const gap = data.length > 1 ? 3 : 0
   const color = (d: Slice, i: number) => (d.name === "Lainnya" ? OTHER : CATEGORICAL[i % CATEGORICAL.length])
   const active = hover !== null ? data[hover] : null
-  let offset = 0
+  // Titik awal tiap irisan = jumlah panjang irisan sebelumnya (dihitung sebelum render).
+  const lengths = data.map((d) => (total ? (d.value / total) * C : 0))
+  const offsets = lengths.map((_, i) => lengths.slice(0, i).reduce((s, l) => s + l, 0))
 
   if (!total) return <p className="admin-muted">Belum ada pendapatan di periode ini.</p>
 
@@ -29,7 +31,8 @@ export function Donut({ data, centerLabel }: { data: Slice[]; centerLabel: strin
         <svg viewBox="0 0 180 180" role="img" aria-label={`Komposisi ${centerLabel.toLowerCase()}`}>
           <circle cx="90" cy="90" r={R} fill="none" stroke="rgba(140,180,240,.08)" strokeWidth="22" />
           {data.map((d, i) => {
-            const len = (d.value / total) * C
+            const len = lengths[i]
+            const offset = offsets[i]
             const dash = Math.max(0, len - gap)
             const el = (
               <motion.circle
@@ -52,7 +55,6 @@ export function Donut({ data, centerLabel }: { data: Slice[]; centerLabel: strin
                 style={{ cursor: "pointer", transition: "stroke-width .2s" }}
               />
             )
-            offset += len
             return el
           })}
         </svg>

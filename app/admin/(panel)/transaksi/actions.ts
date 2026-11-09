@@ -88,8 +88,9 @@ async function nextOrderNumber(tx: Prisma.TransactionClient, date: Date) {
   return `${prefix}${String(seq).padStart(3, "0")}`
 }
 
+/** Segarkan panel admin sekaligus halaman publik (katalog, stok, harga di Beranda & Produk). */
 function refresh() {
-  revalidatePath("/admin", "layout")
+  revalidatePath("/", "layout")
 }
 
 function failure(error: unknown): OrderFormState {

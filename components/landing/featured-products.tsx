@@ -1,17 +1,13 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, MessageCircle } from "lucide-react"
+import { ArrowRight, Cpu, MessageCircle, RotateCcw } from "lucide-react"
 import { whatsappLink } from "@/lib/site"
+import type { CatalogProduct } from "@/lib/catalog"
+import { stockInfo } from "@/components/products/stock"
 import { ScrollReveal } from "@/components/landing/landing-motion"
 
-const products = [
-  { name: "ESP32 Dev Module", category: "MIKROKONTROLER", price: "Rp 100.000", image: "/images/product-esp32.jpg" },
-  { name: "Mobil Kit", category: "KIT", price: "Rp 65.000", image: "/images/product-robot-car-kit.jpg" },
-  { name: "Driver Motor", category: "MODUL", price: "Rp 30.000", image: "/images/product-motor-driver.jpg" },
-  { name: "Servo SG90", category: "SERVO", price: "Rp 25.000", image: "/images/product-sg90.jpg" },
-]
-
-export function FeaturedProducts() {
+export function FeaturedProducts({ products }: { products: CatalogProduct[] }) {
+  if (products.length === 0) return null
   return (
     <section className="featured-products-section" id="products">
       <div className="site-container">
@@ -25,24 +21,35 @@ export function FeaturedProducts() {
         </ScrollReveal>
 
         <div className="featured-products-grid">
-          {products.map((product, index) => (
-            <ScrollReveal key={product.name} delay={index * 0.08}>
-              <article className="featured-product-card">
-                <Link className="featured-product-image" href="/products" aria-label={`Lihat ${product.name}`}>
-                  <Image src={product.image} alt={product.name} width={512} height={279} sizes="(max-width: 760px) 100vw, 33vw" />
-                  <span className="featured-product-category">{product.category}</span>
-                  <span className="featured-product-stock"><i /> STOK TERSEDIA</span>
-                </Link>
-                <div className="featured-product-info">
-                  <h3><Link href="/products">{product.name}</Link></h3>
-                  <div className="featured-product-bottom">
-                    <div><span>HARGA</span><strong>{product.price}</strong></div>
-                    <a className="featured-product-buy" href={whatsappLink(`Halo Microim, saya ingin memesan ${product.name} (${product.price}).`)} target="_blank" rel="noopener noreferrer" aria-label={`Pesan ${product.name} lewat WhatsApp`}><MessageCircle aria-hidden="true" /> PESAN</a>
+          {products.map((product, index) => {
+            const stock = stockInfo(product.stock)
+            return (
+              <ScrollReveal key={product.slug} delay={index * 0.08}>
+                <article className="featured-product-card">
+                  <Link className="featured-product-image" href="/products" aria-label={`Lihat ${product.name}`}>
+                    {product.image ? (
+                      <Image src={product.image} alt={product.name} width={512} height={279} sizes="(max-width: 760px) 100vw, 33vw" />
+                    ) : (
+                      <span className="featured-product-placeholder" aria-hidden="true"><Cpu /></span>
+                    )}
+                    <span className="featured-product-category">{product.category.toUpperCase()}</span>
+                    <span className={`featured-product-stock is-${stock.tone}`}><i /> {stock.label}</span>
+                  </Link>
+                  <div className="featured-product-info">
+                    <h3><Link href="/products">{product.name}</Link></h3>
+                    <div className="featured-product-bottom">
+                      <div><span>HARGA</span><strong>{product.price}</strong></div>
+                      {stock.available ? (
+                        <a className="featured-product-buy" href={whatsappLink(`Halo Microim, saya ingin memesan ${product.name} (${product.price}).`)} target="_blank" rel="noopener noreferrer" aria-label={`Pesan ${product.name} lewat WhatsApp`}><MessageCircle aria-hidden="true" /> PESAN</a>
+                      ) : (
+                        <a className="featured-product-buy is-restock" href={whatsappLink(`Halo Microim, apakah ${product.name} akan restock? Saya berminat membelinya.`)} target="_blank" rel="noopener noreferrer" aria-label={`Tanya restock ${product.name} lewat WhatsApp`}><RotateCcw aria-hidden="true" /> RESTOCK?</a>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </article>
-            </ScrollReveal>
-          ))}
+                </article>
+              </ScrollReveal>
+            )
+          })}
         </div>
       </div>
     </section>

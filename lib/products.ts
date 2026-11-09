@@ -1,8 +1,10 @@
-import type { CatalogProduct } from "@/components/products/product-catalog"
+// Daftar produk awal: dipakai `npm run db:seed` untuk mengisi database, dan sebagai cadangan
+// tampilan bila database tidak bisa diakses. Harga & stok yang tampil di situs diambil dari
+// database (kelola lewat /admin/produk), bukan dari sini.
+// Format setiap baris jangan diubah: scripts/seed.mjs membacanya dengan pola teks.
+type SeedProduct = { name: string; cat: string; price: string; stock: number; image: string }
 
-// Satu sumber data produk: dipakai halaman Produk dan pita berjalan di Beranda.
-// Tambah/ubah produk cukup di sini.
-export const products: CatalogProduct[] = [
+export const products: SeedProduct[] = [
   { name: "Servo SG90", cat: "Servo", price: "Rp 25.000", stock: 65, image: "/images/product-sg90.jpg" },
   { name: "ESP32 Dev Module", cat: "Mikrokontroler", price: "Rp 100.000", stock: 45, image: "/images/product-esp32.jpg" },
   { name: "Motor DC Gearbox TT", cat: "Aktuator", price: "Rp 25.000", stock: 50, image: "/images/product-gear-motor.jpg" },
@@ -22,16 +24,3 @@ export const products: CatalogProduct[] = [
   { name: "Sensor SRF04", cat: "Sensor", price: "Rp 20.000", stock: 75, image: "/images/product-ultrasonic.jpg" },
   { name: "Battery Rechargeable", cat: "Catu Daya", price: "Rp 18.000", stock: 50, image: "/images/product-battery-rechargeable.jpg" },
 ]
-
-/** Nama produk untuk pita berjalan: tanpa kategori Jasa, varian dengan foto sama cukup sekali. */
-export function marqueeProductNames(): string[] {
-  const seenImages = new Set<string>()
-  return products
-    .filter((product) => product.cat !== "Jasa")
-    .filter((product) => {
-      if (seenImages.has(product.image)) return false
-      seenImages.add(product.image)
-      return true
-    })
-    .map((product) => product.name)
-}

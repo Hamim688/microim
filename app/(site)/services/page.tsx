@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Cpu, MessageCircle, Smartphone, Terminal } from "lucide-react"
+import { Cpu, MessageCircle, Package, Terminal } from "lucide-react"
 import { PageHero } from "@/components/layout/page-hero"
 import { OrderSteps } from "@/components/landing/order-steps"
 import { LandingMotion, ScrollReveal } from "@/components/landing/landing-motion"
@@ -7,7 +7,7 @@ import { whatsappLink } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Layanan",
-  description: "Jasa perakitan perangkat IoT, pemrograman sistem tertanam, dan pembuatan aplikasi pemantau dari Microim.",
+  description: "Jasa perakitan perangkat IoT, pemrograman mikrokontroler (Arduino, ESP32), dan paket komponen proyek dari Microim.",
 }
 
 const services = [
@@ -15,19 +15,19 @@ const services = [
     code: "RAKIT.01",
     icon: Cpu,
     title: "Perakitan Perangkat & IoT",
-    body: "Perancangan skematik, tata letak PCB khusus, pemilihan sensor dan aktuator, serta integrasi modul nirkabel (LoRa, ESP32, GSM/seluler).",
+    body: "Pemilihan komponen, wiring, penyolderan, dan perakitan rangkaian mikrokontroler beserta sensor, aktuator, dan catu daya. Setiap perangkat dites dulu sebelum diserahkan.",
   },
   {
     code: "PROGRAM.02",
     icon: Terminal,
-    title: "Pemrograman Sistem Tertanam",
-    body: "Pengembangan perangkat lunak tertanam C/C++ yang deterministik dengan FreeRTOS, penghematan daya baterai, dan pembaruan jarak jauh yang aman.",
+    title: "Pemrograman Mikrokontroler",
+    body: "Kode program Arduino/ESP32 (C/C++) untuk membaca sensor, menggerakkan motor dan servo, hingga mengirim data ke dashboard IoT lewat WiFi, lengkap dengan penjelasan alurnya.",
   },
   {
-    code: "APLIKASI.03",
-    icon: Smartphone,
-    title: "Pembuatan Aplikasi Seluler",
-    body: "Aplikasi lintas platform untuk menerima telemetri sensor melalui Bluetooth hemat energi (BLE), REST API, atau MQTT WebSocket.",
+    code: "PAKET.03",
+    icon: Package,
+    title: "Komponen & Paket Proyek",
+    body: "Komponen ready stock dengan harga mahasiswa, plus bundling paket proyek (mis. mobil kit) yang sudah dicek kecocokannya, sehingga tidak perlu takut salah beli modul.",
   },
 ]
 

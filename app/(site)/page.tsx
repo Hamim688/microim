@@ -10,17 +10,22 @@ import { TechMarquee } from "@/components/landing/tech-marquee"
 import { OrderSteps } from "@/components/landing/order-steps"
 import { SocialSection } from "@/components/landing/social-section"
 import { LandingMotion } from "@/components/landing/landing-motion"
+import { getFeaturedProducts, getMarqueeNames } from "@/lib/catalog"
 
-export default function HomePage() {
+// Produk unggulan & pita berjalan memakai stok/harga terbaru dari database.
+export const revalidate = 300
+
+export default async function HomePage() {
+  const [featured, marquee] = await Promise.all([getFeaturedProducts(), getMarqueeNames()])
   return (
     <LandingMotion>
       <div className="landing-page">
         <Hero />
-        <TechMarquee />
+        <TechMarquee names={marquee} />
         <AboutSection />
         <ValuesSection />
         <ServicesPreview />
-        <FeaturedProducts />
+        <FeaturedProducts products={featured} />
         <OrderSteps />
         <EngineeringEdge />
         <ProjectShowcase />

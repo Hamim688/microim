@@ -27,7 +27,7 @@ type Mode = "qty" | "revenue" | "buyer"
  * baris lain meredup. Batang tumbuh saat kartu terlihat di layar.
  */
 export function RankList({
-  rows,
+  rows: allRows,
   mode,
   tone,
   summary,
@@ -44,7 +44,7 @@ export function RankList({
 }) {
   const [active, setActive] = useState<number | null>(null)
   const reduce = useReducedMotion()
-  rows = rows.slice(0, SLOTS)
+  const rows = allRows.slice(0, SLOTS)
   if (!rows.length) return <p className="admin-muted admin-rank-empty">{empty}</p>
   const max = Math.max(...rows.map((r) => r.value), 1)
   const fmt = (r: RankEntry) => (mode === "qty" ? `${count(r.value)} pcs` : rp(r.value))

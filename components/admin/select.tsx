@@ -140,7 +140,7 @@ export function Select({
           } else if (e.key === "Tab") {
             hide(false)
           } else if (e.key.length === 1) {
-            const now = Date.now()
+            const now = e.timeStamp
             typed.current = { text: (now - typed.current.at < 600 ? typed.current.text : "") + e.key.toLowerCase(), at: now }
             const hit = options.findIndex((o) => o.label.toLowerCase().startsWith(typed.current.text))
             if (hit >= 0) setActive(hit)

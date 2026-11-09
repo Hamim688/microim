@@ -108,7 +108,6 @@ export function Combobox({
     setActive(i)
   }
 
-  let lastGroup: string | undefined
   return (
     <div className={`admin-combo${open ? " is-open" : ""}${invalid ? " is-invalid" : ""}`}>
       <Search aria-hidden="true" className="admin-combo-icon" />
@@ -156,8 +155,7 @@ export function Combobox({
       <div ref={popRef} id={`${id}-list`} popover="manual" role="listbox" aria-label={label} className="admin-select-pop admin-combo-pop">
         {filtered.length === 0 ? <div className="admin-combo-empty">Tidak ada yang cocok dengan “{query}”.</div> : null}
         {filtered.map((o, i) => {
-          const header = o.group && o.group !== lastGroup ? o.group : null
-          lastGroup = o.group
+          const header = o.group && o.group !== filtered[i - 1]?.group ? o.group : null
           return (
             <div key={o.value}>
               {header ? <div className="admin-combo-group">{header}</div> : null}

@@ -4,37 +4,38 @@ import { PageHero } from "@/components/layout/page-hero"
 import { LandingMotion, ScrollReveal } from "@/components/landing/landing-motion"
 import { whatsappLink } from "@/lib/site"
 
+// Contoh proyek yang bisa dirakit dari komponen yang tersedia di katalog Microim.
 const projects = [
   {
-    title: "Telemetri Kualitas Air & Oksigen Terlarut",
-    category: "IoT",
-    desc: "Sistem pemantauan tambak melalui LoRaWAN jarak jauh dengan baterai panel surya yang bertahan hingga 14 hari.",
-    tech: ["ESP32", "LoRaWAN", "FreeRTOS", "MQTT"],
-  },
-  {
-    title: "Kendaraan Logistik Otomatis & Penghindar Rintangan",
+    title: "Smart Car 2WD Radar Scanner",
     category: "Robotika",
-    desc: "Robot pengangkut barang di gudang dengan sensor ultrasonik dan LiDAR berbasis mikrokontroler presisi tinggi.",
-    tech: ["STM32", "Pengendali H-Bridge", "Pengendali PID", "BLE 5.0"],
+    desc: "Mobil robot yang memindai sekitarnya hingga 180° dengan sensor ultrasonik di atas servo, lalu menghindari rintangan secara otomatis.",
+    tech: ["ESP32", "Servo SG90", "Sensor SRF04", "Driver L298N"],
   },
   {
-    title: "Pencatat Suhu Rantai Dingin",
-    category: "Sistem Tertanam",
-    desc: "Pencatat data berakurasi tinggi dengan enkripsi memori internal dan sinkronisasi NFC ke ponsel pintar.",
-    tech: ["ATmega328P", "DS18B20", "EEPROM", "NFC"],
+    title: "Robot Line Follower",
+    category: "Robotika",
+    desc: "Robot pengikut garis untuk praktikum dan lomba: membaca lintasan dengan sensor garis dan mengatur kecepatan dua motor DC.",
+    tech: ["Arduino / ESP32", "Sensor Garis", "Motor DC Gearbox TT", "Driver L298N"],
+  },
+  {
+    title: "Pemantau Ruangan Berbasis IoT",
+    category: "IoT",
+    desc: "Perangkat pembaca suhu, kelembapan, atau jarak yang mengirim data lewat WiFi ke dashboard di HP, cocok untuk tugas mata kuliah IoT.",
+    tech: ["ESP32", "Sensor", "WiFi", "Dashboard IoT"],
   },
 ]
 
 export const metadata: Metadata = {
   title: "Proyek",
-  description: "Contoh bidang proyek IoT, robotika, dan sistem tertanam yang bisa dikerjakan bersama Microim.",
+  description: "Contoh proyek IoT dan robotika (smart car, line follower, pemantau IoT) yang bisa dirakit dan diprogram bersama Microim.",
 }
 
 export default function ProjectsPage() {
   return (
     <LandingMotion>
-      <PageHero kicker="CONTOH BIDANG PROYEK" title={<>Proyek Rekayasa &amp; <span>Purwarupa</span></>}>
-        Gambaran jenis proyek perangkat keras, mikrokontroler, dan otomasi yang bisa kami bantu wujudkan. Punya ide serupa? Konsultasikan saja.
+      <PageHero kicker="CONTOH PROYEK" title={<>Proyek Rekayasa &amp; <span>Purwarupa</span></>}>
+        Contoh proyek yang bisa kami rakit dan program dari komponen di katalog Microim. Punya ide serupa atau tugas dengan spesifikasi berbeda? Konsultasikan saja.
       </PageHero>
       <div className="site-container page-body">
         <div className="projects-page-grid">

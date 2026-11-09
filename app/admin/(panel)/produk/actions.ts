@@ -46,8 +46,9 @@ async function uniqueSlug(name: string, tx: Prisma.TransactionClient, exceptId?:
   }
 }
 
+/** Segarkan panel admin sekaligus halaman publik (katalog, stok, harga di Beranda & Produk). */
 function refresh() {
-  revalidatePath("/admin", "layout")
+  revalidatePath("/", "layout")
 }
 
 export async function createProduct(_state: ProductFormState, formData: FormData): Promise<ProductFormState> {

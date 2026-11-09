@@ -14,7 +14,7 @@ export function CTASection() {
           <Link className="button-primary" href="/contact">Mulai Proyek <ArrowUpRight aria-hidden="true" /></Link>
           <Link className="button-secondary" href="/contact"><MessageSquareText aria-hidden="true" /> Kirim Pengajuan Proyek</Link>
         </div>
-        <div className="cta-points"><span>Perangkat Keras &amp; IoT</span><i /><span>Sistem Tertanam</span><i /><span>Aplikasi Seluler</span></div>
+        <div className="cta-points"><span>Perangkat Keras &amp; IoT</span><i /><span>Pemrograman Mikrokontroler</span><i /><span>Komponen Ready Stock</span></div>
       </div>
     </section>
   )

@@ -11,6 +11,7 @@ export const siteContact = {
   email: "microimofficial@gmail.com",
   whatsappDisplay: "+62 851-3747-3695",
   whatsappNumber: "6285137473695",
+  location: "Semarang, Jawa Tengah · COD di area kampus",
 }
 
 // Kosongkan nilai `url` untuk menyembunyikan tautan di situs.

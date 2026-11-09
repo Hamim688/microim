@@ -16,18 +16,14 @@ export function CountUp({ value, format = "number" }: { value: number; format?: 
   const [shown, setShown] = useState(reduce ? value : 0)
 
   useEffect(() => {
-    if (!inView) return
-    if (reduce) {
-      setShown(value)
-      return
-    }
+    if (!inView || reduce) return
     const controls = animate(0, value, { duration: 1.1, ease: [0.16, 1, 0.3, 1], onUpdate: (v) => setShown(v) })
     return () => controls.stop()
   }, [inView, value, reduce])
 
   return (
     <span ref={ref} className="admin-num">
-      {formatters[format].format(Math.round(shown))}
+      {formatters[format].format(Math.round(reduce ? value : shown))}
     </span>
   )
 }

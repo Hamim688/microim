@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react"
-import { marqueeProductNames } from "@/lib/products"
 import { siteConfig } from "@/lib/site"
 
 // Kecepatan pita konstan berapa pun jumlah isinya (detik per item).
@@ -9,17 +8,18 @@ const TAGLINE_EVERY = 8
 
 type MarqueeItem = { label: string; tagline?: boolean }
 
-function buildItems(): MarqueeItem[] {
+function buildItems(names: string[]): MarqueeItem[] {
   const items: MarqueeItem[] = []
-  marqueeProductNames().forEach((name, index) => {
+  names.forEach((name, index) => {
     if (index % TAGLINE_EVERY === 0) items.push({ label: siteConfig.tagline, tagline: true })
     items.push({ label: name })
   })
   return items
 }
 
-export function TechMarquee() {
-  const items = buildItems()
+export function TechMarquee({ names }: { names: string[] }) {
+  const items = buildItems(names)
+  if (items.length === 0) return null
   const row = [...items, ...items]
   const style = { "--marquee-duration": `${items.length * SECONDS_PER_ITEM}s` } as CSSProperties
 

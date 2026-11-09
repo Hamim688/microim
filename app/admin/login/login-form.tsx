@@ -23,6 +23,8 @@ export function LoginForm() {
     try {
       const saved = localStorage.getItem(EMAIL_KEY)
       if (saved) {
+        // localStorage hanya ada di browser; dibaca setelah mount agar HTML server & klien sama.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setEmail(saved)
         setRemember(true)
         passwordRef.current?.focus()
