@@ -7,8 +7,10 @@ import { PageTracker } from "@/components/analytics/page-tracker"
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      {/* Untuk pengguna keyboard/pembaca layar: langsung lompat melewati navbar. */}
+      <a href="#konten" className="skip-link">Lewati ke konten</a>
       <Navbar />
-      <main className="flex-1">{children}</main>
+      <main id="konten" tabIndex={-1} className="flex-1">{children}</main>
       <Footer />
       <WhatsappFloat />
       <PageTracker />

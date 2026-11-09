@@ -59,8 +59,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // data-scroll-behavior="smooth": scroll halus tetap untuk lompat ke section, tetapi saat pindah
+  // halaman Next.js langsung ke atas (tanpa ini halaman baru tampak "meluncur dari bawah").
   return (
-    <html lang="id" className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}>
+    <html lang="id" data-scroll-behavior="smooth" className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#071426] text-white selection:bg-[#FFC928] selection:text-[#071426]">
         {children}
       </body>
