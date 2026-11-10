@@ -3,7 +3,7 @@
 import { useRef, useState, type CSSProperties, type KeyboardEvent } from "react"
 import { BrainCircuit, Check, Gauge, Lightbulb, Link2, UsersRound, Zap } from "lucide-react"
 import { motion, type Variants } from "motion/react"
-import { ScrollReveal } from "@/components/landing/landing-motion"
+import { ScrollReveal, useRevealOnScroll } from "@/components/landing/landing-motion"
 
 const values = [
   { letter: "M", title: "Mutu", text: "Memberikan solusi teknologi dengan kualitas yang terukur.", icon: Check },
@@ -15,10 +15,12 @@ const values = [
   { letter: "M", title: "Mudah", text: "Membuat teknologi kompleks terasa lebih mudah digunakan.", icon: UsersRound },
 ]
 
-// Saat bagian ini pertama terlihat, huruf M-I-C-R-O-I-M naik berurutan.
-const wordVariants: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } }
+// Setiap kali masuk layar, huruf M-I-C-R-O-I-M muncul berurutan: naik dari bawah saat di-scroll ke bawah,
+// turun dari atas saat di-scroll ke atas. Reset terjadi diam-diam setelah keluar layar.
+const wordVariants: Variants = { below: {}, above: {}, show: { transition: { staggerChildren: 0.06 } } }
 const letterVariants: Variants = {
-  hidden: { opacity: 0, y: 28 },
+  below: { opacity: 0, y: 28, transition: { duration: 0 } },
+  above: { opacity: 0, y: -28, transition: { duration: 0 } },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 }
 
@@ -29,6 +31,7 @@ const letterVariants: Variants = {
 export function ValuesSection() {
   const [active, setActive] = useState(0)
   const tabs = useRef<(HTMLButtonElement | null)[]>([])
+  const [wordRef, wordState] = useRevealOnScroll<HTMLDivElement>(0.5)
 
   const select = (index: number, focus = false) => {
     setActive(index)
@@ -56,14 +59,14 @@ export function ValuesSection() {
         </ScrollReveal>
 
         <motion.div
+          ref={wordRef}
           className="values-word"
           role="tablist"
           aria-label="Nilai M-I-C-R-O-I-M"
           style={{ "--i": active } as CSSProperties}
           variants={wordVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.5 }}
+          initial="below"
+          animate={wordState}
         >
             {values.map(({ letter, title }, index) => (
               <button

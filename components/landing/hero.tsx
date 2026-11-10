@@ -3,6 +3,7 @@ import Image from "next/image"
 import { GraduationCap, MessageCircle, ShieldCheck, ShoppingBag, Zap } from "lucide-react"
 import { whatsappLink } from "@/lib/site"
 import { Esp32Viewer } from "@/components/landing/esp32-viewer"
+import { HeroReplay } from "@/components/landing/hero-replay"
 
 const heroProof = [
   { label: "Respons Cepat", icon: Zap },
@@ -29,6 +30,7 @@ function HardwareIllustration() {
 export function Hero() {
   return (
     <section className="hero-section" id="home">
+      <HeroReplay />
       <div className="hero-circuit-grid" aria-hidden="true" />
       <div className="hero-pointer-field">
         <div className="site-container hero-grid">

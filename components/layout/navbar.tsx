@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type MouseEvent } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -100,8 +100,18 @@ function activeName(pathname: string, activeSection: string) {
   )
 }
 
+/** true hanya di browser setelah hidrasi (false di server). */
+const noopSubscribe = () => () => {}
+function useIsClient() {
+  return useSyncExternalStore(noopSubscribe, () => true, () => false)
+}
+
 export function Navbar() {
-  const pathname = usePathname()
+  const pathname = usePathname() ?? ""
+  // Status "menu aktif" hanya ditentukan di browser: halaman yang diregenerasi berkala (ISR) bisa dirender
+  // di server tanpa tahu URL-nya, dan React produksi tidak memperbaiki kelas yang berbeda saat hidrasi
+  // (teks menu aktif sempat tertahan abu di atas pil kuning). Pil sendiri juga baru muncul di browser.
+  const isClient = useIsClient()
   const onHome = pathname === "/"
   const [isOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
@@ -120,6 +130,10 @@ export function Navbar() {
   // Sejak HTML awal, teks menu aktif putih (pil belum ada). Fase: 0 = putih, 1 = langsung hitam (tanpa
   // transisi warna), 2 = normal (transisi warna saat pindah menu berlaku lagi).
   const [entryPhase, setEntryPhase] = useState(0)
+  // Di Beranda, pil baru diletakkan setelah scroll spy tahu section yang terlihat (termasuk posisi scroll
+  // yang dipulihkan browser setelah refresh), supaya animasi "muncul" terjadi di menu yang benar.
+  const [spyReady, setSpyReady] = useState(false)
+  const labelTimersStarted = useRef(false)
   // Saat menu diklik, pil langsung pindah ke tujuan dan scroll spy "dikunci"
   // sampai scroll halus selesai, supaya pil tidak mampir ke section yang dilewati.
   const lockRef = useRef<string | null>(null)
@@ -142,27 +156,25 @@ export function Navbar() {
   // menu aktif berganti (di Beranda maupun antar halaman) pil meluncur ke samping. Bila ukuran kapsul
   // berubah (font selesai dimuat, layar diputar, menu HP tampil), pil langsung disesuaikan.
   useLayoutEffect(() => {
+    if (onHome && !spyReady) return
     const update = () => {
       pillBoxes.current.desktop = placePill(desktopNavRef.current, desktopPillRef.current, current, pillBoxes.current.desktop, STRETCH_X, 600, !pillEntered.current)
       if (pillBoxes.current.desktop) pillEntered.current = true
       pillBoxes.current.mobile = placePill(mobileNavRef.current, mobilePillRef.current, current, pillBoxes.current.mobile, STRETCH_Y, 500)
     }
     update()
+    // Teks menu aktif: putih sampai pil muncul, lalu langsung hitam (dihitung dari saat pil diletakkan).
+    if (!labelTimersStarted.current) {
+      labelTimersStarted.current = true
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      const darken = pillEntered.current && !reduceMotion ? LABEL_DARKEN_AFTER : 0
+      window.setTimeout(() => setEntryPhase(1), darken)
+      window.setTimeout(() => setEntryPhase(2), darken + 120)
+    }
     const observer = new ResizeObserver(update)
     for (const nav of [desktopNavRef.current, mobileNavRef.current]) if (nav) observer.observe(nav)
     return () => observer.disconnect()
-  }, [current])
-
-  useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    const darken = pillEntered.current && !reduceMotion ? LABEL_DARKEN_AFTER : 0
-    const toBlack = window.setTimeout(() => setEntryPhase(1), darken)
-    const toNormal = window.setTimeout(() => setEntryPhase(2), darken + 120)
-    return () => {
-      window.clearTimeout(toBlack)
-      window.clearTimeout(toNormal)
-    }
-  }, [])
+  }, [current, onHome, spyReady])
 
   const closeMenu = (returnFocus = false) => {
     setIsOpen(false)
@@ -208,8 +220,21 @@ export function Navbar() {
 
     handleScroll()
     window.addEventListener("scroll", handleScroll, { passive: true })
+
+    let frame = 0
+    const markReady = () => {
+      frame = window.requestAnimationFrame(() => {
+        handleScroll()
+        setSpyReady(true)
+      })
+    }
+    if (document.readyState === "complete") markReady()
+    else window.addEventListener("load", markReady, { once: true })
+
     return () => {
       window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("load", markReady)
+      window.cancelAnimationFrame(frame)
       window.clearTimeout(unlockTimer.current)
     }
   }, [onHome])
@@ -262,8 +287,19 @@ export function Navbar() {
     }
   }, [isOpen])
 
-  const selectSection = (item: NavItem) => {
+  // Di Beranda, link ke "/" dianggap Next.js navigasi ke halaman yang sama sehingga posisi scroll tidak
+  // berubah. Jadi saat sudah di Beranda, "Beranda" & logo langsung menggulir halus ke paling atas.
+  const scrollToTopIfHome = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (!onHome) return
+    event.preventDefault()
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" })
+    if (window.location.hash) window.history.replaceState(null, "", "/")
+  }
+
+  const selectSection = (item: NavItem, event: MouseEvent<HTMLAnchorElement>) => {
     const { sectionId } = item
+    if (sectionId === "home") scrollToTopIfHome(event)
     // Di HP, beri waktu pil emas meluncur ke menu tujuan sebelum menu ditutup.
     window.clearTimeout(closeTimer.current)
     if (isOpen) closeTimer.current = window.setTimeout(() => setIsOpen(false), 380)
@@ -283,15 +319,23 @@ export function Navbar() {
   return (
     <header ref={headerRef} className={headerClass}>
       <div className="site-header-inner">
-        <Link href="/" className="brand-link" aria-label="Beranda Microim" onClick={() => setIsOpen(false)}>
+        <Link
+          href="/"
+          className="brand-link"
+          aria-label="Beranda Microim"
+          onClick={(event) => {
+            setIsOpen(false)
+            scrollToTopIfHome(event)
+          }}
+        >
           <Image src="/logo/logo-baru.png" alt="" width={40} height={40} priority quality={100} />
           <span className="brand-name" aria-hidden="true">Microim</span>
         </Link>
         <nav ref={desktopNavRef} className={`desktop-nav${entryPhase === 0 ? " is-entering is-switching" : entryPhase === 1 ? " is-switching" : ""}`} aria-label="Navigasi utama">
           {navLinks.map((item) => {
-            const active = current === item.name
+            const active = isClient && current === item.name
             return (
-              <Link aria-current={active ? "page" : undefined} className={active ? "active" : ""} data-nav={item.name} href={hrefFor(item)} key={item.name} onClick={() => selectSection(item)}>
+              <Link aria-current={active ? "page" : undefined} className={active ? "active" : ""} data-nav={item.name} href={hrefFor(item)} key={item.name} onClick={(event) => selectSection(item, event)}>
                 <span className="nav-label">{item.name}</span>
               </Link>
             )
@@ -317,9 +361,9 @@ export function Navbar() {
       <div className={`mobile-nav-backdrop${isOpen ? " is-open" : ""}`} aria-hidden="true" onClick={() => closeMenu(true)} />
       <nav ref={mobileNavRef} className={`mobile-nav${isOpen ? " is-open" : ""}`} id="mobile-navigation" aria-label="Navigasi seluler" inert={!isOpen}>
         {navLinks.map((item) => {
-          const active = current === item.name
+          const active = isClient && current === item.name
           return (
-            <Link href={hrefFor(item)} key={item.name} className={active ? "active" : ""} aria-current={active ? "page" : undefined} data-nav={item.name} onClick={() => selectSection(item)}>
+            <Link href={hrefFor(item)} key={item.name} className={active ? "active" : ""} aria-current={active ? "page" : undefined} data-nav={item.name} onClick={(event) => selectSection(item, event)}>
               <span className="nav-label">{item.name}</span>
             </Link>
           )

@@ -357,6 +357,28 @@ main:focus { outline: none; }
 .hero-copy > :nth-child(5) { animation-delay: .9s; }
 .hero-esp32 { animation: board-enter 1.8s cubic-bezier(.16, 1, .3, 1) .45s both; }
 
+/* Putar ulang saat hero masuk layar lagi (kembali dari bawah, lihat hero-replay.tsx): elemen datang dari atas,
+   searah scroll ke atas. "is-reset" menyembunyikan seketika saat hero di luar layar, jadi tidak terlihat. */
+@keyframes hero-drop {
+  from { opacity: 0; transform: translate3d(0, -18px, 0); filter: blur(4px); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
+}
+@keyframes line-reveal-down {
+  from { opacity: 0; clip-path: inset(-25% -5% 100% -5%); transform: translate3d(0, -45%, 0); filter: blur(3px); }
+  to { opacity: 1; clip-path: inset(-20% -5% -25% -5%); transform: translate3d(0, 0, 0); filter: blur(0); }
+}
+@keyframes board-drop {
+  from { opacity: 0; transform: perspective(1400px) translate3d(0, -56px, 0) rotateX(-18deg) rotateY(-28deg) rotateZ(-6deg) scale(.86); }
+  60% { opacity: 1; }
+  to { opacity: 1; transform: perspective(1400px) translate3d(0, 0, 0) rotateX(0) rotateY(0) rotateZ(0) scale(1); }
+}
+.hero-section.is-replay .hero-copy > * { animation-name: hero-drop; }
+.hero-section.is-replay .hero-copy > h1 { animation: none; }
+.hero-section.is-replay .hero-copy h1 .hero-line { animation-name: line-reveal-down; }
+.hero-section.is-replay .hero-esp32 { animation-name: board-drop; animation-duration: 1.4s; animation-delay: .2s; }
+.hero-section.is-reset .hero-copy > *, .hero-section.is-reset .hero-copy h1 .hero-line, .hero-section.is-reset .hero-esp32 { animation: none; opacity: 0; }
+.hero-section.is-reset .hero-copy > h1 { opacity: 1; }
+
 /* Pita berjalan miring: pembatas dua warna antara hero & section berikutnya. */
 .tech-marquee-wrap {
   position: relative; z-index: 2; overflow: hidden; pointer-events: none;
