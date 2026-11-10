@@ -35,7 +35,7 @@ export function Hero() {
           <div className="hero-copy">
             <div className="eyebrow hero-eyebrow"><span className="status-light" /> RAKIT · PROGRAM · KOMPONEN</div>
             <h1><span className="hero-line">Microcontroller</span> <span className="hero-line">Immediately Made.</span></h1>
-            <p>Microim menyediakan jasa perakitan dan pemrograman perangkat berbasis mikrokontroler, lengkap dengan komponen elektroniknya, untuk membawa ide Anda dari purwarupa hingga perangkat yang siap digunakan.</p>
+            <p>Microim menyediakan jasa perakitan dan pemrograman mikrokontroler, lengkap dengan komponen ready stock yang bisa COD di area kampus, untuk membawa idemu dari purwarupa hingga perangkat siap pakai.</p>
             <div className="hero-actions">
               <a className="button-primary" href={whatsappLink("Halo Microim, saya ingin berkonsultasi mengenai proyek perangkat.")} target="_blank" rel="noopener noreferrer"><MessageCircle aria-hidden="true" /> Konsultasi via WhatsApp</a>
               <Link className="button-secondary" href="/products"><ShoppingBag aria-hidden="true" /> Lihat Produk</Link>

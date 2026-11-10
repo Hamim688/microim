@@ -31,6 +31,20 @@ const STRETCH_Y: Keyframe[] = [{ scale: "1 1" }, { scale: ".97 1.22", offset: 0.
 
 type PillBox = { name: string; x: number; y: number; w: number; h: number }
 
+/** Pil mulai muncul setelah kapsul menu selesai turun (ms). */
+const PILL_ENTER_DELAY = 380
+/** Teks menu aktif langsung berganti putih → hitam begitu pil mulai tampak (ms). */
+const LABEL_DARKEN_AFTER = PILL_ENTER_DELAY + 40
+
+/** Animasi masuk pil emas saat situs pertama dibuka: muncul dari kecil, sedikit meregang, lalu pas. */
+const PILL_ENTER: Keyframe[] = [
+  { opacity: 0, scale: ".45 .6" },
+  // Langsung tampak jelas (bukan memudar pelan), jadi teks hitam di atasnya tetap terbaca.
+  { opacity: 1, scale: ".55 .66", offset: 0.12 },
+  { opacity: 1, scale: "1.08 .92", offset: 0.6 },
+  { opacity: 1, scale: "1 1" },
+]
+
 /**
  * Letakkan pil emas di bawah menu aktif. Posisi diukur relatif ke kapsul menu (offsetLeft/Top),
  * bukan ke halaman, sehingga pil tidak pernah ikut naik/turun saat halaman di-scroll atau berganti.
@@ -44,6 +58,7 @@ function placePill(
   last: PillBox | null,
   stretch: Keyframe[],
   duration: number,
+  enter = false,
 ): PillBox | null {
   if (!nav || !pill) return last
   const link = name ? nav.querySelector<HTMLElement>(`a[data-nav="${name}"]`) : null
@@ -63,10 +78,13 @@ function placePill(
   // Properti `translate` (bukan `transform`) supaya efek `scale` tidak ikut memperbesar jarak geser.
   pill.style.translate = `${box.x}px ${box.y}px`
   pill.style.opacity = "1"
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   if (first) {
     void pill.offsetWidth // terapkan posisi tanpa transisi, baru nyalakan lagi transisinya
     pill.classList.remove("no-transition")
-  } else if (moved && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // Muncul setelah kapsul menu selesai turun (lihat animasi header-in di globals.css).
+    if (enter && !reduceMotion) pill.animate(PILL_ENTER, { duration: 650, delay: PILL_ENTER_DELAY, easing: "cubic-bezier(.22, 1, .36, 1)", fill: "backwards" })
+  } else if (moved && !reduceMotion) {
     pill.animate(stretch, { duration, easing: "cubic-bezier(.3, .7, .3, 1)" })
   }
   return box
@@ -97,6 +115,11 @@ export function Navbar() {
   const desktopPillRef = useRef<HTMLSpanElement>(null)
   const mobilePillRef = useRef<HTMLSpanElement>(null)
   const pillBoxes = useRef<{ desktop: PillBox | null; mobile: PillBox | null }>({ desktop: null, mobile: null })
+  // Animasi "muncul" pil hanya sekali per kunjungan (navbar tidak dimuat ulang saat pindah halaman).
+  const pillEntered = useRef(false)
+  // Sejak HTML awal, teks menu aktif putih (pil belum ada). Fase: 0 = putih, 1 = langsung hitam (tanpa
+  // transisi warna), 2 = normal (transisi warna saat pindah menu berlaku lagi).
+  const [entryPhase, setEntryPhase] = useState(0)
   // Saat menu diklik, pil langsung pindah ke tujuan dan scroll spy "dikunci"
   // sampai scroll halus selesai, supaya pil tidak mampir ke section yang dilewati.
   const lockRef = useRef<string | null>(null)
@@ -120,7 +143,8 @@ export function Navbar() {
   // berubah (font selesai dimuat, layar diputar, menu HP tampil), pil langsung disesuaikan.
   useLayoutEffect(() => {
     const update = () => {
-      pillBoxes.current.desktop = placePill(desktopNavRef.current, desktopPillRef.current, current, pillBoxes.current.desktop, STRETCH_X, 600)
+      pillBoxes.current.desktop = placePill(desktopNavRef.current, desktopPillRef.current, current, pillBoxes.current.desktop, STRETCH_X, 600, !pillEntered.current)
+      if (pillBoxes.current.desktop) pillEntered.current = true
       pillBoxes.current.mobile = placePill(mobileNavRef.current, mobilePillRef.current, current, pillBoxes.current.mobile, STRETCH_Y, 500)
     }
     update()
@@ -128,6 +152,17 @@ export function Navbar() {
     for (const nav of [desktopNavRef.current, mobileNavRef.current]) if (nav) observer.observe(nav)
     return () => observer.disconnect()
   }, [current])
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const darken = pillEntered.current && !reduceMotion ? LABEL_DARKEN_AFTER : 0
+    const toBlack = window.setTimeout(() => setEntryPhase(1), darken)
+    const toNormal = window.setTimeout(() => setEntryPhase(2), darken + 120)
+    return () => {
+      window.clearTimeout(toBlack)
+      window.clearTimeout(toNormal)
+    }
+  }, [])
 
   const closeMenu = (returnFocus = false) => {
     setIsOpen(false)
@@ -252,7 +287,7 @@ export function Navbar() {
           <Image src="/logo/logo-baru.png" alt="" width={40} height={40} priority quality={100} />
           <span className="brand-name" aria-hidden="true">Microim</span>
         </Link>
-        <nav ref={desktopNavRef} className="desktop-nav" aria-label="Navigasi utama">
+        <nav ref={desktopNavRef} className={`desktop-nav${entryPhase === 0 ? " is-entering is-switching" : entryPhase === 1 ? " is-switching" : ""}`} aria-label="Navigasi utama">
           {navLinks.map((item) => {
             const active = current === item.name
             return (

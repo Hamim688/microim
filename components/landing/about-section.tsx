@@ -1,27 +1,33 @@
-import { Globe2 } from "lucide-react"
+import { ScrollReveal } from "@/components/landing/landing-motion"
+
+const VISION = "Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global."
+
+/** Visi Microim sebagai satu pernyataan besar (dipakai di Beranda & halaman /about). */
+export function VisionStatement() {
+  return (
+    <figure className="vision-statement">
+      <figcaption>Visi Microim</figcaption>
+      <blockquote>
+        <p>“{VISION}”</p>
+      </blockquote>
+    </figure>
+  )
+}
 
 export function AboutSection() {
   return (
     <section className="about-section" id="about">
       <div className="site-container">
-        <div className="about-intro">
-          <span className="section-kicker">CARA KERJA MICROIM</span>
-          <div className="about-intro-row">
-            <div>
-              <h2>Membangun Teknologi Lewat Inovasi</h2>
-              <p>Microim menghubungkan ide kreatif dengan penerapan nyata melalui pengembangan perangkat keras dan perangkat lunak.</p>
-            </div>
-            <span className="about-side-note"><i /> INOVASI MELALUI REKAYASA</span>
-          </div>
-        </div>
-        <div className="vision-panel">
+        <ScrollReveal className="about-head">
           <div>
-            <span className="section-kicker">VISI UTAMA PERUSAHAAN</span>
-            <blockquote>“Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.”</blockquote>
+            <span className="section-kicker">TENTANG MICROIM</span>
+            <h2>Membangun Teknologi Lewat Inovasi</h2>
           </div>
-          <div className="vision-badge"><Globe2 aria-hidden="true" /><span>PENGEMBANGAN<br />MENDUNIA</span></div>
-          <div className="vision-watermark" aria-hidden="true">M</div>
-        </div>
+          <p>Microim menghubungkan ide kreatif dengan penerapan nyata melalui pengembangan perangkat keras dan perangkat lunak.</p>
+        </ScrollReveal>
+        <ScrollReveal delay={0.08}>
+          <VisionStatement />
+        </ScrollReveal>
       </div>
     </section>
   )

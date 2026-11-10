@@ -10,6 +10,7 @@ import { TechMarquee } from "@/components/landing/tech-marquee"
 import { OrderSteps } from "@/components/landing/order-steps"
 import { SocialSection } from "@/components/landing/social-section"
 import { LandingMotion } from "@/components/landing/landing-motion"
+import { SectionDivider } from "@/components/landing/section-divider"
 import { getFeaturedProducts, getMarqueeNames } from "@/lib/catalog"
 
 // Produk unggulan & pita berjalan memakai stok/harga terbaru dari database.
@@ -24,11 +25,17 @@ export default async function HomePage() {
         <TechMarquee names={marquee} />
         <AboutSection />
         <ValuesSection />
+        <SectionDivider />
         <ServicesPreview />
+        <SectionDivider />
         <FeaturedProducts products={featured} />
+        <SectionDivider />
         <OrderSteps />
+        <SectionDivider />
         <EngineeringEdge />
+        <SectionDivider />
         <ProjectShowcase />
+        <SectionDivider />
         <SocialSection />
         <CTASection />
       </div>

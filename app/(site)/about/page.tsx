@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowUpRight, Globe2 } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import { PageHero } from "@/components/layout/page-hero"
 import { ValuesSection } from "@/components/landing/values-section"
+import { VisionStatement } from "@/components/landing/about-section"
 import { OrderSteps } from "@/components/landing/order-steps"
 import { LandingMotion } from "@/components/landing/landing-motion"
 
@@ -20,14 +21,7 @@ export default function AboutPage() {
 
       <section className="about-section">
         <div className="site-container">
-          <div className="vision-panel">
-            <div>
-              <span className="section-kicker">VISI UTAMA PERUSAHAAN</span>
-              <blockquote>“Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global.”</blockquote>
-            </div>
-            <div className="vision-badge"><Globe2 aria-hidden="true" /><span>PENGEMBANGAN<br />MENDUNIA</span></div>
-            <div className="vision-watermark" aria-hidden="true">M</div>
-          </div>
+          <VisionStatement />
         </div>
       </section>
 

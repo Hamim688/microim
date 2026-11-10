@@ -79,11 +79,19 @@ export async function getFeaturedProducts(): Promise<CatalogProduct[]> {
   return [...picked, ...rest].slice(0, FEATURED_COUNT)
 }
 
-/** Nama produk untuk pita berjalan: tanpa jasa, dan varian dengan foto sama cukup sekali. */
+/** Produk andalan yang tampil paling awal di pita berjalan Beranda (sisanya menyusul). */
+const MARQUEE_FIRST = ["esp32-dev-module", "servo-sg90", "mobil-kit", "driver-motor", "sensor-srf04", "sensor-garis", "motor-dc-gearbox-tt"]
+
+/** Nama produk untuk pita berjalan: produk andalan dulu, tanpa jasa, varian dengan foto sama cukup sekali. */
 export async function getMarqueeNames(): Promise<string[]> {
   const seen = new Set<string>()
+  const rank = (slug: string) => {
+    const i = MARQUEE_FIRST.findIndex((s) => slug === s || slug.startsWith(`${s}-`))
+    return i < 0 ? MARQUEE_FIRST.length : i
+  }
   return (await getCatalog())
     .filter((p) => p.stock !== null)
+    .sort((a, b) => rank(a.slug) - rank(b.slug))
     .filter((p) => {
       const key = p.image ?? p.slug
       if (seen.has(key)) return false
