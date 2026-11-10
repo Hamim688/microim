@@ -26,14 +26,23 @@ const letterVariants: Variants = {
 
 /**
  * Nilai M-I-C-R-O-I-M: kata "MICROIM" sebagai deretan huruf besar yang bisa dipilih (klik, ketuk, atau
- * tombol panah). Garis emas meluncur ke huruf terpilih dan artinya tampil di bawah.
+ * tombol panah). Lampu sorot panggung berdiri di atas garis emas dan meluncur ke huruf terpilih: menunduk &
+ * padam saat bergeser, lalu mendangak dan menyala membentuk sorotan V ke huruf itu. Artinya tampil di bawah.
  */
 export function ValuesSection() {
   const [active, setActive] = useState(0)
   const tabs = useRef<(HTMLButtonElement | null)[]>([])
   const [wordRef, wordState] = useRevealOnScroll<HTMLDivElement>(0.5)
+  // Lampu sorot: padam saat meluncur ke huruf baru, menyala lagi setelah tiba (≈ durasi luncuran).
+  const [lit, setLit] = useState(true)
+  const lightTimer = useRef<number | undefined>(undefined)
 
   const select = (index: number, focus = false) => {
+    if (index !== active) {
+      setLit(false)
+      window.clearTimeout(lightTimer.current)
+      lightTimer.current = window.setTimeout(() => setLit(true), 560)
+    }
     setActive(index)
     if (focus) tabs.current[index]?.focus()
   }
@@ -86,7 +95,47 @@ export function ValuesSection() {
                 <span className="values-letter-name">{title}</span>
               </button>
             ))}
-            <span className="values-indicator" aria-hidden="true" />
+            {/* Rel lampu panggung (track light) dengan takik di bawah setiap huruf. */}
+            <span className="values-track" aria-hidden="true" />
+            {/* Lampu sorot panggung + sorotan berbentuk V ke huruf terpilih. */}
+            <span className={`values-spot${lit && wordState === "show" ? " is-lit" : ""}`} aria-hidden="true">
+              <span className="values-beam" />
+              <span className="values-rail" />
+              <span className="values-lamp">
+                {/* Kaki + tiang + gagang U (diam) */}
+                <svg className="lamp-stand" viewBox="0 0 48 40" focusable="false">
+                  <rect x="16" y="36" width="16" height="4" rx="2" fill="#6e3d1c" />
+                  <rect x="22.8" y="29" width="2.4" height="7.5" fill="#cfe0f5" />
+                  <path d="M11 17 V25 Q11 30 16 30 H32 Q37 30 37 25 V17" fill="none" stroke="#cfe0f5" strokeWidth="2.4" strokeLinecap="round" />
+                </svg>
+                {/* Kepala lampu: menunduk ke depan (ke arah penonton) pada poros gagang; daun pintu biru berengsel. */}
+                <svg className="lamp-head" viewBox="0 0 48 40" focusable="false">
+                  <defs>
+                    <linearGradient id="lamp-copper" x1="0" x2="1" y1="0" y2="1">
+                      <stop offset="0" stopColor="#d08a4c" />
+                      <stop offset="1" stopColor="#6e3d1c" />
+                    </linearGradient>
+                  </defs>
+                  <path className="lamp-door lamp-door-back" d="M18 10 L19 3 H29 L30 10 Z" fill="#1f4fb0" />
+                  <rect x="13" y="11" width="22" height="15" rx="4" fill="url(#lamp-copper)" />
+                  <ellipse className="lamp-lens" cx="24" cy="11" rx="10" ry="3.4" />
+                  <path className="lamp-door lamp-door-l" d="M14 11 L5 4 L8 1.5 L16 9 Z" fill="#2f6fe0" />
+                  <path className="lamp-door lamp-door-r" d="M34 11 L43 4 L40 1.5 L32 9 Z" fill="#2f6fe0" />
+                  <circle cx="11" cy="19" r="1.6" fill="#cfe0f5" />
+                  <circle cx="37" cy="19" r="1.6" fill="#cfe0f5" />
+                </svg>
+                {/* Tampak depan saat menunduk: lensa menghadap penonton, daun pintu setengah menutup. */}
+                <svg className="lamp-front" viewBox="0 0 48 40" focusable="false">
+                  <rect x="17" y="5.5" width="14" height="4" rx="1.2" fill="#1f4fb0" />
+                  <circle cx="24" cy="19" r="11" fill="url(#lamp-copper)" />
+                  <circle cx="24" cy="19" r="8" fill="#3a2d14" />
+                  <rect className="lamp-front-door" x="12.5" y="9" width="7.5" height="20" rx="1.5" fill="#2f6fe0" />
+                  <rect className="lamp-front-door" x="28" y="9" width="7.5" height="20" rx="1.5" fill="#2f6fe0" />
+                  <circle cx="11" cy="19" r="1.6" fill="#cfe0f5" />
+                  <circle cx="37" cy="19" r="1.6" fill="#cfe0f5" />
+                </svg>
+              </span>
+            </span>
         </motion.div>
 
         <ScrollReveal delay={0.25}>
