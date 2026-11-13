@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState, type CSSProperties, type KeyboardEvent } from "react"
-import { ArrowRight, ShieldCheck, Timer, TriangleAlert, Truck, Wallet, Zap } from "lucide-react"
+import { ArrowRight, ShieldCheck, Timer, TriangleAlert, Truck, Wallet, X, Zap } from "lucide-react"
 
 // Masalah → solusi diambil dari "Latar Belakang & Validasi Masalah" di rencana bisnis Microim.
 const REASONS = [
@@ -37,7 +37,7 @@ const REASONS = [
 /**
  * "Kenapa Microim ada": daftar masalah (kiri) yang bisa dipilih + satu panel solusi besar (kanan) yang berganti
  * isi, menampilkan perbandingan sebelum → sesudah. Di HP, panel solusi muncul tepat di bawah masalah terpilih.
- * Pola tab vertikal (klik, sorot, atau tombol panah atas/bawah).
+ * Pola tab vertikal (klik, sorot, atau tombol panah atas/bawah). Sengaja dibuat sederhana.
  */
 export function AboutReasons() {
   const [active, setActive] = useState(0)
@@ -94,7 +94,7 @@ export function AboutReasons() {
           >
             <SolutionIcon className="why-panel-watermark" aria-hidden="true" />
             <span className="why-panel-tag"><SolutionIcon aria-hidden="true" />Solusi Microim</span>
-            <p className="why-before"><span className="sr-only">Sebelumnya: </span><s>{before}</s></p>
+            <p className="why-before"><X aria-hidden="true" /><span className="sr-only">Sebelumnya: </span><s>{before}</s></p>
             <p className="why-after">{after}</p>
             <p className="why-solution-text">{solution}</p>
           </div>,
