@@ -29,8 +29,8 @@ const padVariants: Variants = {
 }
 
 /**
- * Pembatas Tentang → Layanan: jalur PCB berbelok dengan bantalan solder emas, seolah "menyambungkan"
- * dua section. Tergambar dari kiri ke kanan setiap kali masuk layar. Tingginya 0, jadi tidak menambah jarak.
+ * Pembatas Tentang → Layanan: jalur PCB berbelok dengan bantalan solder, sekaligus tepi atas section Layanan
+ * yang berlatar emas. Kilau jalurnya tergambar dari kiri ke kanan setiap kali masuk layar. Tingginya 0.
  */
 export function PcbDivider() {
   const [ref, state] = useRevealOnScroll<HTMLDivElement>(1)
@@ -41,13 +41,16 @@ export function PcbDivider() {
         <svg className="pcb-divider-svg" viewBox="0 0 1000 60" preserveAspectRatio="none" focusable="false">
           <defs>
             <linearGradient id="pcb-trace-gradient" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0" stopColor="#ffc928" stopOpacity="0" />
-              <stop offset=".18" stopColor="#ffc928" stopOpacity=".55" />
-              <stop offset=".5" stopColor="#ffd257" stopOpacity="1" />
-              <stop offset=".82" stopColor="#ffc928" stopOpacity=".55" />
-              <stop offset="1" stopColor="#ffc928" stopOpacity="0" />
+              <stop offset="0" stopColor="#fff3b8" stopOpacity="0" />
+              <stop offset=".18" stopColor="#fff3b8" stopOpacity=".7" />
+              <stop offset=".5" stopColor="#fffbe6" stopOpacity="1" />
+              <stop offset=".82" stopColor="#fff3b8" stopOpacity=".7" />
+              <stop offset="1" stopColor="#fff3b8" stopOpacity="0" />
             </linearGradient>
           </defs>
+          {/* Tepi atas section Layanan (emas) mengikuti jalur: emas di bawah jalur, lekuk tengah tetap navy. */}
+          <path className="pcb-notch" d="M300 14 L340 46 H660 L700 14 Z" />
+          <path className="pcb-fill" d="M-4000 14 H300 L340 46 H660 L700 14 H5000 V61 H-4000 Z" />
           <motion.path
             d={TRACE}
             className="pcb-trace"

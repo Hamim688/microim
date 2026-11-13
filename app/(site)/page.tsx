@@ -28,7 +28,6 @@ export default async function HomePage() {
         <ValuesSection />
         <PcbDivider />
         <ServicesPreview />
-        <SectionDivider />
         <FeaturedProducts products={featured} />
         <SectionDivider />
         <OrderSteps />

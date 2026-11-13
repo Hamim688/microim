@@ -497,18 +497,188 @@ main:focus { outline: none; }
   background-image: radial-gradient(circle at 1px 1px, rgb(255 201 40 / 26%) 1px, transparent 1.5px); background-size: 28px 28px;
   mask-image: radial-gradient(ellipse 70% 75% at 85% 0%, #000, transparent 72%); opacity: .45;
 }
-.about-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .85fr); align-items: end; gap: 18px 56px; }
-.about-head h2 { margin: 8px 0 0; color: #e8eef8; font-family: var(--font-display); font-size: clamp(27px, 3vw, 39px); font-weight: 550; letter-spacing: -.035em; line-height: 1.17; }
-.about-head p { max-width: 520px; margin: 0; color: #a7b5c7; font-size: 15px; line-height: 1.7; }
+.about-mono { display: inline-block; color: var(--gold); font-family: var(--font-mono, ui-monospace, monospace); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.about-mono.is-muted { color: #7f91a8; }
+
+/* --- Tentang (konsep "datasheet"): judul bab besar + kartu chip IC --- */
+.about-intro { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: center; gap: 40px clamp(32px, 5vw, 80px); }
+.about-title {
+  margin: 0; color: #e9eff8; font-family: var(--font-display); font-size: clamp(56px, 8.4vw, 112px); font-weight: 650;
+  letter-spacing: -.045em; line-height: .88; text-transform: uppercase;
+}
+.about-title-line { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+.about-title-line > span { display: block; translate: 0 108%; transition: translate .2s ease; }
+.about-title-block.is-live .about-title-line > span { translate: 0 0; transition: translate 1s cubic-bezier(.22, 1, .36, 1); }
+.about-title-block.is-live .about-title-line:nth-child(2) > span { transition-delay: .12s; }
+.about-title .is-gold { color: var(--gold); }
+.about-subtitle { position: relative; margin: 28px 0 0; padding-top: 22px; color: #dbe4f0; font-family: var(--font-display); font-size: clamp(20px, 2vw, 26px); font-weight: 550; letter-spacing: -.025em; }
+/* Garis di atas subjudul: abu tipis, dengan aksen emas yang tergambar dari kiri. */
+.about-subtitle::before, .about-subtitle::after { position: absolute; top: 0; left: 0; height: 1px; content: ""; transform-origin: 0 50%; scale: 0 1; transition: scale .2s ease; }
+.about-subtitle::before { right: 0; background: rgb(148 163 184 / 18%); }
+.about-subtitle::after { width: 96px; height: 2px; top: -1px; background: var(--gold); box-shadow: 0 0 12px rgb(255 201 40 / 60%); }
+.about-title-block.is-live .about-subtitle::before { scale: 1 1; transition: scale 1s cubic-bezier(.22, 1, .36, 1) .3s; }
+.about-title-block.is-live .about-subtitle::after { scale: 1 1; transition: scale .8s cubic-bezier(.22, 1, .36, 1) .55s; }
+.about-lead { max-width: 560px; margin: 12px 0 0; color: #a7b5c7; font-size: 15px; line-height: 1.75; }
+.about-subtitle, .about-lead { opacity: 0; transition: opacity .2s ease; }
+.about-title-block.is-live .about-subtitle { opacity: 1; transition: opacity .7s ease .4s; }
+.about-title-block.is-live .about-lead { opacity: 1; transition: opacity .7s ease .55s; }
+
+/* Kartu berbentuk chip IC: badan gelap, takik di atas, pin emas di kiri & kanan. */
+.about-chip-wrap { position: relative; padding-inline: 16px; }
+.about-chip-wrap::before { position: absolute; inset: -12% 0; z-index: -1; content: ""; pointer-events: none; background: radial-gradient(closest-side, rgb(64 120 210 / 20%), rgb(255 201 40 / 5%) 60%, transparent); filter: blur(10px); }
+.about-chip {
+  position: relative; padding: 30px 28px 22px; border: 1px solid rgb(148 163 184 / 20%); border-radius: 10px;
+  /* Badan chip: epoksi gelap bertekstur garis halus + bevel tipis di tepi. */
+  background:
+    repeating-linear-gradient(115deg, rgb(255 255 255 / 1.6%) 0 1px, transparent 1px 4px),
+    linear-gradient(160deg, #15263d 0%, #0b1728 55%, #08121f 100%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 10%), inset 0 0 0 5px rgb(4 10 20 / 35%), inset 0 0 0 6px rgb(148 163 184 / 8%), 0 34px 64px -32px rgb(0 0 0 / 85%);
+  transition: translate .4s cubic-bezier(.22, 1, .36, 1), box-shadow .4s ease;
+}
+.about-chip:hover { translate: 0 -4px; box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%), inset 0 0 0 5px rgb(4 10 20 / 35%), inset 0 0 0 6px rgb(255 201 40 / 14%), 0 44px 70px -32px rgb(0 0 0 / 90%), 0 0 44px -18px rgb(255 201 40 / 35%); }
+/* Kaki-kaki pin logam emas di kiri & kanan (dipotong dengan mask jadi kaki satu per satu). */
+.about-chip::before, .about-chip::after {
+  position: absolute; top: 30px; bottom: 30px; width: 16px; content: ""; pointer-events: none;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 75%) 50%, rgb(255 255 255 / 0%) 100%) 0 -90px / 100% 90px no-repeat, linear-gradient(90deg, #8a6100 0%, #ffd95a 45%, #fff0b0 55%, #c99a16 100%);
+  mask-image: repeating-linear-gradient(180deg, #000 0 8px, transparent 8px 22px);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path .9s cubic-bezier(.22, 1, .36, 1) .1s;
+}
+.about-chip::before { left: -16px; border-radius: 2px 0 0 2px; }
+.about-chip::after { right: -16px; border-radius: 0 2px 2px 0; background-image: linear-gradient(180deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 75%) 50%, rgb(255 255 255 / 0%) 100%), linear-gradient(270deg, #8a6100 0%, #ffd95a 45%, #fff0b0 55%, #c99a16 100%); }
+.about-chip.is-live::before, .about-chip.is-live::after { clip-path: inset(0); animation: chip-pin-signal 1.5s ease-in-out 1s 1 both; }
+/* "Sinyal" berjalan menuruni kaki pin: sekali saat chip muncul, dan berulang saat chip disorot. */
+.about-chip.is-live:hover::before, .about-chip.is-live:hover::after { animation: chip-pin-signal 1.4s ease-in-out infinite; }
+@keyframes chip-pin-signal { from { background-position: 0 -90px, 0 0; } to { background-position: 0 calc(100% + 90px), 0 0; } }
+/* Kilau yang menyapu badan chip saat muncul. */
+.about-chip-sheen { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; pointer-events: none; }
+.about-chip-sheen::before {
+  position: absolute; top: -20%; bottom: -20%; left: -45%; width: 38%; content: "";
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 9%) 45%, rgb(255 236 170 / 16%) 50%, rgb(255 255 255 / 9%) 55%, transparent);
+  transform: skewX(-18deg); opacity: 0;
+}
+.about-chip.is-live .about-chip-sheen::before { animation: chip-sheen 1.3s cubic-bezier(.3, .6, .3, 1) .35s 1 both; }
+@keyframes chip-sheen { from { left: -45%; opacity: 1; } to { left: 115%; opacity: 1; } }
+/* Takik setengah lingkaran di tepi atas + titik penanda pin 1 di sudut kiri atas. */
+.about-chip-notch { position: absolute; top: -1px; left: 50%; width: 28px; height: 14px; margin-left: -14px; border: 1px solid rgb(148 163 184 / 20%); border-top: 0; border-radius: 0 0 14px 14px; background: #0d1c2e; box-shadow: inset 0 -3px 6px rgb(0 0 0 / 45%); }
+.about-chip-pin1 { position: absolute; top: 16px; left: 16px; width: 11px; height: 11px; border-radius: 50%; background: #070f1b; box-shadow: inset 0 2px 3px rgb(0 0 0 / 80%), 0 1px 0 rgb(255 255 255 / 9%); }
+/* Marking: nama tercetak di badan chip seperti tulisan laser pada IC. */
+.about-chip-marking { display: grid; justify-items: start; gap: 2px; padding: 4px 0 18px 22px; border-bottom: 1px dashed rgb(148 163 184 / 22%); }
+.about-chip-kicker { color: #7f91a8; font-family: var(--font-mono, ui-monospace, monospace); font-size: 10.5px; letter-spacing: .22em; }
+.about-chip-marking strong {
+  font-family: var(--font-display); font-size: clamp(30px, 3.4vw, 44px); font-weight: 700; letter-spacing: .1em; line-height: 1.05;
+  color: transparent; background: linear-gradient(180deg, #fff0b0 0%, #ffc928 55%, #c9930a 100%); -webkit-background-clip: text; background-clip: text;
+  filter: drop-shadow(0 1px 0 rgb(0 0 0 / 55%));
+}
+.about-chip-fullname { color: #c3cedd; font-family: var(--font-mono, ui-monospace, monospace); font-size: 12px; letter-spacing: .06em; }
+.about-chip-specs { display: grid; gap: 0; margin: 0; }
+.about-chip-specs > div { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 14px; padding: 12px 0; border-bottom: 1px solid rgb(148 163 184 / 10%); }
+.about-chip-specs dt { display: flex; gap: 10px; padding-top: 2px; color: #7f91a8; font-family: var(--font-mono, ui-monospace, monospace); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.about-chip-specs dt span { color: var(--gold); opacity: .8; }
+.about-chip-specs dd { margin: 0; color: #dbe4f0; font-size: 14px; line-height: 1.5; }
+.about-chip-tagline { margin: 16px 0 0; color: var(--gold); font-family: var(--font-display); font-size: 17px; font-weight: 550; letter-spacing: -.02em; }
+/* Baris spesifikasi muncul berurutan saat chip masuk layar. */
+.about-chip-specs > div, .about-chip-tagline { opacity: 0; translate: 10px 0; transition: opacity .2s ease, translate .2s ease; }
+.about-chip.is-live .about-chip-specs > div, .about-chip.is-live .about-chip-tagline {
+  opacity: 1; translate: 0 0;
+  transition: opacity .5s ease calc(.3s + var(--row) * .09s), translate .6s cubic-bezier(.22, 1, .36, 1) calc(.3s + var(--row) * .09s);
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-chip { transition: none; }
+  .about-chip::before, .about-chip::after { clip-path: none; transition: none; }
+  .about-chip.is-live::before, .about-chip.is-live::after, .about-chip.is-live:hover::before, .about-chip.is-live:hover::after, .about-chip.is-live .about-chip-sheen::before { animation: none; }
+  .about-chip-specs > div, .about-chip-tagline { opacity: 1; translate: none; transition: none; }
+}
+
+/* Kenapa Microim ada: daftar masalah (kiri) yang bisa dipilih + satu panel solusi besar (kanan) yang menyala
+   dan berganti isi (sebelum → sesudah). Di HP panel muncul tepat di bawah masalah terpilih. */
+.about-reasons { margin-top: clamp(64px, 8vw, 104px); }
+.about-reasons-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); align-items: end; gap: 12px 56px; }
+.about-reasons-head h3 { margin: 8px 0 0; color: #e8eef8; font-family: var(--font-display); font-size: clamp(30px, 3.8vw, 48px); font-weight: 600; letter-spacing: -.04em; line-height: 1.05; }
+.about-reasons-head p { max-width: 440px; margin: 0; padding-bottom: 6px; color: #a7b5c7; font-size: 15px; line-height: 1.7; }
+.why { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); grid-template-rows: repeat(3, auto); gap: 12px clamp(28px, 4vw, 56px); margin-top: 34px; }
+.why-tab {
+  position: relative; grid-column: 1; grid-row: var(--r); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 18px;
+  padding: 20px 20px 20px 22px; border: 1px solid rgb(148 163 184 / 14%); border-radius: 14px; background: rgb(255 255 255 / 2%);
+  color: inherit; font: inherit; text-align: left; cursor: pointer;
+  transition: border-color .3s ease, background .3s ease, translate .35s cubic-bezier(.22, 1, .36, 1);
+}
+.why-tab:hover { border-color: rgb(148 163 184 / 30%); }
+.why-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.why-tab.is-active { border-color: rgb(255 201 40 / 55%); background: linear-gradient(90deg, rgb(255 201 40 / 9%), rgb(255 201 40 / 2%)); translate: 6px 0; }
+/* Jalur emas dari masalah terpilih ke panel solusi */
+.why-tab::after {
+  position: absolute; top: 50%; left: 100%; width: clamp(28px, 4vw, 56px); height: 2px; margin-top: -1px; content: ""; pointer-events: none;
+  background: repeating-linear-gradient(90deg, var(--gold) 0 8px, transparent 8px 16px); filter: drop-shadow(0 0 4px rgb(255 201 40 / 55%));
+  transform-origin: 0 50%; scale: 0 1; transition: scale .2s ease;
+}
+.why-tab.is-active::after { scale: 1 1; transition: scale .45s cubic-bezier(.22, 1, .36, 1) .1s; animation: why-flow .7s linear infinite; }
+@keyframes why-flow { from { background-position: 0 0; } to { background-position: 16px 0; } }
+.why-tab-num { color: transparent; font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -.05em; line-height: 1; -webkit-text-stroke: 1px rgb(148 163 184 / 40%); transition: color .3s ease, -webkit-text-stroke-color .3s ease; }
+.why-tab.is-active .why-tab-num { color: var(--gold); -webkit-text-stroke-color: var(--gold); }
+.why-tab-body { display: grid; gap: 6px; min-width: 0; }
+.why-tab-title { display: flex; align-items: center; gap: 9px; color: #c9d4e3; font-family: var(--font-display); font-size: clamp(17px, 1.6vw, 20px); font-weight: 600; letter-spacing: -.025em; line-height: 1.25; transition: color .3s ease; }
+.why-tab-title svg { flex: 0 0 auto; width: 17px; height: 17px; color: #f2a59d; }
+.why-tab.is-active .why-tab-title { color: #f4f7fb; }
+.why-tab-detail { color: #8a9ab0; font-size: 13.5px; line-height: 1.6; }
+.why-tab-arrow { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid rgb(148 163 184 / 26%); border-radius: 50%; color: #7f91a8; transition: background .3s ease, color .3s ease, border-color .3s ease; }
+.why-tab-arrow svg { width: 15px; height: 15px; }
+.why-tab.is-active .why-tab-arrow { color: #071426; border-color: var(--gold); background: var(--gold); }
+/* Panel solusi: besar, menyala emas */
+.why-panel {
+  position: relative; grid-column: 2; grid-row: 1 / span 3; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; overflow: hidden;
+  padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgb(255 201 40 / 42%); border-radius: 18px;
+  background: radial-gradient(120% 100% at 100% 0%, rgb(255 201 40 / 16%), transparent 60%), linear-gradient(150deg, #14263d 0%, #0b1829 100%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%), 0 34px 64px -34px rgb(255 201 40 / 40%);
+}
+.why-panel[hidden] { display: none; }
+.why-panel:not([hidden]) > * { animation: why-in .55s cubic-bezier(.22, 1, .36, 1) both; }
+.why-panel:not([hidden]) > :nth-child(3) { animation-delay: .05s; }
+.why-panel:not([hidden]) > :nth-child(4) { animation-delay: .12s; }
+.why-panel:not([hidden]) > :nth-child(5) { animation-delay: .2s; }
+@keyframes why-in { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
+.why-panel-watermark { position: absolute; right: -24px; bottom: -34px; width: clamp(150px, 17vw, 230px); height: auto; aspect-ratio: 1; color: rgb(255 201 40 / 9%); stroke-width: 1.1; pointer-events: none; }
+.why-panel:not([hidden]) > .why-panel-watermark { animation: why-mark .8s cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes why-mark { from { opacity: 0; rotate: -14deg; scale: .8; } to { opacity: 1; rotate: 0deg; scale: 1; } }
+.why-panel-tag { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); font-family: var(--font-mono, ui-monospace, monospace); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.why-panel-tag svg { width: 16px; height: 16px; }
+.why-before { margin: clamp(18px, 2.4vw, 30px) 0 0; color: #8a9ab0; font-size: 15px; }
+.why-before s { text-decoration-color: rgb(242 165 157 / 80%); text-decoration-thickness: 1.5px; }
+.why-after { margin: 6px 0 0; color: var(--gold); font-family: var(--font-display); font-size: clamp(34px, 4.4vw, 60px); font-weight: 650; letter-spacing: -.045em; line-height: 1.02; text-shadow: 0 0 34px rgb(255 201 40 / 28%); }
+.why-solution-text { max-width: 440px; margin: 16px 0 0; color: #dbe4f0; font-size: 16px; line-height: 1.65; }
+@media (max-width: 900px) {
+  .about-reasons-head { grid-template-columns: 1fr; }
+  .why { grid-template-columns: 1fr; grid-template-rows: none; gap: 10px; margin-top: 26px; }
+  .why-tab { grid-row: auto; padding: 16px; gap: 14px; }
+  .why-tab.is-active { translate: 0 0; }
+  .why-tab::after { display: none; }
+  .why-tab-num { font-size: 28px; }
+  .why-tab-arrow { rotate: 90deg; }
+  .why-panel { grid-column: 1; grid-row: auto; margin-bottom: 8px; padding: 24px 22px 26px; }
+  .why-solution-text { font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-title-line > span, .about-subtitle, .about-lead, .about-subtitle::before, .about-subtitle::after { translate: none; scale: 1 1; opacity: 1; transition: none !important; }
+  .why-tab, .why-tab::after, .why-tab-arrow { transition: none !important; }
+  .why-tab.is-active::after, .why-panel:not([hidden]) > *, .why-panel:not([hidden]) > .why-panel-watermark { animation: none; }
+}
+@media (max-width: 1000px) and (min-width: 761px) {
+  .about-intro { grid-template-columns: 1fr; }
+  .about-chip-wrap { max-width: 620px; }
+}
 
 /* Visi: satu pernyataan besar, tanpa kotak. Tanda kutip pembuka "menggantung" di luar teks. */
-.vision-statement { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 14px 40px; margin: 40px 0 0; padding: 34px 0; border-block: 1px solid rgb(148 163 184 / 14%); }
+.vision-statement { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 14px 40px; margin: clamp(48px, 6vw, 72px) 0 0; padding: 34px 0; border-block: 1px solid rgb(148 163 184 / 14%); }
 .vision-statement figcaption { padding-top: .55em; color: var(--gold); font-size: 13px; font-weight: 600; }
 .vision-statement blockquote { margin: 0; }
-.vision-statement p { max-width: 900px; margin: 0; text-indent: -.42em; color: #e9eff8; font-family: var(--font-display); font-size: clamp(24px, 3vw, 40px); font-weight: 500; line-height: 1.22; letter-spacing: -.03em; text-wrap: balance; }
+.vision-word { color: rgb(233 239 248 / 20%); transition: color .25s ease; }
+.vision-statement.is-live .vision-word { color: #e9eff8; transition: color .55s ease calc(var(--w) * .055s); }
+.vision-statement.is-live .vision-word.is-key { color: var(--gold); text-shadow: 0 0 26px rgb(255 201 40 / 35%); }
+@media (prefers-reduced-motion: reduce) { .vision-word { color: #e9eff8; transition: none; } .vision-word.is-key { color: var(--gold); } }
+.vision-statement p { max-width: 900px; margin: 0; text-indent: -.42em; color: #e9eff8; font-family: var(--font-display); font-size: clamp(22px, 2.5vw, 32px); font-weight: 500; line-height: 1.25; letter-spacing: -.03em; text-wrap: balance; }
 
 /* Nilai: kata MICROIM sebagai deretan huruf yang bisa dipilih; garis emas meluncur ke huruf terpilih. */
-.values-section { padding: 44px 0 64px; background: linear-gradient(180deg, #0d1c2e 0%, #0d1c2e 72%, #0b1b2c 100%); }
+.values-section { padding: 44px 0 112px; background: linear-gradient(180deg, #0d1c2e 0%, #0d1c2e 72%, #0b1b2c 100%); }
 .values-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 32px; margin-bottom: 44px; }
 /* Jarak cukup agar huruf terpilih yang terangkat tidak mepet ke judul. */
 .values-head h2 { margin: 0; color: #dce4ef; font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
@@ -521,7 +691,9 @@ main:focus { outline: none; }
 }
 .values-letter { position: relative; z-index: 1; }
 .values-letter-char {
-  display: block; transform-origin: 50% 100%;
+  /* padding-right = |letter-spacing|: letter-spacing negatif memotong sisi kanan kotak, jadi tanpa ini huruf
+     terlihat bergeser ke kanan dari tengah kolom (dan dari tengah sorotan lampu). */
+  display: block; padding-right: .04em; transform-origin: 50% 100%;
   color: rgb(148 163 184 / 32%); font-family: var(--font-display); font-size: clamp(44px, 8.2vw, 124px); font-weight: 600; line-height: .9; letter-spacing: -.04em;
   transition: color .3s ease, translate .45s cubic-bezier(.22, 1, .36, 1), scale .45s cubic-bezier(.22, 1, .36, 1), text-shadow .3s ease;
 }
@@ -631,13 +803,16 @@ main:focus { outline: none; }
 @keyframes icon-pop { from { opacity: 0; scale: .6; rotate: -14deg; } 60% { opacity: 1; scale: 1.08; rotate: 3deg; } to { scale: 1; rotate: 0deg; } }
 
 /* Pembatas Tentang → Layanan: jalur PCB berbelok + bantalan solder emas (lihat pcb-divider.tsx). Tinggi 0. */
-.pcb-divider { position: relative; z-index: 3; height: 0; }
+.pcb-divider { position: relative; z-index: 3; height: 0; overflow-x: clip; }
+/* Isi emas di bawah jalur = tepi atas section Layanan; lekuk tengah (di bawah garis batas) tetap navy. */
+.pcb-fill { fill: var(--svc-gold-top); }
+.pcb-notch { fill: #0b1b2c; }
 .pcb-divider-inner { position: relative; height: 0; }
 .pcb-divider-svg { position: absolute; left: 0; top: -30px; width: 100%; height: 60px; overflow: visible; }
-.pcb-trace { fill: none; stroke: url(#pcb-trace-gradient); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 4px rgb(255 201 40 / 45%)); }
+.pcb-trace { fill: none; stroke: url(#pcb-trace-gradient); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 5px rgb(255 214 90 / 60%)); }
 .pcb-pad {
   position: absolute; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%;
-  background: #0b1b2c; border: 2px solid var(--gold); box-shadow: 0 0 10px rgb(255 201 40 / 55%);
+  background: #0b1b2c; border: 2px solid var(--gold); box-shadow: 0 0 0 2px #0b1b2c, 0 0 12px rgb(11 27 44 / 45%);
 }
 /* Via di tengah: cincin lebih besar dengan titik tembaga di dalamnya. */
 .pcb-pad.is-via { width: 15px; height: 15px; margin: -7.5px 0 0 -7.5px; background: radial-gradient(circle, var(--gold) 0 2.5px, #0b1b2c 3px); }
@@ -658,13 +833,16 @@ main:focus { outline: none; }
 
 @media (max-width: 760px) {
   .about-section { padding-top: 48px; }
-  .about-head { grid-template-columns: 1fr; }
-  .about-head p { font-size: 14px; }
+  .about-intro { grid-template-columns: 1fr; }
+  .about-lead { font-size: 14px; }
+  .about-chip { padding: 28px 20px 18px; }
+  .about-chip-marking { padding-left: 18px; }
+  .about-chip-specs > div { grid-template-columns: 1fr; gap: 3px; padding: 10px 0; }
   .vision-statement { grid-template-columns: 1fr; gap: 10px; margin-top: 28px; padding: 26px 0; }
   .vision-statement figcaption { padding-top: 0; }
   /* Di HP kutip pembuka tidak menggantung, supaya tidak menempel ke tepi layar. */
   .vision-statement p { text-indent: 0; }
-  .values-section { padding: 36px 0 52px; }
+  .values-section { padding: 36px 0 80px; }
   .values-head { margin-bottom: 28px; }
   .values-letter { padding-bottom: 42px; }
   .values-letter-char { font-size: clamp(34px, 11vw, 60px); }
@@ -686,10 +864,83 @@ main:focus { outline: none; }
 
 .section-code { color: #788ba5; font-size: 11px; }
 
+/* Section daftar layanan di halaman /services (gelap). Beranda memakai .svc-section di bawah. */
 .services-section { padding: 52px 0 58px; background: linear-gradient(180deg, #0b1b2c 0%, #071426 180px); }
+
+/* ===== Layanan (Beranda): section kuning emas + navy. Tepi atas mengikuti jalur PCB (pcb-divider),
+   tepi bawah miring ke section Produk. ===== */
+:root { --svc-gold-top: #ffd23f; --svc-slant: clamp(28px, 5vw, 72px); }
+.svc-section {
+  position: relative; isolation: isolate; padding: 104px 0 calc(64px + var(--svc-slant));
+  background: linear-gradient(180deg, var(--svc-gold-top) 0%, #ffc928 55%, #f4b712 100%); color: #071426;
+}
+/* Tekstur titik sirkuit navy samar */
+.svc-section::before {
+  position: absolute; inset: 0; z-index: -1; content: ""; pointer-events: none;
+  background-image: radial-gradient(circle at 1px 1px, rgb(7 20 38 / 22%) 1px, transparent 1.5px); background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 60% 70% at 100% 0%, #000, transparent 70%), radial-gradient(ellipse 50% 60% at 0% 100%, #000, transparent 70%);
+}
+/* Tepi bawah miring: segitiga sewarna awal section Produk */
+.svc-section::after {
+  position: absolute; left: 0; right: 0; bottom: -1px; height: var(--svc-slant); content: ""; pointer-events: none;
+  background: #071426; clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+.svc-head { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); align-items: end; gap: 16px 56px; }
+.svc-kicker { display: inline-block; color: #071426; font-family: var(--font-mono, ui-monospace, monospace); font-size: 11px; font-weight: 700; letter-spacing: .14em; }
+.svc-kicker::before { display: inline-block; width: 22px; height: 2px; margin-right: 10px; content: ""; vertical-align: middle; background: #071426; }
+.svc-head h2 { max-width: 760px; margin: 12px 0 0; color: #071426; font-family: var(--font-display); font-size: clamp(32px, 4.6vw, 60px); font-weight: 650; letter-spacing: -.045em; line-height: 1; text-wrap: balance; }
+.svc-head p { max-width: 400px; margin: 0; padding-bottom: 6px; color: rgb(7 20 38 / 78%); font-size: 15px; font-weight: 500; line-height: 1.65; }
+.svc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 40px; }
+.svc-cell { display: flex; }
+.svc-card {
+  position: relative; display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 26px 26px 22px; overflow: hidden;
+  border: 1px solid rgb(7 20 38 / 60%); border-radius: 14px; color: #e8edf6;
+  background: radial-gradient(120% 90% at 100% 0%, rgb(64 120 210 / 20%), transparent 55%), linear-gradient(160deg, #10284d 0%, #081629 100%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%), 0 26px 44px -28px rgb(74 46 0 / 75%);
+  transition: translate .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease, border-color .25s ease;
+}
+.svc-card:hover { translate: 0 -6px; border-color: #071426; box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%), 0 36px 54px -26px rgb(74 46 0 / 85%); }
+.svc-card:focus-visible { outline: 3px solid #071426; outline-offset: 4px; }
+.svc-number { position: absolute; top: 14px; right: 22px; color: transparent; font-family: var(--font-display); font-size: 58px; font-weight: 700; letter-spacing: -.05em; line-height: 1; -webkit-text-stroke: 1px rgb(255 201 40 / 38%); transition: -webkit-text-stroke-color .3s ease, color .3s ease; }
+.svc-card:hover .svc-number { color: rgb(255 201 40 / 14%); -webkit-text-stroke-color: rgb(255 201 40 / 80%); }
+.svc-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; color: #071426; background: linear-gradient(180deg, #ffe07a, #ffc928); box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%), 0 8px 18px -8px rgb(255 201 40 / 70%); transition: rotate .35s cubic-bezier(.22, 1, .36, 1), scale .35s cubic-bezier(.22, 1, .36, 1); }
+.svc-icon svg { width: 21px; height: 21px; }
+.svc-card:hover .svc-icon { rotate: -8deg; scale: 1.08; }
+.svc-code { margin-top: 20px; color: #8fa2bb; font-family: var(--font-mono, ui-monospace, monospace); font-size: 10.5px; letter-spacing: .12em; }
+.svc-card h3 { margin: 8px 0 0; color: #f1f5fb; font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -.025em; line-height: 1.2; }
+.svc-card p { margin: 10px 0 0; color: #a9b7ca; font-size: 13.5px; line-height: 1.65; }
+.svc-card ul { display: grid; gap: 8px; width: 100%; margin: 18px 0 0; padding: 16px 0 0; border-top: 1px dashed rgb(148 163 184 / 24%); list-style: none; }
+.svc-card li { display: flex; align-items: center; gap: 9px; color: #dbe4f0; font-size: 13px; }
+.svc-card li svg { flex: 0 0 auto; width: 15px; height: 15px; padding: 2px; border-radius: 50%; color: #071426; background: var(--gold); stroke-width: 3; }
+.svc-action { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin-top: auto; padding-top: 22px; color: var(--gold); font-size: 12px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
+.svc-arrow { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid rgb(255 201 40 / 55%); border-radius: 50%; color: var(--gold); transition: background .25s ease, color .25s ease, rotate .35s cubic-bezier(.22, 1, .36, 1); }
+.svc-arrow svg { width: 16px; height: 16px; }
+.svc-card:hover .svc-arrow { color: #071426; background: var(--gold); rotate: 45deg; }
+.svc-help { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-top: 30px; padding: 18px 22px; border: 1px solid rgb(7 20 38 / 22%); border-radius: 14px; background: rgb(255 255 255 / 22%); }
+.svc-help p { margin: 0; color: rgb(7 20 38 / 82%); font-size: 15px; }
+.svc-help strong { color: #071426; font-weight: 700; }
+.svc-help-button { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 18px; border-radius: 999px; color: #fff; background: #071426; font-size: 13px; font-weight: 650; transition: background .2s ease, translate .25s cubic-bezier(.22, 1, .36, 1), box-shadow .25s ease; }
+.svc-help-button svg { width: 17px; height: 17px; color: var(--gold); }
+.svc-help-button:hover { background: #0e2445; translate: 0 -2px; box-shadow: 0 12px 22px -12px rgb(7 20 38 / 80%); }
+.svc-help-button:focus-visible { outline: 3px solid #071426; outline-offset: 3px; }
+@media (max-width: 1000px) {
+  .svc-head { grid-template-columns: 1fr; }
+  .svc-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 30px; }
+}
+@media (max-width: 760px) {
+  .svc-section { padding-top: 76px; padding-bottom: calc(48px + var(--svc-slant)); }
+  .svc-card { padding: 22px 20px 18px; }
+  .svc-card h3 { font-size: 20px; }
+  .svc-number { font-size: 48px; }
+  .svc-help { flex-direction: column; align-items: flex-start; padding: 16px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .svc-card, .svc-icon, .svc-arrow, .svc-help-button { transition: none; }
+}
 .section-heading { text-align: center; }
 .section-heading h2 { margin: 6px 0 0; color: #e9eff8; font-family: var(--font-display); font-size: clamp(26px, 3vw, 36px); font-weight: 550; letter-spacing: -.035em; }
 .section-heading p { margin: 5px 0 0; color: #99a9bd; font-size: 14px; }
+/* Kartu layanan/proyek di halaman /services dan /projects (Beranda memakai .svc-*). */
 .services-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 32px; }
 .service-card { min-height: 248px; display: flex; flex-direction: column; padding: 20px; border: 1px solid rgb(148 163 184 / 13%); border-radius: 5px; background: linear-gradient(145deg, #0c1d31, #0a192a); transition: border-color .2s ease, transform .2s ease, background .2s ease; }
 .service-card:hover { border-color: rgb(255 201 40 / 42%); background: linear-gradient(145deg, #10233b, #0a192a); transform: translateY(-3px); }
