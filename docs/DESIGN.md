@@ -88,9 +88,9 @@ components:
 Dokumen ini ditulis ulang dari kode yang berjalan (`app/globals.css` dan komponen di `components/`), menggantikan
 panduan lama hasil ekspor Stitch. Sumber kebenarannya adalah kode; bila keduanya berbeda, perbarui dokumen ini.
 
-**Cakupan:** navbar, Beranda (hero + pita), Tentang, Layanan, dan section Produk di Beranda sudah mengikuti sistem ini.
-Halaman katalog `/products`, Proyek, Kontak, dan footer masih memakai gaya lama dan akan disempurnakan satu per satu;
-jangan jadikan bagian-bagian itu acuan.
+**Cakupan:** seluruh Beranda (navbar, hero + pita, Tentang, Layanan, Produk + Cara Pesan, Proyek, Kontak) sudah
+mengikuti sistem ini, begitu juga footer. Halaman tersendiri `/products`, `/projects`, `/contact`, dan kotak ajakan di `/about`
+masih memakai gaya lama dan akan disempurnakan satu per satu; jangan jadikan bagian-bagian itu acuan.
 
 ## Overview
 
@@ -111,7 +111,13 @@ Suaranya akrab dan langsung, memakai "kamu", bukan "Anda". Kalimat menyebut hal 
 
 ## Colors
 
-- **Navy** (`#071426`) adalah latar utama. Variannya: `#040d1a` (paling gelap, hero dan Produk) dan `#0d1c2e` (Tentang).
+- **Navy** (`#071426`) adalah latar utama. Variannya: `#040d1a` (paling gelap: hero, Produk + Cara Pesan, Kontak) dan
+  `#0d1c2e` (Tentang).
+- **Biru cetak biru** (`#12305a → #0e2749`, dengan kisi garis `rgb(160 195 245 / 7–9%)`) hanya untuk section Proyek.
+  Teksnya `#f1f6fd` (judul), `#b9c9df` (isi), `#9db6d8` (keterangan).
+- **Urutan latar Beranda:** navy (hero) → navy Tentang → emas (Layanan) → navy paling gelap (Produk + Cara Pesan) →
+  biru cetak biru (Proyek) → navy paling gelap (Kontak). Dua section bersebelahan tidak boleh berlatar sama, kecuali
+  memang satu bab.
 - **Emas** (`#ffc928`) adalah aksen tunggal: tombol utama, status aktif, garis penanda, dan teks penekanan.
 - **Section emas** (Layanan) memakai gradasi `#ffd23f → #ffc928 → #f4b712` dengan teks navy. Hanya satu section per
   halaman yang boleh berlatar emas.
@@ -139,7 +145,9 @@ Suaranya akrab dan langsung, memakai "kamu", bukan "Anda". Kalimat menyebut hal 
 - Jarak antar-bab lebih lega daripada jarak di dalam bab (104px di atas Layanan; 76px di HP).
 - Di dalam satu bab tidak ada garis pemisah: batasnya ruang kosong dan perubahan warna latar.
 - Batas antar section memakai bentuk, bukan garis yang sama berulang: pita teks miring (Beranda → Tentang),
-  jalur PCB yang menjadi tepi atas section emas (Tentang → Layanan), tepi miring (Layanan → Produk).
+  jalur PCB yang menjadi tepi atas section emas (Tentang → Layanan), tepi miring (Layanan → Produk), tepi berlubang
+  setengah lingkaran berlapis emas seperti tepi modul ESP32 (Produk → Proyek), dan tepi sinyal digital HIGH/LOW
+  (Proyek → Kontak). Setiap bentuk hanya dipakai sekali.
 - Halaman tidak boleh bisa digeser ke samping di lebar mana pun.
 
 ## Elevation & Depth
@@ -167,13 +175,24 @@ Suaranya akrab dan langsung, memakai "kamu", bukan "Anda". Kalimat menyebut hal 
   dengan lampu indikator berisi ikon solusi di pojok kanan atas. Ketiga masalah tersambung ke panel lewat jalur PCB
   (belokan 45°, bantalan solder di tiap ujung); jalur terpilih menyala emas dan dialiri satu denyut cahaya.
   Di HP menjadi akordeon dan jalurnya disembunyikan.
-- **Pembatas jalur PCB (Tentang → Layanan):** saat masuk layar, kilau tergambar dari kiri ke kanan, tiap bantalan
-  berkilat dengan cincin riak tepat saat dilewati, lalu satu komet cahaya melintas.
+- **Pembatas jalur PCB (Tentang → Layanan):** saat masuk layar, kilau tergambar dari tepi kiri layar sampai tepi kanan
+  layar, tiap bantalan berkilat dengan cincin riak tepat saat dilewati, lalu satu komet cahaya melintas.
 - **Nilai M-I-C-R-O-I-M:** tujuh huruf sebagai tab, lampu panggung di atas rel yang menyorot huruf terpilih. Latarnya
   sedikit lebih gelap (`#08131f`) seperti panggung.
 - **Visi:** pernyataan besar dengan tanda kutip emas besar di kirinya dan keterangan "Visi Microim" di bawahnya.
 - **Etalase produk:** susunan asimetris (1 unggulan besar, 2 sedang, 1 melebar). Foto mengisi kartu; di bawahnya
   kategori, status stok, nama, harga emas, dan tombol kapsul ("Pesan" emas, atau "Tanya restock" bergaris tepi).
+- **Cara pesan:** empat langkah di sepanjang satu jalur PCB, tanpa kartu. Saat masuk layar jalur menyala emas dari
+  langkah 1 ke 4 dan tiap bantalan solder menyala ketika dilewati. Di tablet dan HP jalurnya tegak di kiri.
+- **Baris proyek:** daftar baris (bukan kartu) di atas kertas cetak biru, dipisah garis putus-putus. Tiap baris berisi
+  gambar teknik garis (tergambar saat masuk layar, berubah emas saat disorot), penjelasan, dan daftar komponen
+  berhuruf mono. Isinya dari `lib/projects.ts`, sama dengan halaman `/projects`.
+- **Pembatas sinyal digital (Proyek → Kontak):** pola piksel asli yang berulang, jadi tebal garisnya sama di semua
+  lebar layar; garis emasnya tersapu dari kiri ke kanan saat masuk layar.
+- **Kontak:** judul besar dua baris (baris kedua emas), dua tombol, rincian kontak tanpa kotak, dan satu panel
+  percakapan. Balon kalimat pembuka muncul berurutan dan masing-masing membuka WhatsApp dengan pesan terisi.
+- **Footer:** ramping, tiga bagian (merek + tagline, tautan halaman, kontak singkat) dan satu baris bawah. Judul kolom
+  huruf biasa 15px, tautan 14px; tanpa kolom tambahan, kutipan, atau label huruf kapital.
 - **Fokus keyboard:** garis luar emas 2px (`:focus-visible`) di semua elemen interaktif.
 
 **Gerak:**

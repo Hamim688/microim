@@ -35,7 +35,7 @@ export function WhatsappFloat() {
   }, [])
 
   useEffect(() => {
-    const targets = Array.from(document.querySelectorAll(".cta-section, .site-footer"))
+    const targets = Array.from(document.querySelectorAll(".cta-section, .kontak-section, .site-footer"))
     if (targets.length === 0) return
     const inView = new Set<Element>()
     const observer = new IntersectionObserver(

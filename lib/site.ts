@@ -17,7 +17,7 @@ export const siteContact = {
 // Kosongkan nilai `url` untuk menyembunyikan tautan di situs.
 export const siteSocials = [
   { name: "Instagram", handle: "@microim.official", url: "https://www.instagram.com/microim.official/" },
-  { name: "TikTok", handle: "", url: "" },
+  { name: "TikTok", handle: "@microim.official", url: "https://www.tiktok.com/@microim.official" },
 ].filter((social) => social.url)
 
 export function whatsappLink(message?: string) {

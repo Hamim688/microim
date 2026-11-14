@@ -1,42 +1,47 @@
+import type { CSSProperties } from "react"
 import { CircuitBoard, MessageCircle, PackageCheck, Search } from "lucide-react"
 import { ScrollReveal } from "@/components/landing/landing-motion"
+import { RevealFlag } from "@/components/landing/reveal-flag"
 import { whatsappLink } from "@/lib/site"
 
 const steps = [
-  { icon: Search, title: "Pilih atau Ceritakan", text: "Pilih komponen dari katalog, atau ceritakan ide perangkat yang ingin kamu buat." },
+  { icon: Search, title: "Pilih atau ceritakan", text: "Pilih komponen dari katalog, atau ceritakan ide perangkat yang ingin kamu buat." },
   { icon: MessageCircle, title: "Chat lewat WhatsApp", text: "Kami bantu cek kebutuhan, rekomendasi komponen, dan perkiraan biayanya." },
-  { icon: CircuitBoard, title: "Kami Siapkan", text: "Komponen disiapkan, atau perangkat dirakit dan diprogram sesuai kesepakatan." },
-  { icon: PackageCheck, title: "Terima & Coba", text: "Perangkat siap dipakai. Kalau ada kendala, tinggal tanya lagi." },
+  { icon: CircuitBoard, title: "Kami siapkan", text: "Komponen disiapkan, atau perangkat dirakit dan diprogram sesuai kesepakatan." },
+  { icon: PackageCheck, title: "Terima dan coba", text: "Perangkat siap dipakai. Kalau ada kendala, tinggal tanya lagi." },
 ]
 
+/**
+ * Cara pesan: empat langkah di sepanjang satu jalur PCB. Saat masuk layar, jalur menyala emas dari langkah pertama
+ * ke langkah terakhir dan tiap bantalan solder menyala ketika dilewati. Di tablet dan HP jalurnya menjadi tegak.
+ * Dipakai di Beranda (lanjutan section Produk) serta halaman /about dan /services.
+ */
 export function OrderSteps() {
   return (
-    <section className="steps-section" id="cara-pesan">
+    <section className="steps-section" id="cara-pesan" aria-labelledby="steps-heading">
       <div className="site-container">
-        <ScrollReveal className="section-heading centered-heading">
-          <span className="section-kicker">CARA PESAN</span>
-          <h2>Dari Ide ke Perangkat dalam 4 Langkah</h2>
-          <p>Tanpa ribet. Semua obrolan cukup lewat WhatsApp.</p>
+        <ScrollReveal className="steps-head">
+          <h2 id="steps-heading">Dari Chat sampai Perangkat di Tanganmu</h2>
+          <div>
+            <p>Empat langkah, tanpa ribet. Semua obrolan cukup lewat WhatsApp.</p>
+            <a className="steps-chat" href={whatsappLink("Halo Microim, saya ingin bertanya tentang produk/jasa Microim.")} target="_blank" rel="noopener noreferrer">
+              <MessageCircle aria-hidden="true" />Mulai chat
+            </a>
+          </div>
         </ScrollReveal>
-        <ol className="steps-grid">
-          {steps.map(({ icon: Icon, title, text }, index) => (
-            <ScrollReveal key={title} delay={index * 0.08}>
-              <li className="step-card">
-                <div className="step-card-top">
-                  <span className="step-number">0{index + 1}</span>
-                  <span className="step-icon"><Icon aria-hidden="true" /></span>
-                </div>
-                <h3>{title}</h3>
+
+        <RevealFlag className="steps-flow" amount={0.3}>
+          <ol className="steps-rail">
+            {steps.map(({ icon: Icon, title, text }, index) => (
+              <li key={title} style={{ "--s": index } as CSSProperties}>
+                <i className="steps-pad" aria-hidden="true" />
+                <span className="steps-num" aria-hidden="true">{index + 1}</span>
+                <h3><Icon aria-hidden="true" />{title}</h3>
                 <p>{text}</p>
               </li>
-            </ScrollReveal>
-          ))}
-        </ol>
-        <div className="steps-action">
-          <a className="button-primary" href={whatsappLink("Halo Microim, saya ingin bertanya tentang produk/jasa Microim.")} target="_blank" rel="noopener noreferrer">
-            <MessageCircle aria-hidden="true" /> Chat Sekarang
-          </a>
-        </div>
+            ))}
+          </ol>
+        </RevealFlag>
       </div>
     </section>
   )

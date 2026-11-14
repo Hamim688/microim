@@ -3,14 +3,11 @@ import { AboutSection } from "@/components/landing/about-section"
 import { ValuesSection } from "@/components/landing/values-section"
 import { ServicesPreview } from "@/components/landing/services-preview"
 import { FeaturedProducts } from "@/components/landing/featured-products"
-import { EngineeringEdge } from "@/components/landing/engineering-edge"
 import { ProjectShowcase } from "@/components/landing/project-showcase"
-import { CTASection } from "@/components/landing/cta-section"
+import { ContactSection } from "@/components/landing/contact-section"
 import { TechMarquee } from "@/components/landing/tech-marquee"
 import { OrderSteps } from "@/components/landing/order-steps"
-import { SocialSection } from "@/components/landing/social-section"
 import { LandingMotion } from "@/components/landing/landing-motion"
-import { SectionDivider } from "@/components/landing/section-divider"
 import { PcbDivider } from "@/components/landing/pcb-divider"
 import { getFeaturedProducts, getMarqueeNames, getCatalog } from "@/lib/catalog"
 
@@ -28,16 +25,11 @@ export default async function HomePage() {
         <ValuesSection />
         <PcbDivider />
         <ServicesPreview />
+        {/* Bab Produk: etalase, lalu cara pesan (latar sama, tanpa garis pemisah). */}
         <FeaturedProducts products={featured} total={catalog.length} />
-        <SectionDivider />
         <OrderSteps />
-        <SectionDivider />
-        <EngineeringEdge />
-        <SectionDivider />
         <ProjectShowcase />
-        <SectionDivider />
-        <SocialSection />
-        <CTASection />
+        <ContactSection />
       </div>
     </LandingMotion>
   )

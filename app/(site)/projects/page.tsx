@@ -3,28 +3,7 @@ import { ArrowUpRight } from "lucide-react"
 import { PageHero } from "@/components/layout/page-hero"
 import { LandingMotion, ScrollReveal } from "@/components/landing/landing-motion"
 import { whatsappLink } from "@/lib/site"
-
-// Contoh proyek yang bisa dirakit dari komponen yang tersedia di katalog Microim.
-const projects = [
-  {
-    title: "Smart Car 2WD Radar Scanner",
-    category: "Robotika",
-    desc: "Mobil robot yang memindai sekitarnya hingga 180° dengan sensor ultrasonik di atas servo, lalu menghindari rintangan secara otomatis.",
-    tech: ["ESP32", "Servo SG90", "Sensor SRF04", "Driver L298N"],
-  },
-  {
-    title: "Robot Line Follower",
-    category: "Robotika",
-    desc: "Robot pengikut garis untuk praktikum dan lomba: membaca lintasan dengan sensor garis dan mengatur kecepatan dua motor DC.",
-    tech: ["Arduino / ESP32", "Sensor Garis", "Motor DC Gearbox TT", "Driver L298N"],
-  },
-  {
-    title: "Pemantau Ruangan Berbasis IoT",
-    category: "IoT",
-    desc: "Perangkat pembaca suhu, kelembapan, atau jarak yang mengirim data lewat WiFi ke dashboard di HP, cocok untuk tugas mata kuliah IoT.",
-    tech: ["ESP32", "Sensor", "WiFi", "Dashboard IoT"],
-  },
-]
+import { exampleProjects as projects } from "@/lib/projects"
 
 export const metadata: Metadata = {
   title: "Proyek",
