@@ -45,10 +45,7 @@ export function AboutSection() {
 
         <div className="about-reasons">
           <ScrollReveal className="about-reasons-head">
-            <div>
-              <span className="about-mono">MASALAH → SOLUSI</span>
-              <h3>Kenapa Microim ada</h3>
-            </div>
+            <h3>Kenapa Microim ada</h3>
             <p>Tiga kendala yang paling sering dialami mahasiswa saat mengerjakan proyek, dan cara Microim menjawabnya.</p>
           </ScrollReveal>
           <ScrollReveal delay={0.08}>

@@ -1,88 +1,202 @@
-# Microim - Design System & Visual Guidelines
-
-## 1. Visual Identity & Brand Philosophy
-
-Microim represents the intersection between hardware engineering, software intelligence, and connectivity.
-The design language is engineered to be **futuristic, premium, minimalist, and deeply engineering-focused**, avoiding generic ecommerce tropes.
-
-- **Brand Name**: Microim
-- **Tagline**: *"Connecting Ideas Through Intelligent Technology"*
-- **Vision**: *"Menjadi perusahaan yang mendorong pengembangan dan pembelajaran Teknologi IT di level global."*
-
+---
+name: Microim
+description: "Komponen Lengkap, Kerja Tanggap."
+colors:
+  navy: "#071426"
+  navy-deep: "#040d1a"
+  navy-about: "#0d1c2e"
+  navy-card: "#10284d"
+  navy-card-deep: "#081629"
+  gold: "#ffc928"
+  gold-top: "#ffd23f"
+  gold-deep: "#f4b712"
+  gold-metal-light: "#fff0b0"
+  gold-metal-dark: "#c9930a"
+  text-strong: "#e9eff8"
+  text-body: "#a7b5c7"
+  text-muted: "#7f91a8"
+  problem-red: "#f2a59d"
+  button-navy: "#1c3d70"
+typography:
+  display:
+    fontFamily: "Space Grotesk, Geist, Arial, sans-serif"
+    fontSize: "clamp(56px, 8.4vw, 112px)"
+    fontWeight: 650
+    lineHeight: 0.88
+    letterSpacing: "-0.045em"
+  headline:
+    fontFamily: "Space Grotesk, Geist, Arial, sans-serif"
+    fontSize: "clamp(32px, 4.6vw, 60px)"
+    fontWeight: 650
+    lineHeight: 1
+    letterSpacing: "-0.045em"
+  title:
+    fontFamily: "Space Grotesk, Geist, Arial, sans-serif"
+    fontSize: "clamp(18px, 1.7vw, 22px)"
+    fontWeight: 600
+    lineHeight: 1.25
+    letterSpacing: "-0.025em"
+  body:
+    fontFamily: "Geist, Arial, sans-serif"
+    fontSize: "15px"
+    fontWeight: 400
+    lineHeight: 1.7
+  label:
+    fontFamily: "Geist Mono, ui-monospace, monospace"
+    fontSize: "12px"
+    fontWeight: 600
+    letterSpacing: "0.14em"
+rounded:
+  button: "3px"
+  chip: "10px"
+  card: "14px"
+  panel: "18px"
+  pill: "999px"
+spacing:
+  gutter-mobile: "1rem"
+  gutter-desktop: "2.5rem"
+  card-gap: "18px"
+  section-y: "104px"
+  section-y-mobile: "76px"
+components:
+  button-primary:
+    backgroundColor: "{colors.gold}"
+    textColor: "{colors.navy}"
+    rounded: "{rounded.button}"
+    height: "46px"
+    padding: "0 17px"
+  button-secondary:
+    backgroundColor: "{colors.button-navy}"
+    textColor: "#ffffff"
+    rounded: "{rounded.button}"
+    height: "46px"
+    padding: "0 17px"
+  service-card:
+    backgroundColor: "{colors.navy-card}"
+    textColor: "{colors.text-strong}"
+    rounded: "{rounded.card}"
+    padding: "26px 26px 22px"
+  solution-panel:
+    backgroundColor: "#14263d"
+    textColor: "{colors.text-strong}"
+    rounded: "{rounded.panel}"
+    padding: "clamp(28px, 3.4vw, 48px)"
 ---
 
-## 2. Color Palette & Tokens
+# Design System: Microim
 
-### Primary Brand Colors
-- **Deep Navy (Background & Foundation)**: `#071426`
-  - Hex: `#071426`
-  - HSL: `hsl(215, 69%, 9%)`
-  - Use: Main page backgrounds, root surfaces, primary contrast base.
-- **Deep Navy Elevated (Cards & Panels)**: `#0c213d`
-  - Hex: `#0c213d`
-  - HSL: `hsl(215, 67%, 15%)`
-  - Use: Card surfaces, navigation header, dropdowns, modal layers.
-- **Deep Navy Border / Circuit Line**: `#173359`
-  - Hex: `#173359`
-  - Use: Subtle divider borders, card strokes, circuit grid lines.
+Dokumen ini ditulis ulang dari kode yang berjalan (`app/globals.css` dan komponen di `components/`), menggantikan
+panduan lama hasil ekspor Stitch. Sumber kebenarannya adalah kode; bila keduanya berbeda, perbarui dokumen ini.
 
-### Accent Colors
-- **Golden Yellow (Primary Accent)**: `#FFC928`
-  - Hex: `#FFC928`
-  - HSL: `hsl(45, 100%, 58%)`
-  - Use: Call to actions (CTAs), glowing badges, active states, circuit nodes, key highlights.
-  - *Rule*: Never use as dominant solid background for large sections; use intentionally as an accent.
-- **Golden Yellow Glow / Hover**: `#FFE066` / `rgba(255, 201, 40, 0.15)`
-  - Use: Hover states, radial glow backgrounds behind hardware prototypes, badge tint.
+**Cakupan:** navbar, Beranda (hero + pita), Tentang, Layanan, dan section Produk di Beranda sudah mengikuti sistem ini.
+Halaman katalog `/products`, Proyek, Kontak, dan footer masih memakai gaya lama dan akan disempurnakan satu per satu;
+jangan jadikan bagian-bagian itu acuan.
 
-### Supporting & Neutral Colors
-- **Pure White**: `#FFFFFF`
-  - Use: Hero titles, high-contrast text, primary button foregrounds.
-- **Text Muted / Light Slate**: `#94A3B8`
-  - Use: Body copy, secondary descriptions, metadata, timestamps.
-- **Dark Surface / Inset**: `#040d1a`
-  - Use: Code blocks, terminal previews, circuit canvas backgrounds.
+## Overview
 
----
+**Creative North Star: "Meja Rakit di Malam Hari"**
 
-## 3. Typography
+Microim (Microcontroller Immediately Made) menjual komponen IoT dan jasa rakit/pemrograman untuk mahasiswa. Tampilannya
+seperti meja kerja elektronika yang lampunya menyala di ruangan gelap: latar navy pekat, emas sebagai cahaya dan
+tembaga, dan benda-benda nyata dari dunia elektronika sebagai elemen visual, bukan hiasan abstrak.
 
-- **Font Family**: Modern Geometric Sans-serif (Geist Sans / Inter / Plus Jakarta Sans)
-- **Code / Specs Font**: Modern Monospace (Geist Mono / JetBrains Mono)
+Suaranya akrab dan langsung, memakai "kamu", bukan "Anda". Kalimat menyebut hal konkret (H-1 praktikum, COD kampus,
+3.3V vs 5V), bukan janji umum.
 
-### Type Hierarchy
-| Level | Size | Weight | Line Height | Tracking |
-|---|---|---|---|---|
-| Display / Hero | 48px - 64px | Bold (700) | 1.1 | -0.02em |
-| Section Heading (H2) | 32px - 40px | SemiBold (600) | 1.2 | -0.015em |
-| Subsection (H3) | 22px - 26px | SemiBold (600) | 1.3 | -0.01em |
-| Card Title (H4) | 18px - 20px | SemiBold (600) | 1.4 | normal |
-| Body Regular | 15px - 16px | Regular (400) | 1.6 | normal |
-| Body Small / Meta | 13px - 14px | Medium (500) | 1.5 | +0.01em |
-| Monospace Spec / Tag | 11px - 12px | Medium (500) | 1.4 | +0.05em (Uppercase) |
+**Key Characteristics:**
+- Gelap secara bawaan, dengan satu section terang berwarna emas (Layanan) sebagai jeda di tengah halaman.
+- Motif diambil dari elektronika sungguhan: jalur PCB, bantalan solder, chip IC, pin, lampu panggung.
+- Satu ide interaktif per section, bukan banyak efek kecil.
+- Judul besar dan tegas; teks kecil minimal 12px.
 
----
+## Colors
 
-## 4. Visual Elements & Motifs
+- **Navy** (`#071426`) adalah latar utama. Variannya: `#040d1a` (paling gelap, hero dan Produk) dan `#0d1c2e` (Tentang).
+- **Emas** (`#ffc928`) adalah aksen tunggal: tombol utama, status aktif, garis penanda, dan teks penekanan.
+- **Section emas** (Layanan) memakai gradasi `#ffd23f → #ffc928 → #f4b712` dengan teks navy. Hanya satu section per
+  halaman yang boleh berlatar emas.
+- **Emas logam** (`#fff0b0 → #ffc928 → #c9930a`, atas ke bawah) dipakai untuk tulisan yang "tercetak": nama di chip dan
+  huruf nilai yang sedang disorot. Jangan dipakai untuk judul biasa.
+- **Teks:** `#e9eff8` untuk judul, `#a7b5c7` untuk isi, `#7f91a8` untuk keterangan.
+- **Merah lembut** (`#f2a59d`) hanya untuk menandai "masalah" atau keadaan "sebelum".
+- **Kartu navy di atas emas:** `#10284d → #081629`.
 
-1. **Subtle Glassmorphism**:
-   - Background: `rgba(12, 33, 61, 0.75)` with `backdrop-filter: blur(12px)`
-   - Border: `1px solid rgba(255, 201, 40, 0.12)` or `1px solid rgba(255, 255, 255, 0.08)`
-2. **Circuit Accents**:
-   - Subtle dot matrices or PCB track lines at 5-10% opacity in dark sections.
-   - Glowing golden node dots on card corners or badge borders.
-3. **Card Shapes & Elevation**:
-   - Border radius: `rounded-2xl` (16px) or `rounded-xl` (12px)
-   - Shadows: Soft directional glow `0 10px 30px -10px rgba(0, 0, 0, 0.5)` with subtle golden rim highlight on hover.
-4. **Button Styles**:
-   - **Primary Action**: Solid Golden Yellow (`#FFC928`) background, Deep Navy (`#071426`) bold text, subtle hover lift and glow (`shadow-[0_0_20px_rgba(255,201,40,0.35)]`).
-   - **Secondary Action**: Deep Navy glass surface, subtle border `border-[#173359]`, white text, hover `border-[#FFC928]/40`.
-   - **Ghost / Nav Link**: Text `#94A3B8`, hover text `#FFC928` with smooth 200ms transition.
+## Typography
 
----
+- **Space Grotesk** untuk judul dan angka besar. **Geist** untuk isi. **Geist Mono** hanya untuk label teknis pendek
+  di dalam komponen (misalnya baris datasheet).
+- Judul bab memakai huruf kapital, sangat rapat (`-0.045em`), tinggi baris `0.88`, hingga 112px.
+- Judul section 32–60px. Judul kartu 18–22px. Isi 14–16px dengan tinggi baris 1.65–1.75.
+- Tidak ada teks di bawah 12px.
+- Tidak ada label kecil huruf kapital di atas judul section. Judul berdiri sendiri.
+- Judul memakai `text-wrap: balance`.
 
-## 5. Layout & Navigation Hierarchy
+## Layout
 
-- **Global Header**: Sticky top navigation with Microim mirrored M/I emblem, navigation links (`Home`, `About`, `Services`, `Products`, `Projects`, `Contact`), and prominent primary CTA `Start Your Project`.
-- **Global Footer**: Company vision, quick links, contact info (WhatsApp, Email, Lab location), copyright, and engineering badge.
-- **Container Max-Width**: `max-w-7xl` (1280px) with fluid padding `px-4 sm:px-6 lg:px-8`.
+- Kontainer: `min(100% - 5rem, 1440px)`; di HP `min(100% - 2rem, 600px)`.
+- Titik henti: 760px (HP), 900–1000px (tablet, kolom ganda menjadi satu), 1050px (hero).
+- Kepala section dua kolom: judul besar di kiri, kalimat pengantar pendek di kanan bawah. Di HP menjadi satu kolom.
+- Jarak antar-bab lebih lega daripada jarak di dalam bab (104px di atas Layanan; 76px di HP).
+- Di dalam satu bab tidak ada garis pemisah: batasnya ruang kosong dan perubahan warna latar.
+- Batas antar section memakai bentuk, bukan garis yang sama berulang: pita teks miring (Beranda → Tentang),
+  jalur PCB yang menjadi tepi atas section emas (Tentang → Layanan), tepi miring (Layanan → Produk).
+- Halaman tidak boleh bisa digeser ke samping di lebar mana pun.
+
+## Elevation & Depth
+
+- Kedalaman terutama dari lapisan warna dan garis tepi tipis (`rgb(148 163 184 / 14–20%)`), bukan bayangan tebal.
+- Kartu di atas emas memakai bayangan hangat kecokelatan (`rgb(74 46 0 / 75%)`).
+- Pendar emas hanya untuk hal yang benar-benar "menyala": panel solusi aktif, lampu sorot, takik rel yang terkunci.
+- "Kaca" (blur latar) hanya di navbar, tombol WhatsApp melayang, dan elemen hero; resepnya ada di variabel
+  `--glass-bg`, `--glass-filter`, `--glass-shadow`.
+
+## Shapes
+
+- Tombol bersudut tegas (3px). Kartu 14px, panel besar 18px, chip IC 10px, kapsul dan lencana 999px.
+- Garis tepi 1px. Garis putus-putus berarti "belum tersambung" atau pemisah di dalam komponen.
+- Bentuk khas: chip IC dengan pin di kiri-kanan, takik setengah lingkaran, dan titik pin 1; jalur PCB bersudut 45°
+  dengan bantalan solder; tepi section yang dipotong miring.
+
+## Components
+
+- **Tombol utama:** emas dengan teks gelap, huruf kapital 12px berjarak `.075em`, tinggi 46px. Tombol kedua navy.
+- **Kartu layanan:** navy di atas emas, dibuka nomor besar bergaris tepi (terisi emas saat disorot), ikon kecil
+  sebaris dengan judul, daftar cakupan bercentang, dan seluruh kartu adalah satu tautan.
+- **Chip datasheet:** profil singkat Microim dengan nama tercetak emas logam dan baris bernomor pin.
+- **Daftar masalah + panel solusi:** tab vertikal; panel menampilkan "sebelum" yang dicoret dan "sesudah" yang besar,
+  dengan lampu indikator berisi ikon solusi di pojok kanan atas. Ketiga masalah tersambung ke panel lewat jalur PCB
+  (belokan 45°, bantalan solder di tiap ujung); jalur terpilih menyala emas dan dialiri satu denyut cahaya.
+  Di HP menjadi akordeon dan jalurnya disembunyikan.
+- **Pembatas jalur PCB (Tentang → Layanan):** saat masuk layar, kilau tergambar dari kiri ke kanan, tiap bantalan
+  berkilat dengan cincin riak tepat saat dilewati, lalu satu komet cahaya melintas.
+- **Nilai M-I-C-R-O-I-M:** tujuh huruf sebagai tab, lampu panggung di atas rel yang menyorot huruf terpilih. Latarnya
+  sedikit lebih gelap (`#08131f`) seperti panggung.
+- **Visi:** pernyataan besar dengan tanda kutip emas besar di kirinya dan keterangan "Visi Microim" di bawahnya.
+- **Etalase produk:** susunan asimetris (1 unggulan besar, 2 sedang, 1 melebar). Foto mengisi kartu; di bawahnya
+  kategori, status stok, nama, harga emas, dan tombol kapsul ("Pesan" emas, atau "Tanya restock" bergaris tepi).
+- **Fokus keyboard:** garis luar emas 2px (`:focus-visible`) di semua elemen interaktif.
+
+**Gerak:**
+- Kurva utama `cubic-bezier(.22, 1, .36, 1)`. Respons tekan 160ms, perubahan keadaan 250–450ms, masuk layar 550–1000ms.
+- Elemen yang bisa ditekan mengecil sedikit saat ditekan (`scale: .97–.985`).
+- Efek sorot hanya aktif di perangkat berkursor (`@media (hover: hover) and (pointer: fine)`).
+- Animasi masuk berulang tiap kali section masuk layar (`useRevealOnScroll`, `RevealFlag`).
+- Animasi yang berjalan terus dibatasi: pita teks di Beranda dan kilau huruf nilai. Jangan menambah yang lain.
+- `prefers-reduced-motion` selalu dihormati: isi langsung tampil di keadaan akhirnya.
+
+## Do's and Don'ts
+
+**Lakukan:**
+- Ambil isi dari rencana bisnis Microim; sebut angka dan situasi yang nyata.
+- Pakai motif elektronika yang punya makna di tempatnya.
+- Buat satu elemen interaktif yang jelas per section.
+- Uji di desktop dan HP, dan pastikan halaman tidak bisa digeser ke samping.
+
+**Jangan:**
+- Jangan menaruh label kecil huruf kapital di atas judul, atau kode buatan seperti `[IOT.01]` dan `RAKIT.01`.
+- Jangan mengulang susunan "tiga atau empat kartu seragam" di setiap section.
+- Jangan menaruh ikon dalam kotak tepat di atas judul kartu; ikon menyatu sebaris dengan judul.
+- Jangan menampilkan proyek, angka, atau testimoni yang tidak nyata.
+- Jangan menambah animasi tak berujung, pendar, atau gradasi teks di luar yang tercantum di atas.
+- Jangan memakai "Anda"; pakai "kamu".
+- Jangan memakai teks di bawah 12px.

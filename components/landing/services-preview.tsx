@@ -6,7 +6,6 @@ import { whatsappLink } from "@/lib/site"
 // Cakupan tiap layanan mengikuti rencana bisnis Microim (reseller komponen, jasa perakitan, jasa programming).
 const services = [
   {
-    code: "RAKIT.01",
     icon: Cpu,
     title: "Jasa Rakit Perangkat & IoT",
     body: "Perakitan perangkat, purwarupa, dan sistem IoT sesuai kebutuhan proyek, dari pemilihan komponen sampai siap diuji.",
@@ -15,7 +14,6 @@ const services = [
     action: "Lihat jasa rakit",
   },
   {
-    code: "PROGRAM.02",
     icon: Code2,
     title: "Jasa Pemrograman",
     body: "Pemrograman mikrokontroler, perangkat lunak tertanam, dan integrasi aplikasi agar perangkat bekerja sesuai kebutuhanmu.",
@@ -24,7 +22,6 @@ const services = [
     action: "Lihat jasa pemrograman",
   },
   {
-    code: "TOKO.IOT.03",
     icon: ShoppingBag,
     title: "Komponen IoT & Elektronik",
     body: "Cari papan mikrokontroler, sensor, motor, dan modul elektronik untuk merakit proyekmu sendiri.",
@@ -43,21 +40,16 @@ export function ServicesPreview() {
     <section className="svc-section" id="services-core" aria-labelledby="services-heading">
       <div className="site-container">
         <ScrollReveal className="svc-head">
-          <div>
-            <span className="svc-kicker">JASA &amp; PRODUK MICROIM</span>
-            <h2 id="services-heading">Butuh Dirakit, Diprogram, atau Komponennya?</h2>
-          </div>
+          <h2 id="services-heading">Butuh Dirakit, Diprogram, atau Komponennya?</h2>
           <p>Pilih bantuan teknis atau temukan komponen yang kamu perlukan untuk mulai berkarya.</p>
         </ScrollReveal>
 
         <div className="svc-grid">
-          {services.map(({ code, icon: Icon, title, body, points, href, action }, index) => (
-            <ScrollReveal key={code} delay={index * 0.09} className="svc-cell">
+          {services.map(({ icon: Icon, title, body, points, href, action }, index) => (
+            <ScrollReveal key={title} delay={index * 0.09} className="svc-cell">
               <Link className="svc-card" href={href}>
                 <span className="svc-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                <span className="svc-icon"><Icon aria-hidden="true" /></span>
-                <span className="svc-code">{code}</span>
-                <h3>{title}</h3>
+                <h3><Icon aria-hidden="true" />{title}</h3>
                 <p>{body}</p>
                 <ul>
                   {points.map((point) => (

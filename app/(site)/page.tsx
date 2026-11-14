@@ -12,13 +12,13 @@ import { SocialSection } from "@/components/landing/social-section"
 import { LandingMotion } from "@/components/landing/landing-motion"
 import { SectionDivider } from "@/components/landing/section-divider"
 import { PcbDivider } from "@/components/landing/pcb-divider"
-import { getFeaturedProducts, getMarqueeNames } from "@/lib/catalog"
+import { getFeaturedProducts, getMarqueeNames, getCatalog } from "@/lib/catalog"
 
 // Produk unggulan & pita berjalan memakai stok/harga terbaru dari database.
 export const revalidate = 300
 
 export default async function HomePage() {
-  const [featured, marquee] = await Promise.all([getFeaturedProducts(), getMarqueeNames()])
+  const [featured, marquee, catalog] = await Promise.all([getFeaturedProducts(), getMarqueeNames(), getCatalog()])
   return (
     <LandingMotion>
       <div className="landing-page">
@@ -28,7 +28,7 @@ export default async function HomePage() {
         <ValuesSection />
         <PcbDivider />
         <ServicesPreview />
-        <FeaturedProducts products={featured} />
+        <FeaturedProducts products={featured} total={catalog.length} />
         <SectionDivider />
         <OrderSteps />
         <SectionDivider />

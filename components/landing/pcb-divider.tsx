@@ -1,5 +1,6 @@
 "use client"
 
+import type { CSSProperties } from "react"
 import { motion, type Variants } from "motion/react"
 import { useRevealOnScroll } from "@/components/landing/landing-motion"
 
@@ -19,25 +20,32 @@ const PADS = [
   { x: 70, y: 14 },
 ]
 
+// Kilau jalur digambar dengan laju yang cukup pelan supaya terlihat "berjalan" dari kiri ke kanan.
+const TRACE_DURATION = 1.5
+const traceEase = [0.45, 0, 0.25, 1] as const
+// Saat kepala kilau melewati tiap bantalan (detik), supaya bantalan menyala tepat ketika dilewati.
+const PAD_DELAYS = [0.5, 0.56, 0.75, 0.94, 1]
+
 const traceVariants: Variants = {
   hidden: { pathLength: 0, opacity: 0, transition: { duration: 0 } },
-  show: { pathLength: 1, opacity: 1, transition: { duration: 1.2, ease } },
+  show: { pathLength: 1, opacity: 1, transition: { duration: TRACE_DURATION, ease: traceEase } },
 }
 const padVariants: Variants = {
   hidden: { scale: 0, opacity: 0, transition: { duration: 0 } },
-  show: (i: number) => ({ scale: 1, opacity: 1, transition: { duration: 0.45, delay: 0.35 + i * 0.12, ease } }),
+  show: (i: number) => ({ scale: [0, 1.5, 1], opacity: 1, transition: { duration: 0.5, delay: PAD_DELAYS[i], ease } }),
 }
 
 /**
  * Pembatas Tentang → Layanan: jalur PCB berbelok dengan bantalan solder, sekaligus tepi atas section Layanan
- * yang berlatar emas. Kilau jalurnya tergambar dari kiri ke kanan setiap kali masuk layar. Tingginya 0.
+ * yang berlatar emas. Setiap kali masuk layar: kilau jalur tergambar dari kiri ke kanan, tiap bantalan menyala
+ * (berdenyut + cincin riak) tepat saat dilewati, lalu satu komet cahaya melintas. Tingginya 0.
  */
 export function PcbDivider() {
   const [ref, state] = useRevealOnScroll<HTMLDivElement>(1)
   const shown = state === "show" ? "show" : "hidden"
   return (
     <div className="pcb-divider" aria-hidden="true">
-      <div ref={ref} className="site-container pcb-divider-inner">
+      <div ref={ref} className={`site-container pcb-divider-inner${shown === "show" ? " is-live" : ""}`}>
         <svg className="pcb-divider-svg" viewBox="0 0 1000 60" preserveAspectRatio="none" focusable="false">
           <defs>
             <linearGradient id="pcb-trace-gradient" x1="0" x2="1" y1="0" y2="0">
@@ -58,12 +66,14 @@ export function PcbDivider() {
             initial="hidden"
             animate={shown}
           />
+          {/* Komet: satu denyut cahaya melintasi jalur setelah kilau selesai tergambar. */}
+          <path className="pcb-comet" d={TRACE} pathLength={1} />
         </svg>
         {PADS.map((pad, i) => (
           <motion.i
             key={`${pad.x}-${pad.y}`}
             className={`pcb-pad${pad.via ? " is-via" : ""}`}
-            style={{ left: `${pad.x}%`, top: `${pad.y - 30}px` }}
+            style={{ left: `${pad.x}%`, top: `${pad.y - 30}px`, "--d": `${PAD_DELAYS[i]}s` } as CSSProperties}
             custom={i}
             variants={padVariants}
             initial="hidden"

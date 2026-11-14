@@ -26,7 +26,7 @@ export function VisionStatement() {
               className={`vision-word${index >= KEY_FROM ? " is-key" : ""}`}
               style={{ "--w": index } as CSSProperties}
             >
-              {index === 0 ? "“" : ""}{word}{index === words.length - 1 ? "”" : ""}{" "}
+              {word}{" "}
             </span>
           ))}
         </p>
