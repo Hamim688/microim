@@ -2,6 +2,7 @@ import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
 import { WhatsappFloat } from "@/components/layout/whatsapp-float"
 import { PageTracker } from "@/components/analytics/page-tracker"
+import { RouteWatcher } from "@/components/layout/back-link"
 
 // Kerangka situs publik (navbar, footer, tombol WA). Area /admin memakai kerangka sendiri.
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -14,6 +15,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <Footer />
       <WhatsappFloat />
       <PageTracker />
+      <RouteWatcher />
     </>
   )
 }

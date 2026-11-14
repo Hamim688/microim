@@ -16,7 +16,7 @@ export default async function ProductsPage() {
   const products = await getCatalog()
   return (
     <LandingMotion>
-      <PageHero kicker="KATALOG KOMPONEN IOT" title={<>Komponen Elektronika &amp; <span>Mikrokontroler</span></>}>
+      <PageHero backTo="/#products" kicker="KATALOG KOMPONEN IOT" title={<>Komponen Elektronika &amp; <span>Mikrokontroler</span></>}>
         Papan mikrokontroler, sensor, aktuator, dan aksesori untuk belajar, membuat purwarupa, dan mengembangkan sistem IoT. Klik Pesan untuk order lewat WhatsApp.
       </PageHero>
       <div className="site-container page-body">

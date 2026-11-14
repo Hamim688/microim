@@ -1,7 +1,8 @@
 import type { CSSProperties } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowUpRight, AtSign, Mail, MapPin, MessageCircle, NotebookPen } from "lucide-react"
+import { ArrowUpRight, Mail, MapPin, MessageCircle, NotebookPen } from "lucide-react"
+import { SocialIcon } from "@/components/icons/social-icon"
 import { ScrollReveal } from "@/components/landing/landing-motion"
 import { RevealFlag } from "@/components/landing/reveal-flag"
 import { SignalDivider } from "@/components/landing/signal-divider"
@@ -47,7 +48,7 @@ export function ContactSection() {
             </li>
             {siteSocials.map((social) => (
               <li key={social.name}>
-                <AtSign aria-hidden="true" />
+                <SocialIcon name={social.name} />
                 <span>{social.name}</span>
                 <a href={social.url} target="_blank" rel="noopener noreferrer">{social.handle}</a>
               </li>

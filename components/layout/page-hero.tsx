@@ -1,12 +1,12 @@
-import Link from "next/link"
 import type { ReactNode } from "react"
-import { ArrowLeft } from "lucide-react"
+import { BackLink } from "@/components/layout/back-link"
 
-export function PageHero({ kicker, title, children }: { kicker: string; title: ReactNode; children?: ReactNode }) {
+/** `backTo`: tujuan tautan "Kembali" bila halaman dibuka langsung (biasanya section terkait di Beranda). */
+export function PageHero({ kicker, title, children, backTo = "/" }: { kicker: string; title: ReactNode; children?: ReactNode; backTo?: string }) {
   return (
     <section className="page-hero">
       <div className="site-container">
-        <Link href="/" className="page-hero-back"><ArrowLeft aria-hidden="true" /> Kembali ke Beranda</Link>
+        <BackLink fallback={backTo} className="page-hero-back" />
         <span className="section-kicker">{kicker}</span>
         <h1>{title}</h1>
         {children ? <p>{children}</p> : null}

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <LandingMotion>
-      <PageHero kicker="CONTOH PROYEK" title={<>Proyek Rekayasa &amp; <span>Purwarupa</span></>}>
+      <PageHero backTo="/#projects" kicker="CONTOH PROYEK" title={<>Proyek Rekayasa &amp; <span>Purwarupa</span></>}>
         Contoh proyek yang bisa kami rakit dan program dari komponen di katalog Microim. Punya ide serupa atau tugas dengan spesifikasi berbeda? Konsultasikan saja.
       </PageHero>
       <div className="site-container page-body">

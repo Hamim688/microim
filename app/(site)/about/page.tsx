@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <LandingMotion>
-      <PageHero kicker="TENTANG MICROIM" title={<>Microcontroller <span>Immediately Made</span></>}>
+      <PageHero backTo="/#about" kicker="TENTANG MICROIM" title={<>Microcontroller <span>Immediately Made</span></>}>
         Microim adalah usaha rekayasa teknologi yang berfokus pada perakitan perangkat IoT, pemrograman mikrokontroler, dan penyediaan komponen elektronik, agar ide teknologi lebih cepat menjadi perangkat nyata.
       </PageHero>
 

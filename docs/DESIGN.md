@@ -89,7 +89,7 @@ Dokumen ini ditulis ulang dari kode yang berjalan (`app/globals.css` dan kompone
 panduan lama hasil ekspor Stitch. Sumber kebenarannya adalah kode; bila keduanya berbeda, perbarui dokumen ini.
 
 **Cakupan:** seluruh Beranda (navbar, hero + pita, Tentang, Layanan, Produk + Cara Pesan, Proyek, Kontak) sudah
-mengikuti sistem ini, begitu juga footer. Halaman tersendiri `/products`, `/projects`, `/contact`, dan kotak ajakan di `/about`
+mengikuti sistem ini, begitu juga footer. Halaman `/contact` juga sudah. Halaman tersendiri `/products`, `/projects`, dan kotak ajakan di `/about`
 masih memakai gaya lama dan akan disempurnakan satu per satu; jangan jadikan bagian-bagian itu acuan.
 
 ## Overview
@@ -193,6 +193,15 @@ Suaranya akrab dan langsung, memakai "kamu", bukan "Anda". Kalimat menyebut hal 
   percakapan. Balon kalimat pembuka muncul berurutan dan masing-masing membuka WhatsApp dengan pesan terisi.
 - **Footer:** ramping, tiga bagian (merek + tagline, tautan halaman, kontak singkat) dan satu baris bawah. Judul kolom
   huruf biasa 15px, tautan 14px; tanpa kolom tambahan, kutipan, atau label huruf kapital.
+- **Formulir pengajuan (`/contact`):** kolom isian 50px, sudut 10px, teks 16px, label huruf biasa 14px; jenis kebutuhan
+  berupa kapsul pilihan (yang terpilih emas). Di sebelahnya pratinjau pesan WhatsApp yang ikut terisi selagi
+  mengetik dan menempel saat digulir; di HP pratinjau turun ke bawah formulir.
+- **Panel nilai:** judul besar (26–38px) dengan ikon emas sebaris, tanpa kotak ikon. Lampu sorotnya satu keluarga warna:
+  baja kebiruan dengan poros dan lensa emas.
+- **Ikon media sosial:** ikon garis buatan sendiri (`components/icons/social-icon.tsx`), berwarna emas seperti ikon
+  kontak lain.
+- **Tautan "Kembali":** kembali ke halaman dan posisi gulir terakhir pengunjung; bila halaman dibuka langsung, menuju
+  section terkait di Beranda (`components/layout/back-link.tsx`).
 - **Fokus keyboard:** garis luar emas 2px (`:focus-visible`) di semua elemen interaktif.
 
 **Gerak:**

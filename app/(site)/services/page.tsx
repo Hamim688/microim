@@ -34,7 +34,7 @@ const services = [
 export default function ServicesPage() {
   return (
     <LandingMotion>
-      <PageHero kicker="LAYANAN REKAYASA" title={<>Jasa Rakit Perangkat &amp; <span>Pemrograman</span></>}>
+      <PageHero backTo="/#services-core" kicker="LAYANAN REKAYASA" title={<>Jasa Rakit Perangkat &amp; <span>Pemrograman</span></>}>
         Dari perakitan purwarupa hingga sistem tertanam yang siap dipakai. Pilih layanan, lalu konsultasikan kebutuhanmu lewat WhatsApp.
       </PageHero>
 

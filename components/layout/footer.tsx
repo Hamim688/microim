@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
-import { AtSign, Mail, MessageCircle } from "lucide-react"
+import { Mail, MessageCircle } from "lucide-react"
+import { SocialIcon } from "@/components/icons/social-icon"
 import { siteConfig, siteContact, siteSocials, whatsappLink } from "@/lib/site"
 
 const links = [
@@ -43,7 +44,7 @@ export function Footer() {
               <li><a href={whatsappLink()} target="_blank" rel="noopener noreferrer"><MessageCircle aria-hidden="true" />{siteContact.whatsappDisplay}</a></li>
               <li><a href={`mailto:${siteContact.email}`}><Mail aria-hidden="true" />{siteContact.email}</a></li>
               {siteSocials.map((social) => (
-                <li key={social.name}><a href={social.url} target="_blank" rel="noopener noreferrer"><AtSign aria-hidden="true" />{social.handle}</a></li>
+                <li key={social.name}><a href={social.url} target="_blank" rel="noopener noreferrer"><SocialIcon name={social.name} />{social.handle}</a></li>
               ))}
             </ul>
           </div>
