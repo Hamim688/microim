@@ -89,7 +89,7 @@ Dokumen ini ditulis ulang dari kode yang berjalan (`app/globals.css` dan kompone
 panduan lama hasil ekspor Stitch. Sumber kebenarannya adalah kode; bila keduanya berbeda, perbarui dokumen ini.
 
 **Cakupan:** seluruh Beranda (navbar, hero + pita, Tentang, Layanan, Produk + Cara Pesan, Proyek, Kontak) sudah
-mengikuti sistem ini, begitu juga footer. Halaman `/contact` juga sudah. Halaman tersendiri `/products`, `/projects`, dan kotak ajakan di `/about`
+mengikuti sistem ini, begitu juga footer. Halaman `/contact`, `/services`, `/products`, dan `/projects` juga sudah. Isi halaman `/about` dan kotak ajakan di `/about`
 masih memakai gaya lama dan akan disempurnakan satu per satu; jangan jadikan bagian-bagian itu acuan.
 
 ## Overview
@@ -155,7 +155,8 @@ Suaranya akrab dan langsung, memakai "kamu", bukan "Anda". Kalimat menyebut hal 
 - Kedalaman terutama dari lapisan warna dan garis tepi tipis (`rgb(148 163 184 / 14–20%)`), bukan bayangan tebal.
 - Kartu di atas emas memakai bayangan hangat kecokelatan (`rgb(74 46 0 / 75%)`).
 - Pendar emas hanya untuk hal yang benar-benar "menyala": panel solusi aktif, lampu sorot, takik rel yang terkunci.
-- "Kaca" (blur latar) hanya di navbar, tombol WhatsApp melayang, dan elemen hero; resepnya ada di variabel
+- "Kaca" (blur latar) hanya di navbar, tombol WhatsApp melayang, elemen hero, serta kapsul saringan dan kolom cari di
+  halaman tersendiri; resepnya ada di variabel
   `--glass-bg`, `--glass-filter`, `--glass-shadow`.
 
 ## Shapes
@@ -167,7 +168,11 @@ Suaranya akrab dan langsung, memakai "kamu", bukan "Anda". Kalimat menyebut hal 
 
 ## Components
 
-- **Tombol utama:** emas dengan teks gelap, huruf kapital 12px berjarak `.075em`, tinggi 46px. Tombol kedua navy.
+- **Tombol utama:** kaca emas (`--gold-glass-*`: gradasi emas, kilau putih dari kiri atas, bayangan dalam) dengan teks
+  gelap, huruf kapital 12px berjarak `.075em`, tinggi 46px. Tombol kedua kaca navy berikon emas. Berlaku di semua
+  halaman, bukan hanya hero.
+- **Bahan kaca lain:** tombol "Pesan" di kartu produk dan kapsul pilihan terpilih memakai kaca emas; tombol "Tanya
+  restock", kapsul pilihan, kolom isian formulir, dan panel percakapan memakai kaca bening (`--clear-glass-*`).
 - **Kartu layanan:** navy di atas emas, dibuka nomor besar bergaris tepi (terisi emas saat disorot), ikon kecil
   sebaris dengan judul, daftar cakupan bercentang, dan seluruh kartu adalah satu tautan.
 - **Chip datasheet:** profil singkat Microim dengan nama tercetak emas logam dan baris bernomor pin.
@@ -202,6 +207,23 @@ Suaranya akrab dan langsung, memakai "kamu", bukan "Anda". Kalimat menyebut hal 
   kontak lain.
 - **Tautan "Kembali":** kembali ke halaman dan posisi gulir terakhir pengunjung; bila halaman dibuka langsung, menuju
   section terkait di Beranda (`components/layout/back-link.tsx`).
+- **Kepala halaman tersendiri:** tautan "Kembali", judul besar dua baris (baris kedua emas), satu kalimat pengantar
+  (`components/layout/subpage-head.tsx`). Tanpa label kecil di atas judul.
+- **Kapsul pilihan (`.pill-link`):** tinggi 44px, garis tepi tipis; yang aktif berlatar emas. Dipakai untuk jangkar
+  layanan, saringan kategori katalog, dan jenis kebutuhan di formulir.
+- **Baris layanan (`/services`):** tiga baris besar bernomor 01–03 (sama dengan kartu Layanan di Beranda), masing-masing
+  punya jangkar (`#rakit`, `#pemrograman`, `#komponen`); nomor baris yang dituju terisi emas.
+- **Katalog (`/products`):** kolom cari, kapsul kategori, tombol "Sembunyikan stok habis", lalu kisi kartu yang
+  memakai gaya etalase Beranda (`.prod-card`).
+- **Indeks ide proyek (`/projects`):** latar cetak biru; saringan bidang dan tingkat kesulitan; tiap ide satu baris
+  (gambar teknik, judul, penjelasan, komponen yang dibutuhkan, tautan konsultasi). Jumlah ide tidak disebut di judul
+  maupun tautan. Datanya di `lib/projects.ts`. Ini daftar ide, bukan
+  portofolio, dan sebagian komponennya belum tentu ada di katalog; kalimat pengantarnya harus tetap menyebut itu.
+- **Kapsul kaca bening (`.glass-island`):** saringan `/projects` dan `/products` serta menu lompat `/services`. Kacanya
+  bening tanpa warna (beda dari navbar yang kacanya gelap) dan diam di tempat, tidak ikut saat digulir. Pil aktifnya
+  meluncur; saringan utama berpil emas, saringan kedua berpil putih tembus pandang; kapsul melebar untuk
+  menampilkan jumlah hasil.
+  Komponennya di `components/layout/segmented.tsx`.
 - **Fokus keyboard:** garis luar emas 2px (`:focus-visible`) di semua elemen interaktif.
 
 **Gerak:**

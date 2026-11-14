@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { Mail, MapPin, MessageCircle } from "lucide-react"
-import { BackLink } from "@/components/layout/back-link"
+import { SubpageHead } from "@/components/layout/subpage-head"
 import { SocialIcon } from "@/components/icons/social-icon"
 import { LandingMotion, PageEntrance } from "@/components/landing/landing-motion"
 import { InquiryForm } from "@/components/contact/inquiry-form"
@@ -18,14 +18,12 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <LandingMotion>
-      <section className="contact-page" aria-labelledby="contact-page-title">
+      <section className="subpage" aria-labelledby="contact-page-title">
         <div className="site-container">
           <PageEntrance>
-            <header className="contact-head">
-              <BackLink fallback="/#contact" className="contact-back" />
-              <h1 id="contact-page-title">Ajukan Proyekmu, <span>Kami Susun Pesannya.</span></h1>
-              <p>Tugas praktikum, tugas akhir, atau proyek pribadi: isi formulirnya, pesanmu tersusun rapi dan langsung terbuka di WhatsApp tim Microim.</p>
-            </header>
+            <SubpageHead id="contact-page-title" backTo="/#contact" title="Ajukan Proyekmu," accent="Kami Susun Pesannya.">
+              Tugas praktikum, tugas akhir, atau proyek pribadi: isi formulirnya, pesanmu tersusun rapi dan langsung terbuka di WhatsApp tim Microim.
+            </SubpageHead>
 
             <InquiryForm>
               <ul className="kontak-details contact-details">

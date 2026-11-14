@@ -10,7 +10,7 @@ const services = [
     title: "Jasa Rakit Perangkat & IoT",
     body: "Perakitan perangkat, purwarupa, dan sistem IoT sesuai kebutuhan proyek, dari pemilihan komponen sampai siap diuji.",
     points: ["Perakitan & wiring", "Integrasi komponen", "Diuji sebelum diserahkan"],
-    href: "/services",
+    href: "/services#rakit",
     action: "Lihat jasa rakit",
   },
   {
@@ -18,7 +18,7 @@ const services = [
     title: "Jasa Pemrograman",
     body: "Pemrograman mikrokontroler, perangkat lunak tertanam, dan integrasi aplikasi agar perangkat bekerja sesuai kebutuhanmu.",
     points: ["Kode mikrokontroler", "Integrasi IoT & aplikasi", "Disesuaikan dengan proyekmu"],
-    href: "/services",
+    href: "/services#pemrograman",
     action: "Lihat jasa pemrograman",
   },
   {

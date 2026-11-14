@@ -19,7 +19,7 @@ export function ProjectShowcase() {
           <h2 id="projects-heading">Contoh Proyek yang Bisa Kami Rakitkan</h2>
           <div>
             <p>Semuanya dirakit dari komponen di katalog Microim. Tugasmu punya spesifikasi berbeda? Tinggal konsultasikan.</p>
-            <Link className="proj-all" href="/projects">Lihat halaman proyek <ArrowRight aria-hidden="true" /></Link>
+            <Link className="proj-all" href="/projects">Lihat semua ide proyek <ArrowRight aria-hidden="true" /></Link>
           </div>
         </ScrollReveal>
 

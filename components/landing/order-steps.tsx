@@ -2,7 +2,6 @@ import type { CSSProperties } from "react"
 import { CircuitBoard, MessageCircle, PackageCheck, Search } from "lucide-react"
 import { ScrollReveal } from "@/components/landing/landing-motion"
 import { RevealFlag } from "@/components/landing/reveal-flag"
-import { whatsappLink } from "@/lib/site"
 
 const steps = [
   { icon: Search, title: "Pilih atau ceritakan", text: "Pilih komponen dari katalog, atau ceritakan ide perangkat yang ingin kamu buat." },
@@ -22,12 +21,7 @@ export function OrderSteps() {
       <div className="site-container">
         <ScrollReveal className="steps-head">
           <h2 id="steps-heading">Dari Chat sampai Perangkat di Tanganmu</h2>
-          <div>
-            <p>Empat langkah, tanpa ribet. Semua obrolan cukup lewat WhatsApp.</p>
-            <a className="steps-chat" href={whatsappLink("Halo Microim, saya ingin bertanya tentang produk/jasa Microim.")} target="_blank" rel="noopener noreferrer">
-              <MessageCircle aria-hidden="true" />Mulai chat
-            </a>
-          </div>
+          <p>Empat langkah, tanpa ribet. Semua obrolan cukup lewat WhatsApp.</p>
         </ScrollReveal>
 
         <RevealFlag className="steps-flow" amount={0.3}>

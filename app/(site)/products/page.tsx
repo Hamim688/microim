@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { PageHero } from "@/components/layout/page-hero"
+import { SubpageHead } from "@/components/layout/subpage-head"
 import { LandingMotion, PageEntrance } from "@/components/landing/landing-motion"
 import { ProductCatalog } from "@/components/products/product-catalog"
 import { getCatalog } from "@/lib/catalog"
@@ -16,14 +16,16 @@ export default async function ProductsPage() {
   const products = await getCatalog()
   return (
     <LandingMotion>
-      <PageHero backTo="/#products" kicker="KATALOG KOMPONEN IOT" title={<>Komponen Elektronika &amp; <span>Mikrokontroler</span></>}>
-        Papan mikrokontroler, sensor, aktuator, dan aksesori untuk belajar, membuat purwarupa, dan mengembangkan sistem IoT. Klik Pesan untuk order lewat WhatsApp.
-      </PageHero>
-      <div className="site-container page-body">
-        <PageEntrance>
-          <ProductCatalog products={products} />
-        </PageEntrance>
-      </div>
+      <section className="subpage" aria-labelledby="products-page-title">
+        <div className="site-container">
+          <PageEntrance>
+            <SubpageHead id="products-page-title" backTo="/#products" title="Cari Komponennya," accent="Pesan lewat WhatsApp.">
+              Papan mikrokontroler, sensor, aktuator, dan aksesori untuk belajar, membuat purwarupa, dan mengembangkan sistem IoT. Harga dan stok mengikuti data terbaru kami.
+            </SubpageHead>
+            <ProductCatalog products={products} />
+          </PageEntrance>
+        </div>
+      </section>
     </LandingMotion>
   )
 }
