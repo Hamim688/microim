@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import Link from "next/link"
 import { ArrowRight, Check, Code2, Cpu, MessageCircle, ShoppingBag } from "lucide-react"
 import { SubpageHead } from "@/components/layout/subpage-head"
@@ -8,10 +9,11 @@ import { OrderSteps } from "@/components/landing/order-steps"
 import { LandingMotion, PageEntrance, ScrollReveal } from "@/components/landing/landing-motion"
 import { whatsappLink } from "@/lib/site"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Layanan",
   description: "Jasa perakitan perangkat IoT, pemrograman mikrokontroler (Arduino, ESP32), dan paket komponen proyek dari Microim.",
-}
+  path: "/services",
+})
 
 // `id` dipakai sebagai jangkar: kartu Layanan di Beranda menuju /services#rakit dan /services#pemrograman.
 const services = [

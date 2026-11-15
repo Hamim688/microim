@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import { SubpageHead } from "@/components/layout/subpage-head"
 import { LandingMotion, PageEntrance } from "@/components/landing/landing-motion"
 import { ProjectIndex } from "@/components/projects/project-index"
@@ -6,10 +7,11 @@ import { ProjectDrawing } from "@/components/landing/project-drawings"
 import { RevealFlag } from "@/components/landing/reveal-flag"
 import { projectIdeas } from "@/lib/projects"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Proyek",
   description: "Ide proyek robotika dan IoT (smart car, line follower, lengan robot, smart home, dan lainnya) beserta komponen yang dibutuhkan. Konsultasikan perakitannya bersama Microim.",
-}
+  path: "/projects",
+})
 
 /** Halaman Proyek: indeks ide proyek di atas latar cetak biru (senada section Proyek di Beranda). */
 export default function ProjectsPage() {

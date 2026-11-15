@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import { PageHero } from "@/components/layout/page-hero"
@@ -7,10 +8,11 @@ import { VisionStatement } from "@/components/landing/about-section"
 import { OrderSteps } from "@/components/landing/order-steps"
 import { LandingMotion } from "@/components/landing/landing-motion"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Tentang",
   description: "Kenali Microim (Microcontroller Immediately Made): visi, nilai M-I-C-R-O-I-M, dan cara kami bekerja.",
-}
+  path: "/about",
+})
 
 export default function AboutPage() {
   return (

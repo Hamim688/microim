@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import { Mail, MapPin, MessageCircle } from "lucide-react"
 import { SubpageHead } from "@/components/layout/subpage-head"
 import { SocialIcon } from "@/components/icons/social-icon"
@@ -6,10 +7,11 @@ import { LandingMotion, PageEntrance } from "@/components/landing/landing-motion
 import { InquiryForm } from "@/components/contact/inquiry-form"
 import { siteContact, siteSocials, whatsappLink } from "@/lib/site"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Kontak",
   description: "Ajukan proyek atau tanyakan komponen ke Microim. Pengajuan langsung terkirim lewat WhatsApp.",
-}
+  path: "/contact",
+})
 
 /**
  * Halaman pengajuan: judul besar, formulir di kiri, dan pratinjau pesan WhatsApp + rincian kontak di kanan

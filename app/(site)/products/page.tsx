@@ -1,13 +1,15 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import { SubpageHead } from "@/components/layout/subpage-head"
 import { LandingMotion, PageEntrance } from "@/components/landing/landing-motion"
 import { ProductCatalog } from "@/components/products/product-catalog"
 import { getCatalog } from "@/lib/catalog"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Produk",
   description: "Katalog komponen mikrokontroler, sensor, aktuator, dan aksesori elektronik Microim. Pesan langsung lewat WhatsApp.",
-}
+  path: "/products",
+})
 
 // Halaman dibangun ulang paling lambat tiap 5 menit, dan langsung saat admin mengubah produk/stok.
 export const revalidate = 300

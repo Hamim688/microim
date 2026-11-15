@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import { siteConfig } from "@/lib/site"
+import { homeShareTitle, sharedOpenGraph } from "@/lib/metadata"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,21 +28,11 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   keywords: ["Microim", "jasa rakit IoT", "pemrograman ESP32", "komponen mikrokontroler", "Arduino", "sensor"],
   applicationName: siteConfig.name,
-  openGraph: {
-    type: "website",
-    locale: "id_ID",
-    url: "/",
-    siteName: siteConfig.name,
-    title: "Microim - Dari Ide ke Perangkat Siap Pakai",
-    description: siteConfig.description,
-    images: [{ url: "/images/iot-board-hero.png", width: 1536, height: 1024, alt: "Perangkat IoT Microim" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Microim - Dari Ide ke Perangkat Siap Pakai",
-    description: siteConfig.description,
-    images: ["/images/iot-board-hero.png"],
-  },
+  alternates: { canonical: "/" },
+  // Gambar pratinjau tautan dibuat oleh app/opengraph-image.tsx; halaman tersendiri memakai pageMetadata()
+  // (lib/metadata.ts) supaya punya judul pratinjaunya sendiri.
+  openGraph: { ...sharedOpenGraph, url: "/", title: homeShareTitle, description: siteConfig.description },
+  twitter: { card: "summary_large_image", title: homeShareTitle, description: siteConfig.description },
   icons: {
     icon: "/logo/logo-baru.png",
     shortcut: "/logo/logo-baru.png",
