@@ -10,8 +10,8 @@ import { LandingMotion, PageEntrance, ScrollReveal } from "@/components/landing/
 import { whatsappLink } from "@/lib/site"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Layanan",
-  description: "Jasa perakitan perangkat IoT, pemrograman mikrokontroler (Arduino, ESP32), dan paket komponen proyek dari Microim.",
+  title: "Jasa Rakit IoT & Pemrograman Arduino, ESP32",
+  description: "Jasa rakit perangkat IoT, pemrograman Arduino dan ESP32, dan paket komponen proyek di Semarang. Untuk praktikum, tugas akhir, dan proyek pribadi.",
   path: "/services",
 })
 

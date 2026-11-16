@@ -74,7 +74,7 @@ export default async function Image() {
             </span>
           </div>
 
-          <span style={{ color: "#8fa2bb", fontSize: 24 }}>microim.vercel.app</span>
+          <span style={{ color: "#8fa2bb", fontSize: 24 }}>{siteConfig.domain}</span>
         </div>
 
         {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse hanya menerima <img> */}

@@ -8,8 +8,8 @@ import { RevealFlag } from "@/components/landing/reveal-flag"
 import { projectIdeas } from "@/lib/projects"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Proyek",
-  description: "Ide proyek robotika dan IoT (smart car, line follower, lengan robot, smart home, dan lainnya) beserta komponen yang dibutuhkan. Konsultasikan perakitannya bersama Microim.",
+  title: "Ide Proyek Robotika & IoT",
+  description: "Ide proyek robotika dan IoT untuk praktikum dan tugas akhir (smart car, line follower, lengan robot, smart home, dan lainnya) lengkap dengan komponen yang dibutuhkan.",
   path: "/projects",
 })
 

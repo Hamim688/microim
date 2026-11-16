@@ -4,10 +4,11 @@ import { SubpageHead } from "@/components/layout/subpage-head"
 import { LandingMotion, PageEntrance } from "@/components/landing/landing-motion"
 import { ProductCatalog } from "@/components/products/product-catalog"
 import { getCatalog } from "@/lib/catalog"
+import { ProductListJsonLd } from "@/components/seo/json-ld"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Produk",
-  description: "Katalog komponen mikrokontroler, sensor, aktuator, dan aksesori elektronik Microim. Pesan langsung lewat WhatsApp.",
+  title: "Jual Komponen Arduino, ESP32 & Sensor",
+  description: "Jual ESP32, servo SG90, sensor, driver motor, dan kit robot di Semarang. Stok dan harga terbaru, pesan lewat WhatsApp, COD di area kampus.",
   path: "/products",
 })
 
@@ -18,6 +19,7 @@ export default async function ProductsPage() {
   const products = await getCatalog()
   return (
     <LandingMotion>
+      <ProductListJsonLd products={products} />
       <section className="subpage" aria-labelledby="products-page-title">
         <div className="site-container">
           <PageEntrance>

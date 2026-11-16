@@ -8,8 +8,8 @@ import { InquiryForm } from "@/components/contact/inquiry-form"
 import { siteContact, siteSocials, whatsappLink } from "@/lib/site"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Kontak",
-  description: "Ajukan proyek atau tanyakan komponen ke Microim. Pengajuan langsung terkirim lewat WhatsApp.",
+  title: "Kontak & Pengajuan Proyek",
+  description: "Hubungi Microim di Semarang: ajukan proyek IoT atau tanyakan komponen. Pengajuan langsung tersusun rapi di WhatsApp.",
   path: "/contact",
 })
 

@@ -22,11 +22,11 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Microim - Jasa Rakit IoT, Pemrograman & Komponen Mikrokontroler",
+    default: "Microim · Jasa Rakit IoT & Komponen Arduino, ESP32 di Semarang",
     template: "%s | Microim",
   },
   description: siteConfig.description,
-  keywords: ["Microim", "jasa rakit IoT", "pemrograman ESP32", "komponen mikrokontroler", "Arduino", "sensor"],
+  keywords: ["Microim", "jasa rakit IoT Semarang", "jual ESP32 Semarang", "komponen Arduino Semarang", "jasa pemrograman Arduino", "tugas akhir IoT"],
   applicationName: siteConfig.name,
   alternates: { canonical: "/" },
   // Gambar pratinjau tautan dibuat oleh app/opengraph-image.tsx; halaman tersendiri memakai pageMetadata()

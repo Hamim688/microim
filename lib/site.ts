@@ -2,9 +2,11 @@ export const siteConfig = {
   name: "Microim",
   longName: "Microim — Microcontroller Immediately Made",
   tagline: "Komponen Lengkap, Kerja Tanggap.",
-  url: "https://microim.vercel.app",
+  url: "https://microim.web.id",
+  /** Alamat situs tanpa https://, untuk ditampilkan (gambar pratinjau, dashboard admin). */
+  domain: "microim.web.id",
   description:
-    "Jasa rakit perangkat IoT, pemrograman mikrokontroler, dan toko komponen elektronik. Dari ide sampai perangkat siap pakai bersama Microim.",
+    "Jasa rakit perangkat IoT, pemrograman Arduino dan ESP32, serta jual komponen elektronik ready stock di Semarang. COD di area kampus, cocok untuk praktikum dan tugas akhir.",
 }
 
 export const siteContact = {

@@ -9,6 +9,7 @@ import { TechMarquee } from "@/components/landing/tech-marquee"
 import { OrderSteps } from "@/components/landing/order-steps"
 import { LandingMotion } from "@/components/landing/landing-motion"
 import { PcbDivider } from "@/components/landing/pcb-divider"
+import { BusinessJsonLd } from "@/components/seo/json-ld"
 import { getFeaturedProducts, getMarqueeNames, getCatalog } from "@/lib/catalog"
 
 // Produk unggulan & pita berjalan memakai stok/harga terbaru dari database.
@@ -18,6 +19,7 @@ export default async function HomePage() {
   const [featured, marquee, catalog] = await Promise.all([getFeaturedProducts(), getMarqueeNames(), getCatalog()])
   return (
     <LandingMotion>
+      <BusinessJsonLd />
       <div className="landing-page">
         <Hero />
         <TechMarquee names={marquee} />

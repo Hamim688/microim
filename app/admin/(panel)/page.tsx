@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { siteConfig } from "@/lib/site"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, CheckCircle2, ChevronRight, Clock3, Eye, FileText, FolderKanban, Home, Info, Layers, Link2, Mail, MousePointerClick, Package, Plus, ReceiptText, ShoppingBag, Smartphone, TrendingDown, TrendingUp, Users, Wallet, Wrench } from "lucide-react"
@@ -162,7 +163,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
         <div className="admin-section-head">
           <div>
             <h2>Pengunjung web</h2>
-            <p>Kunjungan ke situs publik microim.vercel.app · {period.label}</p>
+            <p>Kunjungan ke situs publik {siteConfig.domain} · {period.label}</p>
           </div>
           <Delta value={kpi.visitors.change} label={cmp} />
         </div>

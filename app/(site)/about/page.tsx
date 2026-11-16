@@ -9,8 +9,8 @@ import { OrderSteps } from "@/components/landing/order-steps"
 import { LandingMotion } from "@/components/landing/landing-motion"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Tentang",
-  description: "Kenali Microim (Microcontroller Immediately Made): visi, nilai M-I-C-R-O-I-M, dan cara kami bekerja.",
+  title: "Tentang Microim",
+  description: "Kenali Microim (Microcontroller Immediately Made), usaha komponen IoT dan jasa rakit mahasiswa di Semarang: visi, nilai M-I-C-R-O-I-M, dan cara kami bekerja.",
   path: "/about",
 })
 
