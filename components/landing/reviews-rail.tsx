@@ -5,6 +5,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 
 /** Lebar badan roket (px), sama dengan --car-w di CSS. */
 const ROCKET_W = 70
+/** Titik konstelasi di sepanjang lintasan orbit (0 = awal, 1 = akhir). */
+const ORBIT_NODES = [0, 0.25, 0.5, 0.75, 1] as const
 
 type Spark = {
   id: number
@@ -203,9 +205,29 @@ export function ReviewsRail({ children }: { children: ReactNode }) {
             onPointerUp={endDrag}
             onPointerCancel={endDrag}
             onKeyDown={onKeyDown}
-            style={{ "--p": state.progress } as CSSProperties}
+            style={{ "--p": state.progress, "--dir": facing } as CSSProperties}
           >
-            <span className="rv-road-line" aria-hidden="true" />
+            <span className="rv-road-line" aria-hidden="true">
+              <span className="rv-road-trail" />
+            </span>
+            {ORBIT_NODES.map((pos, idx) => {
+              const lit = state.progress >= pos - 0.01
+              const endpoint = idx === 0 || idx === ORBIT_NODES.length - 1
+              return (
+                <span
+                  key={pos}
+                  className={`rv-node${endpoint ? " is-end" : ""}${lit ? " is-lit" : ""}`}
+                  style={{ left: `${pos * 100}%` }}
+                  aria-hidden="true"
+                >
+                  {endpoint ? (
+                    <svg viewBox="0 0 12 12" focusable="false">
+                      <path d="M6 0 L7.4 4.6 L12 6 L7.4 7.4 L6 12 L4.6 7.4 L0 6 L4.6 4.6 Z" />
+                    </svg>
+                  ) : null}
+                </span>
+              )
+            })}
             {sparks.map((s) => (
               <svg
                 key={s.id}
