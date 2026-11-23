@@ -64,7 +64,7 @@ export function ReviewsSection({ summary }: { summary: ReviewSummary }) {
       <LedStripDivider />
       <div className="site-container">
         <ScrollReveal className="rv-head">
-          <h2 id="reviews-heading">Sudah Dipakai, <span>Ini Kata Mereka.</span></h2>
+          <h2 id="reviews-heading">Sudah Terbukti, <span>Ini Kata Mereka.</span></h2>
           <div className="rv-score" aria-label={`Rata-rata ${decimal(average)} dari 5, dari ${count} ulasan`}>
             <strong aria-hidden="true">{decimal(average)}</strong>
             <div aria-hidden="true">
