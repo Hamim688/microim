@@ -147,7 +147,8 @@ Suaranya akrab dan langsung, memakai "kamu", bukan "Anda". Kalimat menyebut hal 
 - Batas antar section memakai bentuk, bukan garis yang sama berulang: pita teks miring (Beranda → Tentang),
   jalur PCB yang menjadi tepi atas section emas (Tentang → Layanan), tepi miring (Layanan → Produk), tepi berlubang
   setengah lingkaran berlapis emas seperti tepi modul ESP32 (Produk → Proyek), dan tepi sinyal digital HIGH/LOW
-  (Proyek → Kontak). Setiap bentuk hanya dipakai sekali.
+  (Proyek → Kontak), atau strip LED yang menyala emas berurutan seperti rating terisi (Proyek → Ulasan, bila section
+  Ulasan tampil; latarnya matriks LED redup). Setiap bentuk hanya dipakai sekali.
 - Halaman tidak boleh bisa digeser ke samping di lebar mana pun.
 
 ## Elevation & Depth
@@ -231,7 +232,8 @@ Suaranya akrab dan langsung, memakai "kamu", bukan "Anda". Kalimat menyebut hal 
 - Elemen yang bisa ditekan mengecil sedikit saat ditekan (`scale: .97–.985`).
 - Efek sorot hanya aktif di perangkat berkursor (`@media (hover: hover) and (pointer: fine)`).
 - Animasi masuk berulang tiap kali section masuk layar (`useRevealOnScroll`, `RevealFlag`).
-- Animasi yang berjalan terus dibatasi: pita teks di Beranda dan kilau huruf nilai. Jangan menambah yang lain.
+- Animasi yang berjalan terus dibatasi: pita teks di Beranda, kilau huruf nilai, dan kilau
+  bintang skor ulasan. Jangan menambah yang lain.
 - `prefers-reduced-motion` selalu dihormati: isi langsung tampil di keadaan akhirnya.
 
 ## Do's and Don'ts

@@ -1817,3 +1817,102 @@ a.admin-page-btn:active { transform: scale(.94); }
 .admin-chart-tip-box em { font-style: normal; font-size: 11.5px; font-weight: 600; margin-top: 2px; }
 .admin-chart-tip-box em.is-up { color: #6ee7b7; }
 .admin-chart-tip-box em.is-down { color: #fca5a5; }
+
+/* ===== Ulasan pelanggan (/admin/ulasan) ===== */
+.admin-nav-badge.is-reviews { color: #1a1200; background: var(--a-gold); }
+.admin-nav-dot.is-reviews { background: var(--a-gold); }
+.admin-stars { display: inline-flex; gap: 2px; }
+.admin-stars svg { width: 16px; height: 16px; color: rgba(255, 255, 255, .18); fill: currentColor; stroke: none; }
+.admin-stars svg.is-on { color: var(--a-gold); }
+.admin-review-summary { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-bottom: 18px; padding: 18px 22px; border: 1px solid var(--a-line); border-radius: 16px; background: rgba(255, 201, 40, .04); }
+.admin-review-summary > div { display: flex; align-items: center; gap: 12px; }
+.admin-review-summary strong { color: var(--a-text); font-family: var(--font-display); font-size: 34px; line-height: 1; }
+.admin-review-summary .admin-stars svg { width: 20px; height: 20px; }
+.admin-review-summary p { flex: 1 1 280px; margin: 0; color: var(--a-muted); font-size: 13.5px; line-height: 1.6; }
+.admin-review-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; margin: 0; padding: 16px; list-style: none; }
+.admin-review { display: flex; flex-direction: column; gap: 10px; padding: 18px; border: 1px solid var(--a-line); border-radius: 14px; background: rgba(255, 255, 255, .02); }
+.admin-review.is-pending { border-color: rgba(255, 201, 40, .4); background: rgba(255, 201, 40, .04); }
+.admin-review.is-hidden { opacity: .62; }
+.admin-review-head { display: flex; align-items: center; gap: 11px; }
+.admin-review-head > div { display: grid; flex: 1; min-width: 0; gap: 2px; }
+.admin-review-head strong { color: var(--a-text); font-size: 14.5px; }
+.admin-review-head small { overflow: hidden; color: var(--a-muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.admin-review-avatar { display: grid; flex: none; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--a-gold), #f59e0b); color: #0a1626; font-family: var(--font-display); font-weight: 800; }
+.admin-review-status { flex: none; padding: 3px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 650; }
+.admin-review-status.is-pending { color: #1a1200; background: var(--a-gold); }
+.admin-review-status.is-published { color: #04281b; background: var(--a-green); }
+.admin-review-status.is-sample { color: #c7b8ff; background: rgba(139, 92, 246, .18); }
+.admin-review-status.is-hidden { color: var(--a-muted); background: rgba(255, 255, 255, .06); }
+.admin-review-text { margin: 0; color: var(--a-text); font-size: 14px; line-height: 1.65; white-space: pre-line; }
+.admin-review-item { margin: 0; color: var(--a-muted); font-size: 12.5px; }
+.admin-review-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--a-line); }
+.admin-review-empty { display: grid; justify-items: center; gap: 6px; }
+.admin-review-empty p { margin: 0; }
+.admin-stars-field { margin: 0; padding: 0; border: 0; }
+.admin-stars-field legend { margin-bottom: 8px; padding: 0; }
+.admin-stars-input { display: flex; align-items: center; gap: 4px; }
+.admin-stars-input label { position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; cursor: pointer; transition: background .2s, scale .15s; }
+.admin-stars-input label:hover { background: rgba(255, 201, 40, .08); }
+.admin-stars-input label:active { scale: .92; }
+.admin-stars-input input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.admin-stars-input svg { width: 28px; height: 28px; color: rgba(255, 255, 255, .18); fill: currentColor; stroke: none; transition: color .15s; }
+.admin-stars-input label.is-on svg { color: var(--a-gold); }
+.admin-stars-input label:has(input:focus-visible) { outline: 2px solid var(--a-gold); outline-offset: 2px; }
+.admin-stars-input b { margin-left: 10px; color: var(--a-text); font-size: 14px; font-weight: 600; }
+.admin-hint { margin: -4px 0 0; color: var(--a-muted); font-size: 12.5px; line-height: 1.6; }
+@media (max-width: 520px) { .admin-review-list { grid-template-columns: 1fr; padding: 12px; } }
+
+/* =====================================================================
+   KACA & PIL (konsisten dengan situs publik): kapsul kaca untuk semua kendali bersegmen, pil emas mengkilap yang
+   meluncur ke pilihan aktif, tombol utama kaca emas, tombol lain dan kolom isian kaca bening.
+   ===================================================================== */
+:root {
+  --a-glass-bg: radial-gradient(130% 160% at 22% -45%, rgba(255, 255, 255, .10), transparent 55%), rgba(10, 22, 40, .55);
+  --a-glass-border: rgba(255, 255, 255, .09);
+  --a-glass-shadow: inset 0 1px 1px rgba(255, 255, 255, .12), inset 0 -1px 2px rgba(0, 0, 0, .3), 0 14px 30px -20px rgba(0, 0, 0, .8);
+  --a-gold-glass: radial-gradient(130% 160% at 22% -45%, rgba(255, 255, 255, .45), transparent 55%), linear-gradient(180deg, #ffe07a 0%, #ffc928 48%, #f0b20f 100%);
+  --a-gold-glass-hover: radial-gradient(130% 160% at 22% -45%, rgba(255, 255, 255, .55), transparent 55%), linear-gradient(180deg, #ffe48a 0%, #ffcf3d 48%, #f5b916 100%);
+  --a-gold-shadow: inset 0 1px 1px rgba(255, 255, 255, .65), inset 0 -2px 4px rgba(140, 90, 0, .25), 0 8px 20px -8px rgba(255, 201, 40, .6);
+}
+
+/* Kapsul kaca */
+.admin-period-seg, .admin-view-switch, .admin-segment, .admin-status-tabs {
+  padding: 4px; border: 1px solid var(--a-glass-border); border-radius: 999px;
+  background: var(--a-glass-bg); backdrop-filter: blur(14px) saturate(160%); box-shadow: var(--a-glass-shadow);
+}
+.admin-status-tabs { display: inline-flex; flex-wrap: nowrap; gap: 2px; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.admin-status-tabs::-webkit-scrollbar { display: none; }
+
+/* Isi kapsul: teks di atas pil, transisi warna halus */
+.admin-period-seg button, .admin-view-switch a, .admin-segment label, .admin-status-tabs > a { border-radius: 999px; transition: color .3s var(--a-ease), scale .16s var(--a-ease); }
+.admin-period-seg button:active, .admin-view-switch a:active, .admin-segment label:active, .admin-status-tabs > a:active { scale: .96; }
+.admin-status-tabs > a { position: relative; display: inline-flex; align-items: center; gap: 7px; flex: none; min-height: 36px; padding: 0 14px; border: 0; background: none; color: var(--a-muted); font-size: 13px; font-weight: 500; white-space: nowrap; }
+.admin-status-tabs > a:hover { color: var(--a-text); border: 0; background: rgba(255, 255, 255, .04); }
+.admin-status-tabs > a.is-active, .admin-status-tabs > a.is-active:hover { color: #0a1626; font-weight: 650; background: none; border: 0; }
+.admin-status-tabs > a > :not(.admin-status-pill) { position: relative; z-index: 1; }
+.admin-status-tabs > a.is-active b { background: rgba(10, 22, 38, .16); color: #0a1626; }
+.admin-status-tabs > a.is-active i { box-shadow: 0 0 0 2px rgba(10, 22, 38, .25); }
+
+/* Pil emas mengkilap (meluncur lewat motion layoutId) */
+.admin-period-pill, .admin-view-pill, .admin-status-pill { position: absolute; inset: 0; z-index: 0; border-radius: 999px; background: var(--a-gold-glass); box-shadow: var(--a-gold-shadow); }
+.admin-segment label.is-active { color: #0a1626; font-weight: 650; background: var(--a-gold-glass); box-shadow: var(--a-gold-shadow); }
+
+/* Tombol: utama kaca emas, lainnya kaca bening */
+.admin-btn { border-color: var(--a-glass-border); background: var(--a-glass-bg); backdrop-filter: blur(12px); box-shadow: var(--a-glass-shadow); transition: background .25s var(--a-ease), border-color .25s, box-shadow .3s, transform .2s var(--a-ease), color .2s; }
+.admin-btn:hover { border-color: rgba(255, 255, 255, .18); background: radial-gradient(130% 160% at 22% -45%, rgba(255, 255, 255, .14), transparent 55%), rgba(16, 32, 56, .7); }
+.admin-btn.is-primary { border-color: rgba(255, 224, 122, .7); color: #0a1626; background: var(--a-gold-glass); box-shadow: var(--a-gold-shadow); }
+.admin-btn.is-primary:hover { background: var(--a-gold-glass-hover); box-shadow: inset 0 1px 1px rgba(255, 255, 255, .7), inset 0 -2px 4px rgba(140, 90, 0, .25), 0 14px 32px -12px rgba(255, 201, 40, .8); }
+.admin-btn.is-ghost { background: transparent; box-shadow: none; backdrop-filter: none; }
+.admin-btn.is-ghost:hover { background: var(--a-glass-bg); box-shadow: var(--a-glass-shadow); }
+.admin-btn.is-danger { background: rgba(248, 113, 113, .12); border-color: rgba(248, 113, 113, .45); }
+
+/* Kolom isian & pilihan: kaca bening */
+.admin-field input, .admin-field select, .admin-field textarea, .admin-toolbar select, .admin-search input, .admin-select-trigger {
+  border-color: var(--a-glass-border); background: var(--a-glass-bg); backdrop-filter: blur(12px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07);
+  transition: border-color .25s, box-shadow .3s, background .25s;
+}
+.admin-search input, .admin-select-trigger { border-radius: 999px; }
+.admin-select-pop { backdrop-filter: blur(18px) saturate(160%); }
+@media (prefers-reduced-motion: reduce) {
+  .admin-period-seg button, .admin-view-switch a, .admin-segment label, .admin-status-tabs > a, .admin-btn { transition: none; }
+}

@@ -3,9 +3,9 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion } from "motion/react"
-import { Boxes, LayoutDashboard, ReceiptText, UserCog, type LucideIcon } from "lucide-react"
+import { Boxes, LayoutDashboard, MessageSquareQuote, ReceiptText, UserCog, type LucideIcon } from "lucide-react"
 
-export type NavBadges = { pending: number; lowStock: number }
+export type NavBadges = { pending: number; lowStock: number; reviews: number }
 
 type Item = { href: string; label: string; icon: LucideIcon; badge?: keyof NavBadges; badgeTitle?: string }
 
@@ -16,6 +16,7 @@ const sections: { title: string; items: Item[] }[] = [
     items: [
       { href: "/admin/transaksi", label: "Transaksi", icon: ReceiptText, badge: "pending", badgeTitle: "transaksi belum dibayar" },
       { href: "/admin/produk", label: "Produk & Stok", icon: Boxes, badge: "lowStock", badgeTitle: "produk stok menipis" },
+      { href: "/admin/ulasan", label: "Ulasan", icon: MessageSquareQuote, badge: "reviews", badgeTitle: "ulasan menunggu persetujuan" },
     ],
   },
   { title: "Pengaturan", items: [{ href: "/admin/akun", label: "Akun", icon: UserCog }] },

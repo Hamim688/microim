@@ -1191,6 +1191,146 @@ main:focus { outline: none; }
   .proj-drawing { height: 150px; }
 }
 
+/* ===== Ulasan (Beranda): antara Proyek dan Kontak. Nilai rata-rata besar + deretan kartu kaca yang bisa digeser
+   (lihat reviews-section.tsx). Latar navy menengah, beda dari Proyek (biru) dan Kontak (paling gelap). ===== */
+.rv-section { position: relative; isolation: isolate; padding: 132px 0 132px; overflow-x: clip; background: linear-gradient(180deg, #0a1626 0%, #08121f 100%); }
+/* Latar matriks LED: titik-titik kecil seperti panel LED yang padam, dengan pantulan cahaya emas dari strip di atas. */
+.rv-section::before {
+  position: absolute; inset: 0; z-index: -1; content: ""; pointer-events: none;
+  background-image: radial-gradient(circle at 50% 50%, rgb(255 255 255 / 7%) 1.6px, transparent 2.2px);
+  background-size: 18px 18px; background-position: 50% 0;
+  mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 55%) 45%, transparent 100%);
+}
+.rv-section::after {
+  position: absolute; inset: 0 0 auto; z-index: -1; height: 420px; content: ""; pointer-events: none;
+  background: radial-gradient(ellipse 70% 100% at 50% 0%, rgb(255 201 40 / 12%), transparent 70%);
+  opacity: 0; transition: opacity 1.2s ease .6s;
+}
+.rv-section:has(.led-strip.is-live)::after { opacity: 1; }
+/* Strip LED (lihat led-strip-divider.tsx): pita PCB gelap di tepi atas, LED menyala berurutan. */
+.led-strip { position: absolute; top: 0; left: 0; right: 0; z-index: 2; display: flex; align-items: center; height: 30px; overflow: hidden; border-block: 1px solid rgb(255 201 40 / 28%); background: linear-gradient(180deg, #0f1f36, #08131f); box-shadow: 0 8px 24px -12px rgb(0 0 0 / 80%); }
+.led-strip-plug { flex: none; width: 34px; height: 100%; border-right: 1px solid rgb(255 201 40 / 35%); background: repeating-linear-gradient(180deg, #c99a16 0 3px, transparent 3px 7px) 10px 50% / 14px 14px no-repeat, #0b1626; }
+.led-strip-row { display: flex; gap: 0; margin: 0; padding: 0; list-style: none; }
+.led-strip-row li { display: grid; flex: none; place-items: center; width: 32px; height: 30px; }
+/* Badan LED: kotak kecil; padam = kuning gelap, menyala = emas berpendar. */
+.led-strip-row i { width: 12px; height: 8px; border-radius: 2px; background: #3b3115; box-shadow: inset 0 1px 0 rgb(255 255 255 / 10%); transition: background .2s ease, box-shadow .2s ease; }
+.led-strip.is-live .led-strip-row i {
+  background: #ffe48a; box-shadow: inset 0 1px 0 rgb(255 255 255 / 70%), 0 0 8px 2px rgb(255 201 40 / 75%), 0 0 22px 6px rgb(255 201 40 / 30%);
+  transition: background .25s ease calc(.15s + var(--i) * 28ms), box-shadow .35s ease calc(.15s + var(--i) * 28ms);
+}
+@media (max-width: 760px) {
+  .rv-section { padding: 100px 0 104px; }
+  .led-strip-row li { width: 26px; }
+}
+@media (prefers-reduced-motion: reduce) { .led-strip-row i, .led-strip.is-live .led-strip-row i, .rv-section::after { transition: none; } }
+@media (scripting: none) { .led-strip-row i { background: #ffe48a; } }
+.rv-head { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); align-items: end; gap: 24px 56px; }
+.rv-head h2 { max-width: 640px; margin: 0; color: #e9eff8; font-family: var(--font-display); font-size: clamp(32px, 4.6vw, 60px); font-weight: 650; letter-spacing: -.045em; line-height: 1; text-wrap: balance; }
+.rv-head h2 span { display: block; color: var(--gold); }
+.rv-score { display: flex; align-items: center; gap: 18px; justify-self: end; }
+.rv-score strong { color: #fff; font-family: var(--font-display); font-size: clamp(56px, 6vw, 84px); font-weight: 650; letter-spacing: -.05em; line-height: .9; }
+.rv-score p { margin: 8px 0 0; color: #a7b5c7; font-size: 14px; }
+.rv-stars { display: inline-flex; gap: 3px; }
+.rv-stars svg { width: 18px; height: 18px; color: rgb(255 255 255 / 16%); fill: currentColor; stroke: none; }
+.rv-stars svg.is-on { color: var(--gold); }
+.rv-score .rv-stars svg { width: 24px; height: 24px; }
+/* Bintang skor: emas logam + kilau yang menyapu (gradasi ada di reviews-section.tsx) + pendar tipis. */
+.rv-stars.is-shiny { position: relative; gap: 4px; filter: drop-shadow(0 0 10px rgb(255 201 40 / 35%)); }
+.rv-stars.is-shiny svg { width: 28px; height: 28px; }
+.rv-stars.is-shiny .rv-star-base { fill: rgb(255 255 255 / 16%); }
+.rv-stars.is-shiny svg.is-on .rv-star-base { fill: url(#rv-star-metal); filter: drop-shadow(0 1px 0 rgb(0 0 0 / 35%)); }
+.rv-stars.is-shiny .rv-star-glint { fill: url(#rv-star-glint); mix-blend-mode: screen; }
+@media (prefers-reduced-motion: reduce) { .rv-stars.is-shiny .rv-star-glint { display: none; } }
+/* Deretan kartu: dimulai sejajar konten, boleh menjulur sampai tepi kanan layar, digeser dengan jari atau trackpad. */
+.rv-rail { margin-top: 44px; }
+.rv-track {
+  display: flex; gap: 18px; margin: 0; padding: 6px max(2.5rem, calc((100vw - 1440px) / 2)) 18px; overflow-x: auto; list-style: none;
+  scroll-snap-type: x mandatory; scroll-padding-inline: max(2.5rem, calc((100vw - 1440px) / 2)); scrollbar-width: thin; scrollbar-color: rgb(255 201 40 / 40%) transparent;
+}
+.rv-card {
+  position: relative; display: flex; flex: 0 0 clamp(290px, 30vw, 400px); flex-direction: column; gap: 16px; padding: 26px 26px 24px; scroll-snap-align: start;
+  border: 1px solid rgb(255 255 255 / 14%); border-radius: 18px; background: var(--clear-glass-bg); box-shadow: inset 0 1px 0 rgb(255 255 255 / 18%), 0 24px 48px -32px rgb(0 0 0 / 80%);
+  opacity: 0; translate: 24px 0; transition: opacity .2s ease, translate .2s ease, border-color .25s ease;
+}
+.rv-rail.is-live .rv-card { opacity: 1; translate: 0 0; transition: opacity .5s ease calc(var(--c) * 80ms), translate .7s cubic-bezier(.22, 1, .36, 1) calc(var(--c) * 80ms), border-color .25s ease; }
+/* Tanda kutip emas besar di pojok kartu. */
+.rv-card::before { position: absolute; top: 6px; right: 22px; content: "\201D"; color: rgb(255 201 40 / 22%); font-family: var(--font-display); font-size: 96px; line-height: 1; pointer-events: none; }
+.rv-card blockquote { flex: 1; margin: 0; color: #e3eaf4; font-size: 16px; line-height: 1.7; }
+.rv-card footer { display: flex; align-items: center; gap: 12px; }
+.rv-avatar { display: grid; flex: none; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--gold-glass-bg); box-shadow: var(--gold-glass-shadow); color: #071426; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+.rv-who { display: grid; gap: 2px; min-width: 0; }
+.rv-who strong { color: #fff; font-size: 15px; font-weight: 650; }
+.rv-who small { color: #8fa2bb; font-size: 13px; }
+.rv-item { margin: 0; padding-top: 14px; border-top: 1px dashed rgb(255 255 255 / 14%); color: #a7b5c7; font-size: 13px; }
+@media (hover: hover) and (pointer: fine) { .rv-card:hover { border-color: rgb(255 201 40 / 45%); } }
+@media (max-width: 900px) {
+  .rv-head { grid-template-columns: 1fr; }
+  .rv-score { justify-self: start; }
+}
+@media (max-width: 760px) {
+  .rv-section { padding: 84px 0 104px; }
+  .rv-track { padding-inline: 1rem; scroll-padding-inline: 1rem; }
+  .rv-card { flex-basis: 84vw; padding: 22px 20px 20px; }
+  .rv-card blockquote { font-size: 15px; }
+}
+@media (scripting: none) { .rv-card { opacity: 1; translate: none; } }
+@media (prefers-reduced-motion: reduce) { .rv-card, .rv-rail.is-live .rv-card { opacity: 1; translate: none; transition: none; } }
+
+/* --- Ulasan: penunjuk geser mobil RC di jalan raya (reviews-rail.tsx), menggantikan bilah geser bawaan. --- */
+.rv-track { scrollbar-width: none; }
+.rv-track::-webkit-scrollbar { display: none; }
+.rv-track.is-dragging { scroll-snap-type: none; }
+.rv-road {
+  --car-w: 76px;
+  position: relative; height: 40px; margin-top: 18px; border-radius: 6px; cursor: grab; touch-action: none;
+  background: linear-gradient(180deg, #1c2533 0%, #121924 100%);
+  box-shadow: inset 0 2px 0 rgb(255 255 255 / 6%), inset 0 -2px 0 rgb(0 0 0 / 35%), 0 0 0 1px rgb(255 255 255 / 6%);
+}
+.rv-road:active { cursor: grabbing; }
+.rv-road:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+/* Bahu jalan bergaris kuning-hitam di kedua ujung. */
+.rv-road::before, .rv-road::after { position: absolute; top: 0; bottom: 0; width: 10px; content: ""; background: repeating-linear-gradient(135deg, var(--gold) 0 5px, #111 5px 10px); opacity: .8; }
+.rv-road::before { left: 0; border-radius: 6px 0 0 6px; }
+.rv-road::after { right: 0; border-radius: 0 6px 6px 0; }
+/* Marka tengah putus-putus; bergerak saat mobil melaju. */
+.rv-road-lane { position: absolute; left: 14px; right: 14px; top: 50%; height: 2px; margin-top: -1px; background: repeating-linear-gradient(90deg, rgb(255 255 255 / 55%) 0 14px, transparent 14px 28px); background-size: 28px 2px; }
+.rv-road.is-driving .rv-road-lane { animation: rv-lane .45s linear infinite; }
+@keyframes rv-lane { to { background-position: -28px 0; } }
+/* Mobil: diposisikan dari kiri ke kanan sesuai progres geser (dikurangi lebar mobil supaya tidak keluar jalan). */
+.rv-car { position: absolute; top: 50%; left: calc(12px + (100% - 24px - var(--car-w)) * var(--p, 0)); width: var(--car-w); height: 42px; margin-top: -21px; pointer-events: none; transition: left .12s linear; }
+.rv-car svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 4px 6px rgb(0 0 0 / 55%)); transition: scale .35s cubic-bezier(.22, 1, .36, 1); }
+.rv-car-body { fill: #ffc928; stroke: #a87400; stroke-width: 1.2; }
+.rv-car-glass { fill: #0f2442; stroke: rgb(255 255 255 / 35%); stroke-width: 1; }
+.rv-car-wheel { fill: #10151d; stroke: #3a4352; stroke-width: 1; }
+.rv-car-light { fill: #fffbe6; filter: drop-shadow(0 0 3px #fff3b8); }
+.rv-car-antenna { fill: none; stroke: #e3eaf4; stroke-width: 1.4; stroke-linecap: round; }
+/* Saat melaju: badan mobil sedikit bergetar dan lampu menyala lebih terang. */
+.rv-road.is-driving .rv-car svg { animation: rv-car-rumble .16s linear infinite; }
+@keyframes rv-car-rumble { 0%, 100% { translate: 0 0; } 50% { translate: 0 -1px; } }
+@media (hover: hover) and (pointer: fine) { .rv-road:hover .rv-car svg { filter: drop-shadow(0 4px 6px rgb(0 0 0 / 55%)) drop-shadow(0 0 10px rgb(255 201 40 / 45%)); } }
+@media (prefers-reduced-motion: reduce) { .rv-road.is-driving .rv-road-lane, .rv-road.is-driving .rv-car svg { animation: none; } .rv-car { transition: none; } }
+
+/* --- Ulasan: efek sorot kartu --- */
+.rv-card { overflow: hidden; transition: opacity .2s ease, translate .2s ease, border-color .3s ease, box-shadow .4s ease; }
+.rv-card::after { position: absolute; top: -20%; bottom: -20%; left: -60%; width: 40%; content: ""; pointer-events: none; background: linear-gradient(100deg, transparent, rgb(255 255 255 / 8%) 45%, rgb(255 236 170 / 14%) 50%, rgb(255 255 255 / 8%) 55%, transparent); transform: skewX(-18deg); opacity: 0; }
+.rv-card::before { transition: color .35s ease, translate .45s cubic-bezier(.22, 1, .36, 1), scale .45s cubic-bezier(.22, 1, .36, 1); }
+.rv-card .rv-stars svg { transition: scale .35s cubic-bezier(.3, 1.6, .5, 1), filter .35s ease; }
+.rv-avatar { transition: box-shadow .35s ease, scale .35s cubic-bezier(.3, 1.4, .5, 1); }
+@media (hover: hover) and (pointer: fine) {
+  .rv-rail.is-live .rv-card:hover { translate: 0 -8px; border-color: rgb(255 201 40 / 50%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 22%), 0 34px 60px -30px rgb(0 0 0 / 90%), 0 0 40px -18px rgb(255 201 40 / 45%); }
+  .rv-card:hover::after { animation: rv-sheen 1s cubic-bezier(.3, .6, .3, 1) both; }
+  .rv-card:hover::before { color: rgb(255 201 40 / 75%); translate: -4px 2px; scale: 1.12; }
+  .rv-card:hover .rv-stars svg.is-on { scale: 1.22; filter: drop-shadow(0 0 6px rgb(255 201 40 / 80%)); }
+  .rv-card:hover .rv-stars svg:nth-child(2) { transition-delay: .05s; }
+  .rv-card:hover .rv-stars svg:nth-child(3) { transition-delay: .1s; }
+  .rv-card:hover .rv-stars svg:nth-child(4) { transition-delay: .15s; }
+  .rv-card:hover .rv-stars svg:nth-child(5) { transition-delay: .2s; }
+  .rv-card:hover .rv-avatar { scale: 1.08; box-shadow: var(--gold-glass-shadow), 0 0 0 3px rgb(255 201 40 / 25%), 0 0 0 7px rgb(255 201 40 / 8%); }
+}
+@keyframes rv-sheen { from { left: -60%; opacity: 1; } to { left: 130%; opacity: 1; } }
+.rv-card:active { scale: .99; }
+@media (prefers-reduced-motion: reduce) { .rv-card:hover::after { animation: none; } }
+
 /* ===== Kontak (Beranda): penutup halaman. Kiri ajakan + rincian kontak, kanan panel percakapan berisi kalimat
    pembuka yang membuka WhatsApp (lihat contact-section.tsx). ===== */
 .kontak-section { position: relative; padding: 104px 0 116px; background: radial-gradient(ellipse 55% 70% at 88% 100%, rgb(48 96 168 / 18%), transparent 70%), #040d1a; }
@@ -1638,5 +1778,3 @@ main { padding-top: var(--header-h); }
   .page-hero { padding-top: calc(38px + var(--header-h)); }
 }
 .page-hero-back { display: flex; width: fit-content; }
-
-

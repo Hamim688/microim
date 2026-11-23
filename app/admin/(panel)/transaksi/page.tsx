@@ -10,6 +10,7 @@ import { ListFilters } from "@/components/admin/list-filters"
 import { OrderRow, type OrderRowData } from "@/components/admin/order-row"
 import { Pagination } from "@/components/admin/pagination"
 import { ViewSlide, ViewSwitch } from "@/components/admin/view-switch"
+import { StatusTabs } from "@/components/admin/status-tabs"
 import { deleteOrder, setOrderStatus } from "./actions"
 
 export const metadata: Metadata = { title: "Transaksi" }
@@ -212,16 +213,15 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
       <div className="admin-card is-table">
         <div className="admin-table-toolbar">
           <ViewSwitch view={view} hrefs={{ pembeli: href({ tampilan: undefined }), item: href({ tampilan: "item" }) }} />
-          <div className="admin-status-tabs" role="tablist" aria-label="Filter status transaksi">
-            <Link href={href({ status: undefined })} className={!status ? "is-active" : undefined} role="tab" aria-selected={!status} scroll={false}>
-              Semua <b>{totalInBase}</b>
-            </Link>
-            {STATUS_ORDER.map((s) => (
-              <Link key={s} href={href({ status: s })} className={status === s ? "is-active" : undefined} role="tab" aria-selected={status === s} scroll={false}>
-                {orderStatusLabel[s]} <b>{counts[s]}</b>
-              </Link>
-            ))}
-          </div>
+          <StatusTabs
+            id="transaksi"
+            label="Filter status transaksi"
+            active={status ?? "semua"}
+            tabs={[
+              { key: "semua", href: href({ status: undefined }), label: "Semua", count: totalInBase },
+              ...STATUS_ORDER.map((s) => ({ key: s, href: href({ status: s }), label: orderStatusLabel[s], count: counts[s] })),
+            ]}
+          />
         </div>
         <div className="admin-table-toolbar is-second">
           <ListFilters

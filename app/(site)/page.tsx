@@ -5,18 +5,20 @@ import { ServicesPreview } from "@/components/landing/services-preview"
 import { FeaturedProducts } from "@/components/landing/featured-products"
 import { ProjectShowcase } from "@/components/landing/project-showcase"
 import { ContactSection } from "@/components/landing/contact-section"
+import { ReviewsSection } from "@/components/landing/reviews-section"
 import { TechMarquee } from "@/components/landing/tech-marquee"
 import { OrderSteps } from "@/components/landing/order-steps"
 import { LandingMotion } from "@/components/landing/landing-motion"
 import { PcbDivider } from "@/components/landing/pcb-divider"
 import { BusinessJsonLd } from "@/components/seo/json-ld"
 import { getFeaturedProducts, getMarqueeNames, getCatalog } from "@/lib/catalog"
+import { getPublishedReviews } from "@/lib/reviews"
 
 // Produk unggulan & pita berjalan memakai stok/harga terbaru dari database.
 export const revalidate = 300
 
 export default async function HomePage() {
-  const [featured, marquee, catalog] = await Promise.all([getFeaturedProducts(), getMarqueeNames(), getCatalog()])
+  const [featured, marquee, catalog, reviews] = await Promise.all([getFeaturedProducts(), getMarqueeNames(), getCatalog(), getPublishedReviews()])
   return (
     <LandingMotion>
       <BusinessJsonLd />
@@ -31,6 +33,7 @@ export default async function HomePage() {
         <FeaturedProducts products={featured} total={catalog.length} />
         <OrderSteps />
         <ProjectShowcase />
+        <ReviewsSection summary={reviews} />
         <ContactSection />
       </div>
     </LandingMotion>

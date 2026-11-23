@@ -223,3 +223,28 @@ model AppSetting {
   value     String
   updatedAt DateTime @updatedAt
 }
+
+enum ReviewStatus {
+  PENDING
+  PUBLISHED
+  HIDDEN
+}
+
+/// Ulasan pelanggan. Hanya yang PUBLISHED tampil di situs publik; ulasan baru menunggu persetujuan admin.
+model Review {
+  id        String       @id @default(cuid())
+  name      String
+  /// Keterangan singkat pengulas, mis. "Teknik Elektro 2023" (opsional).
+  detail    String?
+  rating    Int
+  /// Produk atau jasa yang dibeli (opsional).
+  item      String?
+  comment   String       @db.Text
+  status    ReviewStatus @default(PENDING)
+  /// "admin" = dimasukkan admin (mis. dari chat WhatsApp, dengan izin), "web" = dari formulir situs.
+  source    String       @default("admin")
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([status, createdAt])
+}

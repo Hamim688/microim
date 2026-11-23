@@ -12,6 +12,7 @@ import { ProductFilters } from "@/components/admin/product-filters"
 import { RestockButton } from "@/components/admin/restock-button"
 import { DeleteProductButton } from "@/components/admin/delete-product-button"
 import { ProductThumb } from "@/components/admin/product-thumb"
+import { StatusTabs } from "@/components/admin/status-tabs"
 import { adjustStock, deleteProduct, setLowStockThreshold } from "./actions"
 
 export const metadata: Metadata = { title: "Produk & Stok" }
@@ -213,16 +214,15 @@ export default async function ProductsAdminPage({ searchParams }: { searchParams
 
       <div className="admin-card is-table">
         <div className="admin-table-toolbar">
-          <div className="admin-status-tabs" role="tablist" aria-label="Filter status stok">
-            <Link href={href({ status: undefined })} className={!status ? "is-active" : undefined} role="tab" aria-selected={!status} scroll={false}>
-              Semua <b>{filtered.length}</b>
-            </Link>
-            {STATUSES.map((s) => (
-              <Link key={s} href={href({ status: s })} className={`is-${s}${status === s ? " is-active" : ""}`} role="tab" aria-selected={status === s} scroll={false}>
-                <i aria-hidden="true" /> {stockStatusLabel[s]} <b>{filteredCounts[s]}</b>
-              </Link>
-            ))}
-          </div>
+          <StatusTabs
+            id="stok"
+            label="Filter status stok"
+            active={status ?? "semua"}
+            tabs={[
+              { key: "semua", href: href({ status: undefined }), label: "Semua", count: filtered.length },
+              ...STATUSES.map((s) => ({ key: s, href: href({ status: s }), label: stockStatusLabel[s], count: filteredCounts[s], tone: s })),
+            ]}
+          />
           <ThresholdForm action={setLowStockThreshold} value={threshold} />
         </div>
         <div className="admin-table-toolbar is-second">
