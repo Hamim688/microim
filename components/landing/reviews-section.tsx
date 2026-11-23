@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react"
-import { Star } from "lucide-react"
+import Link from "next/link"
+import { ArrowRight, Star } from "lucide-react"
 import { ScrollReveal } from "@/components/landing/landing-motion"
 import { RevealFlag } from "@/components/landing/reveal-flag"
 import { LedStripDivider } from "@/components/landing/led-strip-divider"
@@ -67,9 +68,14 @@ export function ReviewsSection({ summary }: { summary: ReviewSummary }) {
           <h2 id="reviews-heading">Sudah Terbukti, <span>Ini Kata Mereka.</span></h2>
           <div className="rv-score" aria-label={`Rata-rata ${decimal(average)} dari 5, dari ${count} ulasan`}>
             <strong aria-hidden="true">{decimal(average)}</strong>
-            <div aria-hidden="true">
-              <ShinyStars value={Math.round(average)} />
-              <p>dari {count} ulasan pelanggan</p>
+            <div>
+              <div aria-hidden="true">
+                <ShinyStars value={Math.round(average)} />
+                <p>dari {count} ulasan pelanggan</p>
+              </div>
+              <Link href="/ulasan" className="rv-write-link">
+                Pernah order? Tulis ulasan <ArrowRight aria-hidden="true" />
+              </Link>
             </div>
           </div>
         </ScrollReveal>

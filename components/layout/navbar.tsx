@@ -31,10 +31,8 @@ const STRETCH_Y: Keyframe[] = [{ scale: "1 1" }, { scale: ".97 1.22", offset: 0.
 
 type PillBox = { name: string; x: number; y: number; w: number; h: number }
 
-/** Pil mulai muncul setelah kapsul menu selesai turun (ms). */
+/** Pil mulai muncul setelah kapsul menu selesai turun saat situs pertama dibuka (ms). */
 const PILL_ENTER_DELAY = 380
-/** Teks menu aktif langsung berganti putih → hitam begitu pil mulai tampak (ms). */
-const LABEL_DARKEN_AFTER = PILL_ENTER_DELAY + 40
 
 /** Animasi masuk pil emas saat situs pertama dibuka: muncul dari kecil, sedikit meregang, lalu pas. */
 const PILL_ENTER: Keyframe[] = [
@@ -59,6 +57,7 @@ function placePill(
   stretch: Keyframe[],
   duration: number,
   enter = false,
+  enterDelay = PILL_ENTER_DELAY,
 ): PillBox | null {
   if (!nav || !pill) return last
   const link = name ? nav.querySelector<HTMLElement>(`a[data-nav="${name}"]`) : null
@@ -82,8 +81,8 @@ function placePill(
   if (first) {
     void pill.offsetWidth // terapkan posisi tanpa transisi, baru nyalakan lagi transisinya
     pill.classList.remove("no-transition")
-    // Muncul setelah kapsul menu selesai turun (lihat animasi header-in di globals.css).
-    if (enter && !reduceMotion) pill.animate(PILL_ENTER, { duration: 650, delay: PILL_ENTER_DELAY, easing: "cubic-bezier(.22, 1, .36, 1)", fill: "backwards" })
+    // Muncul setelah kapsul menu selesai turun (lihat animasi header-in di globals.css), atau langsung saat kembali ke Beranda.
+    if (enter && !reduceMotion) pill.animate(PILL_ENTER, { duration: 650, delay: enterDelay, easing: "cubic-bezier(.22, 1, .36, 1)", fill: "backwards" })
   } else if (moved && !reduceMotion) {
     pill.animate(stretch, { duration, easing: "cubic-bezier(.3, .7, .3, 1)" })
   }
@@ -134,6 +133,8 @@ export function Navbar() {
   // yang dipulihkan browser setelah refresh), supaya animasi "muncul" terjadi di menu yang benar.
   const [spyReady, setSpyReady] = useState(false)
   const labelTimersStarted = useRef(false)
+  const enterDelayRef = useRef(PILL_ENTER_DELAY)
+  const entryTimers = useRef<number[]>([])
   // Saat menu diklik, pil langsung pindah ke tujuan dan scroll spy "dikunci"
   // sampai scroll halus selesai, supaya pil tidak mampir ke section yang dilewati.
   const lockRef = useRef<string | null>(null)
@@ -141,11 +142,20 @@ export function Navbar() {
   const closeTimer = useRef<number | undefined>(undefined)
   const lastScrollY = useRef(0)
 
-  // Pindah halaman: menu HP ikut tertutup (disesuaikan saat render, tanpa efek tambahan).
+  // Pindah halaman: menu HP ikut tertutup, dan saat kembali ke Beranda tanpa klik menu navbar,
+  // tunda penempatan pil sampai posisi scroll selesai dipulihkan, lalu putar animasi masuk pil yang sama.
   const [prevPath, setPrevPath] = useState(pathname)
   if (prevPath !== pathname) {
     setPrevPath(pathname)
     setIsOpen(false)
+    setIsHidden(false)
+    if (pathname === "/" && !lockRef.current) {
+      setSpyReady(false)
+      setEntryPhase(0)
+      pillEntered.current = false
+      labelTimersStarted.current = false
+      enterDelayRef.current = 0
+    }
   }
 
   const current = activeName(pathname, activeSection)
@@ -156,9 +166,23 @@ export function Navbar() {
   // menu aktif berganti (di Beranda maupun antar halaman) pil meluncur ke samping. Bila ukuran kapsul
   // berubah (font selesai dimuat, layar diputar, menu HP tampil), pil langsung disesuaikan.
   useLayoutEffect(() => {
-    if (onHome && !spyReady) return
+    if (onHome && !spyReady) {
+      pillBoxes.current = { desktop: null, mobile: null }
+      if (desktopPillRef.current) desktopPillRef.current.style.opacity = "0"
+      if (mobilePillRef.current) mobilePillRef.current.style.opacity = "0"
+      return
+    }
     const update = () => {
-      pillBoxes.current.desktop = placePill(desktopNavRef.current, desktopPillRef.current, current, pillBoxes.current.desktop, STRETCH_X, 600, !pillEntered.current)
+      pillBoxes.current.desktop = placePill(
+        desktopNavRef.current,
+        desktopPillRef.current,
+        current,
+        pillBoxes.current.desktop,
+        STRETCH_X,
+        600,
+        !pillEntered.current,
+        enterDelayRef.current,
+      )
       if (pillBoxes.current.desktop) pillEntered.current = true
       pillBoxes.current.mobile = placePill(mobileNavRef.current, mobilePillRef.current, current, pillBoxes.current.mobile, STRETCH_Y, 500)
     }
@@ -166,10 +190,13 @@ export function Navbar() {
     // Teks menu aktif: putih sampai pil muncul, lalu langsung hitam (dihitung dari saat pil diletakkan).
     if (!labelTimersStarted.current) {
       labelTimersStarted.current = true
+      entryTimers.current.forEach((id) => window.clearTimeout(id))
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      const darken = pillEntered.current && !reduceMotion ? LABEL_DARKEN_AFTER : 0
-      window.setTimeout(() => setEntryPhase(1), darken)
-      window.setTimeout(() => setEntryPhase(2), darken + 120)
+      const darken = pillEntered.current && !reduceMotion ? enterDelayRef.current + 50 : 0
+      entryTimers.current = [
+        window.setTimeout(() => setEntryPhase(1), darken),
+        window.setTimeout(() => setEntryPhase(2), darken + 120),
+      ]
     }
     const observer = new ResizeObserver(update)
     for (const nav of [desktopNavRef.current, mobileNavRef.current]) if (nav) observer.observe(nav)
@@ -222,10 +249,16 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll, { passive: true })
 
     let frame = 0
+    let frame2 = 0
+    const syncRestoredPosition = () => {
+      lastScrollY.current = window.scrollY
+      setIsHidden(false)
+      handleScroll()
+      setSpyReady(true)
+    }
     const markReady = () => {
       frame = window.requestAnimationFrame(() => {
-        handleScroll()
-        setSpyReady(true)
+        frame2 = window.requestAnimationFrame(syncRestoredPosition)
       })
     }
     if (document.readyState === "complete") markReady()
@@ -235,6 +268,7 @@ export function Navbar() {
       window.removeEventListener("scroll", handleScroll)
       window.removeEventListener("load", markReady)
       window.cancelAnimationFrame(frame)
+      window.cancelAnimationFrame(frame2)
       window.clearTimeout(unlockTimer.current)
     }
   }, [onHome])
@@ -333,7 +367,7 @@ export function Navbar() {
         </Link>
         <nav ref={desktopNavRef} className={`desktop-nav${entryPhase === 0 ? " is-entering is-switching" : entryPhase === 1 ? " is-switching" : ""}`} aria-label="Navigasi utama">
           {navLinks.map((item) => {
-            const active = isClient && current === item.name
+            const active = isClient && (!onHome || spyReady) && current === item.name
             return (
               <Link aria-current={active ? "page" : undefined} className={active ? "active" : ""} data-nav={item.name} href={hrefFor(item)} key={item.name} onClick={(event) => selectSection(item, event)}>
                 <span className="nav-label">{item.name}</span>
@@ -361,7 +395,7 @@ export function Navbar() {
       <div className={`mobile-nav-backdrop${isOpen ? " is-open" : ""}`} aria-hidden="true" onClick={() => closeMenu(true)} />
       <nav ref={mobileNavRef} className={`mobile-nav${isOpen ? " is-open" : ""}`} id="mobile-navigation" aria-label="Navigasi seluler" inert={!isOpen}>
         {navLinks.map((item) => {
-          const active = isClient && current === item.name
+          const active = isClient && (!onHome || spyReady) && current === item.name
           return (
             <Link href={hrefFor(item)} key={item.name} className={active ? "active" : ""} aria-current={active ? "page" : undefined} data-nav={item.name} onClick={(event) => selectSection(item, event)}>
               <span className="nav-label">{item.name}</span>

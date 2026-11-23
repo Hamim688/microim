@@ -24,7 +24,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+html { scroll-padding-top: 5rem; }
 body {
   margin: 0;
   min-height: 100%;
@@ -1230,6 +1230,16 @@ main:focus { outline: none; }
 .rv-score { display: flex; align-items: center; gap: 18px; justify-self: end; }
 .rv-score strong { color: #fff; font-family: var(--font-display); font-size: clamp(56px, 6vw, 84px); font-weight: 650; letter-spacing: -.05em; line-height: .9; }
 .rv-score p { margin: 8px 0 0; color: #a7b5c7; font-size: 14px; }
+.rv-write-link {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 10px;
+  color: var(--gold); font-size: 13px; font-weight: 600; text-decoration: none;
+  transition: color .2s ease;
+}
+.rv-write-link svg { width: 14px; height: 14px; transition: transform .25s cubic-bezier(.22, 1, .36, 1); }
+@media (hover: hover) and (pointer: fine) {
+  .rv-write-link:hover { color: #ffe48a; }
+  .rv-write-link:hover svg { transform: translateX(3px); }
+}
 .rv-stars { display: inline-flex; gap: 3px; }
 .rv-stars svg { width: 18px; height: 18px; color: rgb(255 255 255 / 16%); fill: currentColor; stroke: none; }
 .rv-stars svg.is-on { color: var(--gold); }
@@ -1563,6 +1573,45 @@ main:focus { outline: none; }
 .inq-done p { max-width: 520px; margin: 0; color: #b3bfd0; font-size: 15px; line-height: 1.7; }
 .inq-done-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
 .inq-done-actions button { cursor: pointer; }
+/* --- Halaman formulir (/contact, /ulasan): latar matriks titik + pendar emas kosmik, ukuran kepala & formulir ringkas --- */
+.subpage.is-form {
+  position: relative; isolation: isolate; overflow-x: clip;
+  padding: calc(24px + var(--header-h)) 0 80px;
+  background: linear-gradient(180deg, #0b1b2d 0%, #071426 420px, #040d1a 100%);
+}
+.subpage.is-form::before {
+  position: absolute; inset: 0; z-index: -2; content: ""; pointer-events: none;
+  background-image: radial-gradient(circle at 50% 50%, rgb(255 255 255 / 6.5%) 1.5px, transparent 2.1px);
+  background-size: 18px 18px; background-position: 50% 0;
+  mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 55%) 55%, transparent 100%);
+}
+.subpage.is-form::after {
+  position: absolute; inset: 0; z-index: -1; content: ""; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 78% 18%, rgb(255 201 40 / 12%), transparent 70%),
+    radial-gradient(ellipse 55% 48% at 18% 10%, rgb(57 135 229 / 15%), transparent 70%);
+}
+.subpage.is-form .subpage-head { margin-bottom: 28px; }
+.subpage.is-form .subpage-head h1 { margin-top: 8px; font-size: clamp(28px, 3.4vw, 44px); line-height: 1.04; }
+.subpage.is-form .subpage-head p { margin-top: 12px; font-size: 15px; }
+.subpage.is-form .inq-layout { gap: 28px clamp(28px, 4vw, 60px); }
+.subpage.is-form .inq-form {
+  gap: 18px; padding: clamp(20px, 2.6vw, 28px); border-radius: 18px;
+  border: 1px solid rgb(255 255 255 / 12%); background: rgb(11 24 41 / 72%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 10%), 0 24px 48px -32px rgb(0 0 0 / 80%);
+  backdrop-filter: blur(12px);
+}
+.subpage.is-form .inq-row { gap: 16px 18px; }
+.rv-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.rv-stars-input { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid rgb(148 163 184 / 24%); border-radius: 10px; background: #0d1c2e; width: fit-content; }
+.rv-stars-input label { position: relative; display: grid; place-items: center; cursor: pointer; padding: 2px; }
+.rv-stars-input input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.rv-stars-input svg { width: 24px; height: 24px; color: rgb(255 255 255 / 18%); fill: currentColor; stroke: none; transition: color .15s ease, scale .15s ease; }
+.rv-stars-input label.is-on svg { color: var(--gold); }
+.rv-stars-input label:hover svg { scale: 1.12; }
+.rv-stars-input b { margin-left: 8px; color: #dbe4f0; font-size: 13px; font-weight: 600; }
+.rv-form-error { margin: 0; padding: 11px 14px; border: 1px solid rgb(248 113 113 / 40%); border-radius: 10px; background: rgb(248 113 113 / 10%); color: #fecaca; font-size: 14px; }
+.rv-preview-card { opacity: 1; translate: none; flex: none; width: 100%; }
 @media (hover: hover) and (pointer: fine) {
   .subpage-back:hover { color: var(--gold); }
   .subpage-back:hover svg { translate: -3px 0; }

@@ -20,7 +20,7 @@ export const metadata: Metadata = pageMetadata({
 export default function ContactPage() {
   return (
     <LandingMotion>
-      <section className="subpage" aria-labelledby="contact-page-title">
+      <section className="subpage is-form" aria-labelledby="contact-page-title">
         <div className="site-container">
           <PageEntrance>
             <SubpageHead id="contact-page-title" backTo="/#contact" title="Ajukan Proyekmu," accent="Kami Susun Pesannya.">
